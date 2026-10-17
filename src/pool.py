@@ -33,7 +33,7 @@ LIB_TAG = {"s6e10-124-public-oof-and-test-predictions": "124", "s6e10-tfm-oof-an
            "s6e10-ablation-members-oof": "kagan", "s6e10-tabpfn-member": "gptabpfn",
            "s6e10-route-tfm-nn-oof": "koumei", "kout-s6e10-source-transfer-foundation-model-oof": "kozy"}
 
-FAMILIES = [("tabpfn", "tabpfn|pfn"), ("tabicl", "tabicl"), ("realmlp", "realmlp|rmlp"), ("tabm", "tabm"),
+FAMILIES = [("tabpfn", "tabpfn|pfn"), ("tabicl", "tabicl"), ("tabdpt", "tabdpt"), ("realmlp", "realmlp|rmlp"), ("tabm", "tabm"),
             ("deepfm", "deepfm"), ("cat", "cat"), ("lgb", "lgb|lgbm"), ("xgb", "xgb")]
 
 
