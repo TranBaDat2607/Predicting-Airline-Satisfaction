@@ -112,6 +112,18 @@ The plugin template `train_gbdt.py` defaults to CPU for every model. After `kg-s
 
 ## Current plan / notes
 
+- 2026-10-17 (session 2, /goal: public top 10 or 10 subs today): repo github.com/TranBaDat2607/Predicting-Airline-Satisfaction (private).
+  - Pool: `bash src/pull_datasets.sh <ds...>` (whole download, per-file fallback on 404) + `kaggle kernels output` into
+    `data/ext/kout-*`; `python src/pool.py` → 246 deduped members (stack-level/blend OOFs banned, incl. `124:nj_01`).
+  - `src/stack.py` LR C=0.03: 161 members 0.962139, 233 → 0.962194 (**LB 0.96185**), 246 → 0.962200.
+  - Residual XGB on the LR margin (members or raw features) and pairwise-rank residual: +0 on fold 0 → the linear stack is saturated.
+  - LB blends (`src/blend_public.py`, tagged lb-blend): 0.3 S246 + 0.3 nina 0.96188.txt + 0.4 nina 0.96183 → **LB 0.96189**.
+    The 0.96190 public files = ~0.6 honest stack + 0.4 Den Pugovkin family (rank corr 0.996 with honest stacks).
+  - TabPFN needs a Prior Labs licence token (TABPFN_TOKEN) — ask the user. TabICL v2 works on 8 GB with ≤150k context
+    (`src/train_tabicl.py`, 0.959 fold 0). TabM (pytabkit) is slow here (~70 min/fold) and weak (0.958).
+  - Always validate with `bash src/submit.sh <file> "<msg>"` (validates, submits, logs LB). On Windows PYTHONPATH uses `;`;
+    kgkit is vendored in `src/kgkit` so scripts need no PYTHONPATH.
+
 <!-- Keep a short running log here: what worked, what did not, what to try next. -->
 - 2026-10-17: env + plugin 1.3.1 ready; data downloaded; scouting done. Next: restart in the conda env, run
   `/kaggle-grandmaster:kg-start playground-series-s6e10`, then add `--device` to `src/train_gbdt.py`, install torch (CUDA ≥ 12.8)
