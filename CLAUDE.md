@@ -46,9 +46,9 @@ reports/     EDA, recon, adversarial validation, post-mortems
 
 ## Local GPU: how to train here (long-term rule — all training is local)
 
-**Never use Kaggle GPUs for this competition.** Do not run `/kg-gpu`, `kgkit gpu push`, or `kaggle kernels push`.
-Every experiment runs on this machine. When a plugin skill says "without a local GPU, run on Kaggle", it does not
-apply here.
+**Local first.** Every experiment runs on this machine unless it needs more VRAM than the local 8 GB card
+(user override 2026-10-17: "if you need higher vram, using kaggle GPU"). Then — and only then — package it as a
+Kaggle GPU kernel (`kaggle-gpu` skill / `kgkit gpu`), still on the frozen folds.
 
 ### Hardware and environment
 - GPU: **NVIDIA GeForce RTX 5060, 8 GB VRAM** (Blackwell, sm_120). CPU: 12 threads. Disk: ~50 GB free.

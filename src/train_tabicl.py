@@ -46,6 +46,7 @@ def main():
     ap.add_argument("--batch", type=int, default=20_000)
     ap.add_argument("--n-estimators", type=int, default=1)
     ap.add_argument("--no-aux", action="store_true")
+    ap.add_argument("--ctx-seed", type=int, default=42, help="seed of the context subsample")
     ap.add_argument("--name")
     ap.add_argument("--notes", default="")
     ap.add_argument("--smoke", action="store_true", help="fold 0, 20k validation rows, no test, not logged")
@@ -54,7 +55,7 @@ def main():
 
     X, Xt, y = features(not args.no_aux)
     folds = pd.read_csv("data/folds.csv")["fold"].to_numpy()
-    rng = np.random.default_rng(42)
+    rng = np.random.default_rng(args.ctx_seed)
     oof, test, scores = np.zeros(len(y)), np.zeros(len(Xt)), []
     t0 = time.time()
     for f in range(1 if args.smoke else 5):
@@ -81,7 +82,7 @@ def main():
     from kgkit.experiment import Ledger
 
     name = args.name or f"tabicl_c{args.ctx // 1000}k"
-    rec = Ledger().log(name, cv, fold_scores=scores, params={"ctx": args.ctx, "n_estimators": args.n_estimators,
+    rec = Ledger().log(name, cv, fold_scores=scores, params={"ctx": args.ctx, "ctx_seed": args.ctx_seed, "n_estimators": args.n_estimators,
                        "aux": not args.no_aux}, model="tabicl", notes=args.notes, oof=oof, test_pred=test,
                        task="binary", runtime_s=round(time.time() - t0, 1))
     print(f"logged {rec['id']}")

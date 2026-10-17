@@ -25,7 +25,8 @@ from train_tabicl import features
 def predict(m, X, ctx, bs, seed):
     out = []
     for i in range(0, len(X), bs):
-        p = m.predict_proba(X[i:i + bs], context_size=ctx, seed=seed)
+        with torch.autocast("cuda", dtype=torch.bfloat16):
+            p = m.predict_proba(X[i:i + bs], context_size=ctx, seed=seed)
         out.append(p[:, 1])
     return np.concatenate(out)
 
@@ -47,7 +48,8 @@ def main():
     t0 = time.time()
     for f in range(1 if args.smoke else 5):
         tr, va = np.where(folds != f)[0], np.where(folds == f)[0]
-        m = TabDPTClassifier(device="cuda", context_reduction="retrieval", compile=False, verbose=False)
+        m = TabDPTClassifier(device="cuda", context_reduction="retrieval", compile=False,
+                             use_flash=True, verbose=False)
         m.fit(X[tr], y[tr])
         if args.smoke:
             va = va[:20_000]
