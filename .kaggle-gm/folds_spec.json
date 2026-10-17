@@ -1,0 +1,10 @@
+{
+ "train": "data/train.csv",
+ "strategy": "stratified",
+ "target": "satisfaction",
+ "group": null,
+ "n_splits": 5,
+ "seed": 42,
+ "id_col": "id",
+ "out": "data/folds.csv"
+}
