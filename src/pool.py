@@ -1,14 +1,16 @@
 """Build the stacking pool: every public OOF/test pair (data/ext/*) plus our own ledger experiments,
-converted to logits, audited (row count, AUC sanity, test range), and cached as float32 matrices.
+converted to logits, audited (row count, AUC sanity, exact duplicates), and cached as float32 matrices.
+
+Recognised layouts inside each data/ext/<lib>/ (the public libraries use all of them):
+  oof_<n>.npy + test_<n>.npy | <n>_oof.npy + <n>_test.npy | oof_<n>.csv + test_<n>.csv (id + value)
+  <n>_oof.csv + <n>_test.csv | <k>_*oof.csv + <k>_submission.csv | <n>.npz with oof/test (or train/test) keys
 
     python src/pool.py                 # writes artifacts/pool/{oof,test}.npy + members.csv
 """
 
 from __future__ import annotations
 
-import glob
 import json
-import os
 import re
 from pathlib import Path
 
@@ -20,8 +22,16 @@ EXT = Path("data/ext")
 OUT = Path("artifacts/pool")
 N_TRAIN, N_TEST = 699_635, 299_844
 # stack-level OOFs: their training rows encode other folds' labels, never use them as members
-BANNED = ("stack245", "stack", "blend", "meta")
-
+BANNED = ("stack", "blend", "meta", "nj_01")  # nj_01 = najiama 01_blend inside the 124 set
+# libraries already contained in another library (cdeotte's 124 set) or holding features / submissions only
+SKIP_LIBS = ("s6e10-oof-library", "s6e10-oof-test-predictions", "ps-s6e10-02", "ps-s6e10-7",
+             "kout-s6e10-passenger-context-foundation-ensemble", "s6e10-top18-artifacts")
+LIB_TAG = {"s6e10-124-public-oof-and-test-predictions": "124", "s6e10-tfm-oof-and-test-predictions": "tfm",
+           "s6e10-goodpjw2008-extra-members-oof": "goodpjw", "s6e10-golem-oof-library": "golem",
+           "oof-dataset": "abdullah", "ps-s6e10-airline-satisfaction-artifacts": "sadam",
+           "s6e10-busyaprime-five-members-oof": "bp", "s6e10-oof": "najiama", "s6e10-stack-oof-predictions": "sachith",
+           "s6e10-ablation-members-oof": "kagan", "s6e10-tabpfn-member": "gptabpfn",
+           "s6e10-route-tfm-nn-oof": "koumei", "kout-s6e10-source-transfer-foundation-model-oof": "kozy"}
 
 FAMILIES = [("tabpfn", "tabpfn|pfn"), ("tabicl", "tabicl"), ("realmlp", "realmlp|rmlp"), ("tabm", "tabm"),
             ("deepfm", "deepfm"), ("cat", "cat"), ("lgb", "lgb|lgbm"), ("xgb", "xgb")]
@@ -43,14 +53,57 @@ def to_logit(a: np.ndarray) -> np.ndarray:
     return a
 
 
+_IDS = {}
+
+
+def ids(split):
+    if split not in _IDS:
+        _IDS[split] = pd.read_csv(f"data/{split}.csv", usecols=["id"])["id"].to_numpy()
+    return _IDS[split]
+
+
+def read_csv_pred(path, split):
+    d = pd.read_csv(path)
+    val = [c for c in d.columns if c not in ("id", "fold", "Unnamed: 0")][-1]
+    if "id" in d.columns:
+        return d.set_index("id")[val].reindex(ids(split)).to_numpy()
+    return d[val].to_numpy()
+
+
+def lib_pairs(lib: Path):
+    """Yield (member name, oof loader, test loader) for one library directory."""
+    files = {p.name: p for p in lib.iterdir() if p.is_file()}
+    for fn, p in sorted(files.items()):
+        m = re.fullmatch(r"oof_(.+)\.(npy|csv)", fn) or re.fullmatch(r"(.+)_oof\.(npy|csv)", fn)
+        if m:
+            n, ext = m.group(1), m.group(2)
+            t = files.get(f"test_{n}.{ext}") or files.get(f"{n}_test.{ext}")
+            if t is not None:
+                if ext == "npy":
+                    yield n, (lambda p=p: np.load(p)), (lambda t=t: np.load(t))
+                else:
+                    yield n, (lambda p=p: read_csv_pred(p, "train")), (lambda t=t: read_csv_pred(t, "test"))
+                continue
+        m = re.fullmatch(r"(\d+)_(.+)_oof\.csv", fn)  # najiama: 07_XGBoost_oof.csv + 07_submission.csv
+        if m and f"{m.group(1)}_submission.csv" in files:
+            t = files[f"{m.group(1)}_submission.csv"]
+            yield f"{m.group(1)}_{m.group(2)}", (lambda p=p: read_csv_pred(p, "train")), \
+                (lambda t=t: read_csv_pred(t, "test"))
+            continue
+        if fn.endswith(".npz"):
+            z = np.load(p)
+            ko = "oof" if "oof" in z.files else "train" if "train" in z.files else None
+            if ko and "test" in z.files and z[ko].ndim == 1:
+                yield fn[:-4], (lambda p=p, ko=ko: np.load(p)[ko]), (lambda p=p: np.load(p)["test"])
+
+
 def public_pairs():
     for lib in sorted(p for p in EXT.iterdir() if p.is_dir()):
-        for f in sorted(glob.glob(str(lib / "oof_*.npy"))):
-            name = os.path.basename(f)[4:-4]
-            t = lib / f"test_{name}.npy"
-            if not t.exists():
-                continue
-            yield f"{lib.name.split('-')[1] if '-' in lib.name else lib.name}:{name}", Path(f), t
+        if lib.name in SKIP_LIBS:
+            continue
+        tag = LIB_TAG.get(lib.name, lib.name)
+        for n, lo, lt in lib_pairs(lib):
+            yield f"{tag}:{n}", lo, lt
 
 
 def ledger_pairs():
@@ -62,18 +115,22 @@ def ledger_pairs():
         oof, test = r.get("oof_path"), r.get("test_path")
         if r.get("pool") is False or not oof or not test or not Path(oof).exists():
             continue
-        yield f"own:{r['id']}:{r.get('model', '')}", Path(oof), Path(test)
+        yield f"own:{r['id']}:{r.get('model', '')}", (lambda o=oof: np.load(o)), (lambda t=test: np.load(t))
 
 
 def main():
     y = pd.read_csv("data/train.csv", usecols=["satisfaction"])["satisfaction"].astype(int).to_numpy()
     cols_oof, cols_test, rows, seen = [], [], [], {}
-    for name, fo, ft in list(public_pairs()) + list(ledger_pairs() or []):
+    for name, lo, lt in list(public_pairs()) + list(ledger_pairs() or []):
         short = name.split(":", 1)[1]
         if any(b in short.lower() for b in BANNED):
             rows.append(dict(name=name, status="banned (stack-level)"))
             continue
-        o, t = np.load(fo, allow_pickle=False), np.load(ft, allow_pickle=False)
+        try:
+            o, t = np.asarray(lo(), dtype=np.float64), np.asarray(lt(), dtype=np.float64)
+        except Exception as e:  # noqa: BLE001
+            rows.append(dict(name=name, status=f"unreadable {type(e).__name__}"))
+            continue
         if o.ndim > 1:
             o = o[:, -1]
         if t.ndim > 1:
@@ -81,33 +138,33 @@ def main():
         if len(o) != N_TRAIN or len(t) != N_TEST:
             rows.append(dict(name=name, status=f"bad shape {o.shape} {t.shape}"))
             continue
-        lo, lt = to_logit(o), to_logit(t)
-        if not (np.isfinite(lo).all() and np.isfinite(lt).all()):
-            rows.append(dict(name=name, status="non-finite"))
+        if not (np.isfinite(o).all() and np.isfinite(t).all()):
+            rows.append(dict(name=name, status="non-finite / missing ids"))
             continue
-        auc = roc_auc_score(y, lo)
+        lo_, lt_ = to_logit(o), to_logit(t)
+        auc = roc_auc_score(y, lo_)
         if auc < 0.9:
             rows.append(dict(name=name, status=f"low AUC {auc:.4f} (misaligned?)", auc=auc))
             continue
-        key = np.round(lo[:2000], 5).tobytes()  # exact duplicates across libraries
+        key = np.round(lo_[:2000], 4).tobytes()  # exact duplicates across libraries
         if key in seen:
             rows.append(dict(name=name, status=f"duplicate of {seen[key]}", auc=auc))
             continue
         seen[key] = name
-        cols_oof.append(lo.astype(np.float32))
-        cols_test.append(lt.astype(np.float32))
-        rows.append(dict(name=name, status="ok", auc=auc, oof_mean=float(lo.mean()), test_mean=float(lt.mean())))
+        cols_oof.append(lo_.astype(np.float32))
+        cols_test.append(lt_.astype(np.float32))
+        rows.append(dict(name=name, status="ok", auc=auc, oof_mean=float(lo_.mean()), test_mean=float(lt_.mean())))
     OUT.mkdir(parents=True, exist_ok=True)
     np.save(OUT / "oof.npy", np.stack(cols_oof, 1))
     np.save(OUT / "test.npy", np.stack(cols_test, 1))
     m = pd.DataFrame(rows)
-    m.to_csv(OUT / "members_all.csv", index=False)
     m["family"] = [family(n.rsplit(":", 1)[0] if n.startswith("own:") else n,
                           n.rsplit(":", 1)[1] if n.startswith("own:") else "") for n in m.name]
+    m.to_csv(OUT / "members_all.csv", index=False)
     m[m.status == "ok"][["name", "family", "auc"]].to_csv(OUT / "members.csv", index=False)
     print(m.status.str.split(" ").str[0].value_counts().to_string())
     print(f"pool: {len(cols_oof)} members, best OOF AUC {m.auc.max():.5f}")
-    print(m[m.status != "ok"].to_string())
+    print(m[m.status != "ok"][["name", "status"]].to_string())
 
 
 if __name__ == "__main__":
