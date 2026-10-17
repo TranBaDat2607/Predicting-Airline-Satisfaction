@@ -58,8 +58,9 @@ def main():
         oof, test, names = np.hstack([oof, r_tr]), np.hstack([test, r_te]), names + r_cols
     bm_oof = bm_test = None
     if args.base_margin:
-        rec = next(json.loads(l) for l in Path(".kaggle-gm/ledger.jsonl").read_text().splitlines()
-                   if json.loads(l)["id"] == args.base_margin)
+        from kgkit.experiment import Ledger
+
+        rec = Ledger().get(args.base_margin)
         lg = lambda p: np.log(np.clip(p, 1e-7, 1 - 1e-7) / (1 - np.clip(p, 1e-7, 1 - 1e-7)))
         bm_oof, bm_test = lg(np.load(rec["oof_path"])), lg(np.load(rec["test_path"]))
     params = dict(objective="binary:logistic", eval_metric="auc", device="cuda", tree_method="hist",

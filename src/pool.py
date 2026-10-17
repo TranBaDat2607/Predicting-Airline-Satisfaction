@@ -53,6 +53,8 @@ def to_logit(a: np.ndarray) -> np.ndarray:
     return a
 
 
+NON_PRED = ("id", "fold", "Unnamed: 0", "target", "satisfaction", "n_seeds", "y")
+WIDE = [("oof_predictions.parquet", "test_predictions.parquet"), ("oof_members.csv", "test_members.csv")]
 _IDS = {}
 
 
@@ -64,15 +66,33 @@ def ids(split):
 
 def read_csv_pred(path, split):
     d = pd.read_csv(path)
-    val = [c for c in d.columns if c not in ("id", "fold", "Unnamed: 0")][-1]
+    cols = [c for c in d.columns if c not in NON_PRED]
+    val = "pred" if "pred" in cols else cols[-1] if cols else "satisfaction"
     if "id" in d.columns:
         return d.set_index("id")[val].reindex(ids(split)).to_numpy()
     return d[val].to_numpy()
 
 
+def read_wide(path, split):
+    d = pd.read_parquet(path) if str(path).endswith(".parquet") else pd.read_csv(path)
+    if "id" in d.columns:
+        d = d.set_index("id").reindex(ids(split))
+    return {c: d[c].to_numpy() for c in d.columns if c not in NON_PRED}
+
+
 def lib_pairs(lib: Path):
-    """Yield (member name, oof loader, test loader) for one library directory."""
+    """Yield (member name, oof loader, test loader) for one library directory (and its subdirectories)."""
+    for sub in sorted(p for p in lib.iterdir() if p.is_dir() and p.name not in ("catboost_info", "units")):
+        for n, lo, lt in lib_pairs(sub):
+            yield f"{sub.name}/{n}", lo, lt
     files = {p.name: p for p in lib.iterdir() if p.is_file()}
+    for fo, ft in WIDE:
+        if fo in files and ft in files:
+            cols = read_wide(files[fo], "train").keys()
+            for c in cols:
+                yield c, (lambda f=files[fo], c=c: read_wide(f, "train")[c]),                     (lambda f=files[ft], c=c: read_wide(f, "test")[c])
+    if "oof_preds.csv" in files and "submission.csv" in files:
+        yield "oof_preds", (lambda p=files["oof_preds.csv"]: read_csv_pred(p, "train")),             (lambda p=files["submission.csv"]: read_csv_pred(p, "test"))
     for fn, p in sorted(files.items()):
         m = re.fullmatch(r"oof_(.+)\.(npy|csv)", fn) or re.fullmatch(r"(.+)_oof\.(npy|csv)", fn)
         if m:
@@ -95,6 +115,9 @@ def lib_pairs(lib: Path):
             ko = "oof" if "oof" in z.files else "train" if "train" in z.files else None
             if ko and "test" in z.files and z[ko].ndim == 1:
                 yield fn[:-4], (lambda p=p, ko=ko: np.load(p)[ko]), (lambda p=p: np.load(p)["test"])
+            for k in z.files:  # amanatar: oof_<x> / test_<x> keys in one archive
+                if k.startswith("oof_") and f"test_{k[4:]}" in z.files:
+                    yield f"{fn[:-4]}/{k[4:]}", (lambda p=p, k=k: np.load(p)[k]),                         (lambda p=p, k=k: np.load(p)["test_" + k[4:]])
 
 
 def public_pairs():
