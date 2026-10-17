@@ -1,0 +1,17 @@
+data/
+artifacts/
+subs/*.csv
+*.npy
+*.pkl
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+kaggle.json
+__pycache__/
+.ipynb_checkpoints/
+wandb/
+.idea/
+catboost_info/
+.claude/settings.local.json
+kernels/*/
