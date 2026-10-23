@@ -14,4 +14,5 @@ wandb/
 .idea/
 catboost_info/
 .claude/settings.local.json
-kernels/*/
+kernels/*/output/
+kernels/*/*.log

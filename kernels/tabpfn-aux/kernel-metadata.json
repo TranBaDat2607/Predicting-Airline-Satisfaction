@@ -1,0 +1,16 @@
+{
+  "id": "tranbadat/s6e10-tabpfn35-aux-catfd",
+  "title": "s6e10-tabpfn35-aux-catfd",
+  "code_file": "s6e10-tabpfn35-aux-catfd.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": ["sachith7/s6e10-stack-oof-predictions"],
+  "competition_sources": ["playground-series-s6e10"],
+  "kernel_sources": [],
+  "model_sources": []
+}
