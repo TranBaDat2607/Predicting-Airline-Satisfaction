@@ -32,6 +32,10 @@ KERNELS = [
     # new since the 246-member pool
     "hermengardo/single-catboost-eda-ps6e10", "goodpjw2008/s6e10-more-aux-carriers-lb-0-96163",
     "goodpjw2008/s6e10-auxiliary-task-features-lb-0-96161",
+    # used by yeashusemwal/trust-the-cv (nested CV 0.962260), missing from our v1 pool
+    "mojjeed/s6e10-cv-96180-stacking", "ewtherka/s6e10-factorization-machine-w-more-variants",
+    "kiza123123/s6e10-winning-multi-model-pipeline", "koumeimaki/s6e10-feature-ladder-what-helps-lightgbm",
+    "thethiago28/notebook4ec6a89dc3",
 ]
 
 RUNNER = r'''
