@@ -61,6 +61,7 @@ def main():
     ap.add_argument("--name", default="stack_lr")
     ap.add_argument("--notes", default="")
     ap.add_argument("--log", action="store_true", help="log the best C to the ledger + write subs/")
+    ap.add_argument("--save", help="write the best C's nested OOF + full-fit test logits and weights to this dir")
     args = ap.parse_args()
 
     y = pd.read_csv("data/train.csv", usecols=["satisfaction"])["satisfaction"].astype(int).to_numpy()
@@ -77,11 +78,21 @@ def main():
               + f" | {time.time() - t0:.0f}s", flush=True)
         if best is None or cv > best[0]:
             best = (cv, C, s_oof, scores)
-    if not args.log:
+    if not (args.log or args.save):
         return
     cv, C, s_oof, scores = best
     m = fit_lr(X, y, C)
     s_test = m.decision_function(Xt)
+    if args.save:
+        out = Path(args.save)
+        out.mkdir(parents=True, exist_ok=True)
+        np.save(out / "oof_stack.npy", s_oof)
+        np.save(out / "test_stack.npy", s_test)
+        pd.Series(m.coef_.ravel(), index=names, name="coef").to_csv(out / "weights.csv")
+        (out / "summary.txt").write_text(f"C={C} nested CV {cv:.6f} folds {scores} members {len(names)}\n")
+        print(f"saved stack C={C} to {out}")
+    if not args.log:
+        return
     sys.path.insert(0, str(Path(__file__).parent))
     from kgkit.experiment import Ledger
 
