@@ -6,7 +6,7 @@ Flight Distance acts as a route id) + periodic numeric embedding (numeric column
 13 ratings sachith7's label-free expected value and the residual). One summary token carries row statistics.
 No positional encoding: a bidirectional encoder over the tokens is permutation invariant.
 
-Pretraining: replaced-token detection on train+test features (no labels): 20 % of tokens are swapped with the same
+Pretraining: replaced-token detection on train+test features (no labels): 15 % of tokens are swapped with the same
 column of a random row and the model predicts which ones. Fine-tuning per fold on the frozen folds, epoch picked on a
 5 % inner holdout of the fold's training rows; the scored fold and test are only predicted.
 
@@ -272,10 +272,10 @@ def finetune(f, y, folds, args, out, fold):
     yt = torch.as_tensor(y)
     steps_ep = len(fit) // args.bs
     total = int(args.epochs * steps_ep)
-    head_params = list(model.head.parameters())
-    other = [p for n_, p in model.named_parameters() if not n_.startswith("head.")]
-    opt = torch.optim.AdamW([{"params": other, "lr": args.lr}, {"params": head_params, "lr": args.lr * 5}], weight_decay=0.01)
-    sch = cosine(opt, total, max(1, total // 20))
+    enc = [p for n_, p in model.named_parameters() if n_.startswith("enc.")]
+    tok = [p for n_, p in model.named_parameters() if not n_.startswith("enc.")]   # tokenizer, summary, heads
+    opt = torch.optim.AdamW([{"params": enc, "lr": args.lr}, {"params": tok, "lr": args.lr_tok}], weight_decay=0.01)
+    sch = cosine(opt, total, max(1, int(total * 0.03)))
     scaler = torch.amp.GradScaler(enabled=dev.startswith("cuda"))
     evals = max(1, int(args.evals_per_epoch))
     every = max(1, steps_ep // evals)
@@ -369,14 +369,15 @@ def main():
     ap.add_argument("--heads", type=int, default=8)
     ap.add_argument("--sigma", type=float, default=8.0)
     ap.add_argument("--drop", type=float, default=0.1)
-    ap.add_argument("--bs", type=int, default=1024)
-    ap.add_argument("--lr", type=float, default=2e-4)
-    ap.add_argument("--epochs", type=float, default=3.0)
+    ap.add_argument("--bs", type=int, default=512)
+    ap.add_argument("--lr", type=float, default=1e-4, help="encoder learning rate (fine-tuning)")
+    ap.add_argument("--lr-tok", type=float, default=1e-3, help="tokenizer + head learning rate (fine-tuning)")
+    ap.add_argument("--epochs", type=float, default=2.0)
     ap.add_argument("--evals-per-epoch", type=float, default=4)
     ap.add_argument("--label-smooth", type=float, default=0.0)
-    ap.add_argument("--pre-epochs", type=int, default=2)
+    ap.add_argument("--pre-epochs", type=int, default=3)
     ap.add_argument("--pre-lr", type=float, default=3e-4)
-    ap.add_argument("--corrupt", type=float, default=0.2)
+    ap.add_argument("--corrupt", type=float, default=0.15)
     ap.add_argument("--no-pretrain", action="store_true")
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--subsample", type=int, default=0, help="random train rows (with --smoke: default 20000)")
