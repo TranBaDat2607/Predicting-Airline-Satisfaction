@@ -16,3 +16,4 @@ catboost_info/
 .claude/settings.local.json
 kernels/*/output/
 kernels/*/*.log
+kernels/*/s6e10_*.py
