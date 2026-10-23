@@ -183,5 +183,22 @@
   "screen_gain": null,
   "full_gain": null,
   "created": "2026-10-24T03:30:18"
+ },
+ {
+  "id": 12,
+  "idea": "set transformer member (Q-FT v2 style)",
+  "evidence": "",
+  "source": "discussion",
+  "gain": 2.0,
+  "prob": 0.4,
+  "cost": 1.0,
+  "gpu_hours": 0.0,
+  "status": "done",
+  "first_experiment": "",
+  "exp_ids": [],
+  "result": "\"OOF 0.96058 (d512) / 0.96061 (d256) in 1.24 GPU-h, but stack 0.962246 vs 0.962249 (discard)\"",
+  "screen_gain": null,
+  "full_gain": null,
+  "created": "2026-10-24T04:51:52"
  }
 ]
