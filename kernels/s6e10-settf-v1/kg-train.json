@@ -15,8 +15,8 @@
     3,
     4
   ],
-  "cmd": "python src/train_settf.py --name settf_d512 --d 512 --layers 8 --heads 8 --sigma 32 --folds {fold}",
-  "build_id": "s6e10-settf-v1@2026-10-23T19:36:22Z",
+  "cmd": "python src/train_settf.py --name settf_d512 --d 512 --layers 8 --heads 8 --sigma 32 --epochs 3 --folds {fold}",
+  "build_id": "s6e10-settf-v1@2026-10-23T20:23:08Z",
   "prune": null,
   "resume_from": [],
   "bundle_kb": 2031.7
