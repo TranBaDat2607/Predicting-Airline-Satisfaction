@@ -166,5 +166,22 @@
   "screen_gain": null,
   "full_gain": null,
   "created": "2026-10-24T02:36:23"
+ },
+ {
+  "id": 11,
+  "idea": "own TabPFN aux+catFD as LB direction / stack member",
+  "evidence": "",
+  "source": "own",
+  "gain": 2.0,
+  "prob": 0.3,
+  "cost": 1.0,
+  "gpu_hours": 0.0,
+  "status": "dropped",
+  "first_experiment": "",
+  "exp_ids": [],
+  "result": "\"stack +1e-6 (0.962250); LB 0.96212 at 5%, 0.96211 at 10% (0022/0023) -> full-train aux run dropped from the GPU queue\"",
+  "screen_gain": null,
+  "full_gain": null,
+  "created": "2026-10-24T03:30:18"
  }
 ]
