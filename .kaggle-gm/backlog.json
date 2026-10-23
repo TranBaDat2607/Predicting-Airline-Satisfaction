@@ -149,5 +149,22 @@
   "screen_gain": null,
   "full_gain": null,
   "created": "2026-10-24T01:56:29"
+ },
+ {
+  "id": 10,
+  "idea": "settf ablations at 120k rows d128: sigma 32 +7.7e-4 VAL vs sigma 8; no-pretrain +1.8e-4 (noise)",
+  "evidence": "",
+  "source": "own",
+  "gain": 1.0,
+  "prob": 1.0,
+  "cost": 0.5,
+  "gpu_hours": 0.0,
+  "status": "done",
+  "first_experiment": "",
+  "exp_ids": [],
+  "result": "\"GPU kernel rebuilt with sigma 32 / 48\"",
+  "screen_gain": null,
+  "full_gain": null,
+  "created": "2026-10-24T02:36:23"
  }
 ]
