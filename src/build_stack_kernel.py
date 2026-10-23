@@ -94,13 +94,14 @@ def main():
     ap.add_argument("--kernel-extra", nargs="*", default=[])
     ap.add_argument("--dataset-extra", nargs="*", default=[])
     ap.add_argument("--slug", default="s6e10-honest-stack")
+    ap.add_argument("--stack-args", default="", help="extra src/stack.py arguments, e.g. --raw")
     args = ap.parse_args()
     root = Path(__file__).resolve().parent.parent
     files = {f"src/{n}": base64.b64encode((root / "src" / n).read_bytes()).decode() for n in ("pool.py", "stack.py")}
     cfg = dict(files=files, datasets=DATASETS + args.dataset_extra, kernels=KERNELS + args.kernel_extra,
                cmds=["python src/pool.py",
                      "mkdir -p /kaggle/working/pool && cp artifacts/pool/*.csv /kaggle/working/pool/",
-                     f"python src/stack.py --C {' '.join(args.C)} --save /kaggle/working/stack",
+                     f"python src/stack.py --C {' '.join(args.C)} {args.stack_args} --save /kaggle/working/stack",
                      "cp artifacts/pool/*.npy /kaggle/working/pool/"])
     out = root / "kernels" / ("stack-cpu" if args.slug == "s6e10-honest-stack" else args.slug)
     out.mkdir(parents=True, exist_ok=True)

@@ -62,19 +62,21 @@ def main():
     ap.add_argument("--notes", default="")
     ap.add_argument("--log", action="store_true", help="log the best C to the ledger + write subs/")
     ap.add_argument("--save", help="write the best C's nested OOF + full-fit test logits and weights to this dir")
+    ap.add_argument("--raw", action="store_true", help="fit on raw member logits (no standardisation), as trust-the-cv does")
     args = ap.parse_args()
 
     y = pd.read_csv("data/train.csv", usecols=["satisfaction"])["satisfaction"].astype(int).to_numpy()
     folds = pd.read_csv("data/folds.csv")["fold"].to_numpy()
     oof, test, names = load(args.members)
-    X, Xt = standardise(oof.astype(np.float64), test.astype(np.float64))
+    X, Xt = (oof.astype(np.float64), test.astype(np.float64)) if args.raw else \
+        standardise(oof.astype(np.float64), test.astype(np.float64))
     print(f"{len(names)} members", flush=True)
     best = None
     for C in args.C:
         t0 = time.time()
         s_oof, scores = nested(X, y, folds, C)
         cv = roc_auc_score(y, s_oof)
-        print(f"C={C:g}: nested CV {cv:.6f} | folds " + " ".join(f"{s:.5f}" for s in scores)
+        print(f"C={C:g}: nested CV {cv:.6f} (fold mean {np.mean(scores):.6f}) | folds " + " ".join(f"{s:.5f}" for s in scores)
               + f" | {time.time() - t0:.0f}s", flush=True)
         if best is None or cv > best[0]:
             best = (cv, C, s_oof, scores)
