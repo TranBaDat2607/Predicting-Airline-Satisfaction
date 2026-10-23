@@ -1,4 +1,4 @@
-"""OOF proxy of a public LB file: explain its test ranks by the honest pool members' test logits (ridge), apply the same
+"""OOF proxy of a public LB file: explain its test ranks by the honest pool members' test ranks (non-negative least squares), apply the same
 weights to the members' OOF logits, and use the resulting proxy OOF to pre-screen LB directions on labelled rows.
 
 The public files (nina2025 0.96210, the 0.96213 crowd file) have no OOF, so a new direction D can only be judged on the
@@ -6,6 +6,10 @@ LB. If the file is mostly a linear mix of public members, (1 - a) * R(proxy) + a
 information the file lacks before a submission is spent on it.
 
     python src/lb_proxy.py --target data/ext/ps-s6e10-02/0.96210.csv --cand own:artifacts/<exp>/oof.npy:artifacts/<exp>/test.npy
+
+Measured limitation (2026-10-23): for nina's 0.96210 file the NNLS fit reaches rank corr 0.9916 (19 members, proxy OOF
+0.96200) and predicts +3.9e-5 for 10 % more honest stack, but the LB measured -1e-5 for that move (ledger 0017): the
+LB-tuned part of the public chain is exactly what the members cannot explain, so this screens nothing on its own.
 """
 
 from __future__ import annotations
@@ -16,7 +20,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from scipy.stats import rankdata
-from sklearn.linear_model import Ridge
 from sklearn.metrics import roc_auc_score
 
 
@@ -38,7 +41,6 @@ def main():
     ap.add_argument("--target", required=True, help="public submission csv (id, satisfaction)")
     ap.add_argument("--cand", nargs="*", default=[], help="name:oof.npy:test.npy (probabilities or logits)")
     ap.add_argument("--alpha", type=float, nargs="+", default=[0.05, 0.1, 0.2])
-    ap.add_argument("--ridge", type=float, default=1.0)
     a = ap.parse_args()
     pool = Path(a.pool)
     O, T = np.load(pool / "oof.npy"), np.load(pool / "test.npy")
@@ -47,20 +49,23 @@ def main():
     folds = pd.read_csv("data/folds.csv")["fold"].to_numpy()
     ids = pd.read_csv("data/test.csv", usecols=["id"])["id"].to_numpy()
     tgt = pd.read_csv(a.target).set_index("id").iloc[:, 0].reindex(ids).to_numpy(float)
-    mu, sd = T.mean(0), T.std(0) + 1e-9
-    Zt, Zo = (T - mu) / sd, (O - mu) / sd
-    # target on the logit scale of its ranks, so the linear model is fitted where AUC lives
+    # rank space on both sides: distribution free, so weights fitted on test transfer to the OOF rows
+    rank_cols = lambda M: np.column_stack([R(M[:, j]) for j in range(M.shape[1])]).astype(np.float32)
+    Rt, Ro = rank_cols(T), rank_cols(O)
     rt = R(tgt)
-    zt = np.log(rt / (1 - rt))
-    m = Ridge(alpha=a.ridge).fit(Zt, zt)
-    r2 = m.score(Zt, zt)
-    proxy = m.predict(Zo)
-    resid = zt - m.predict(Zt)
-    print(f"target {a.target}: R^2 on test {r2:.6f}, residual sd {resid.std():.4f} (rank corr fit "
-          f"{np.corrcoef(R(m.predict(Zt)), rt)[0, 1]:.6f})")
+    from scipy.optimize import nnls
+    sub = np.random.default_rng(0).choice(len(rt), min(len(rt), 120_000), replace=False)
+    w, _ = nnls(Rt[sub].astype(np.float64), rt[sub])
+    fit = Rt @ w
+    r2 = 1 - ((rt - fit) ** 2).sum() / ((rt - rt.mean()) ** 2).sum()
+    print(f"target {a.target}: NNLS rank fit R^2 {r2:.6f}, rank corr {np.corrcoef(R(fit), rt)[0, 1]:.6f}, "
+          f"{(w > 0).sum()} members with weight, sum {w.sum():.3f}")
+    proxy = Ro @ w
     base = roc_auc_score(y, proxy)
     print(f"proxy OOF AUC {base:.6f} | folds " + " ".join(f"{roc_auc_score(y[folds == k], proxy[folds == k]):.5f}" for k in range(5)))
-    top = pd.Series(m.coef_, index=names).sort_values(key=np.abs, ascending=False).head(12)
+    class _M: pass
+    m = _M(); m.coef_ = w
+    top = pd.Series(m.coef_, index=names).sort_values(ascending=False).head(12)
     print("largest proxy weights:\n" + top.round(4).to_string())
     rp = R(proxy)
     for spec in a.cand:
