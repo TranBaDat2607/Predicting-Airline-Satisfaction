@@ -14,7 +14,7 @@ print("torch", torch.__version__, "tabpfn", tabpfn.__version__, "GPUs", torch.cu
 from huggingface_hub import hf_hub_download
 os.makedirs("/tmp/tabpfn_ckpt", exist_ok=True)
 os.environ["CKPT"] = hf_hub_download("Prior-Labs/tabpfn_3_5", "tabpfn-v3.5-20260909.safetensors", local_dir="/tmp/tabpfn_ckpt")
-os.environ.update(WORK="/tmp/exp01", OUT="/kaggle/working", LIMIT_H=os.environ.get("LIMIT_H", "11.3"), N_SEEDS=os.environ.get("N_SEEDS", "1"), CTX=os.environ.get("CTX", "200000"), GPUS=",".join(str(i) for i in range(max(1, torch.cuda.device_count()))))
+os.environ.update(WORK="/tmp/exp01", OUT="/kaggle/working", LIMIT_H=os.environ.get("LIMIT_H", "11.3"), N_SEEDS=os.environ.get("N_SEEDS", "2"), CTX=os.environ.get("CTX", "200000"), GPUS=",".join(str(i) for i in range(max(1, torch.cuda.device_count()))))
 os.makedirs("/tmp/exp01", exist_ok=True)
 print(os.environ["CKPT"], os.environ["GPUS"])
 
