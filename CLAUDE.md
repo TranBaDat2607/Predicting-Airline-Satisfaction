@@ -40,54 +40,27 @@ reports/     EDA, recon, adversarial validation, post-mortems
    is packed at ~0.9619; 5th-decimal differences there are noise.
 5. **No target leakage**: target encodings out-of-fold; encoders fit inside the fold. Never pseudo-label from public
    consensus predictions (their test preds contain every fold's labels — CV up, LB down).
-6. **Validate every submission** with `python -m kgkit validate subs/<file>.csv data/sample_submission.csv`, and **ask the
-   user before submitting**.
+6. **Validate every submission** with `python -m kgkit validate subs/<file>.csv data/sample_submission.csv` (or
+   `bash src/submit.sh subs/<id>.csv "<msg>"`, which validates, submits and logs the LB). Standing approval from the
+   user (2026-10-24): submit without asking, up to the daily limit; decide open questions by measuring, not asking.
 7. **Commit code before long runs** so the ledger's git hash points at the exact code.
 
-## Local GPU: how to train here (long-term rule — all training is local)
+## Compute (from 2026-10-24: Linux machine, no local GPU — user rule: use Kaggle GPU **and** CPU)
 
-**Local first.** Every experiment runs on this machine unless it needs more VRAM than the local 8 GB card
-(user override 2026-10-17: "if you need higher vram, using kaggle GPU"). Then — and only then — package it as a
-Kaggle GPU kernel (`kaggle-gpu` skill / `kgkit gpu`), still on the frozen folds.
-
-### Hardware and environment
-- GPU: **NVIDIA GeForce RTX 5060, 8 GB VRAM** (Blackwell, sm_120). CPU: 12 threads. Disk: ~50 GB free.
-- Python env: conda **`airline-satisfaction`** (Python 3.12). Use it for everything:
-  - Python: `C:/Users/Admin/anaconda3/envs/airline-satisfaction/python.exe`
-  - Kaggle CLI: `C:/Users/Admin/anaconda3/envs/airline-satisfaction/Scripts/kaggle.exe`
-  - `python` on PATH is base Anaconda (3.13, **no** lightgbm/xgboost/catboost). Use the full path unless the session
-    was started from `conda activate airline-satisfaction`.
-- kgkit: `PYTHONPATH="<kgkit home from session brief>" <env python> -m kgkit <cmd>`.
-- Windows console is cp1252: when printing notebook text or emoji, set `PYTHONIOENCODING=utf-8` (or
-  `sys.stdout.reconfigure(encoding="utf-8")` when running with `-I`).
-
-### Which model runs where (verified 2026-10-17)
-| Model | Device | How |
-|---|---|---|
-| XGBoost 3.4 | **GPU** ✅ | `device="cuda", tree_method="hist"`. Template: `--params '{"device":"cuda"}'`. Raw 5-fold baseline: 0.95879 CV in 31 s |
-| CatBoost 1.2.10 | **GPU** ✅ | `task_type="GPU"`. Template: `--params '{"task_type":"GPU"}'` |
-| LightGBM 4.7 | **CPU only** | The pip wheel has no GPU/CUDA learner. Use `n_jobs=6` when a GPU job runs alongside |
-| sklearn (linear, kNN, SVM, MLP), stacking LR | CPU | cuML is not available on native Windows; use sklearn |
-| RealMLP / TabM (pytabkit), TabPFN, TabICL | GPU | **Not installed yet**: needs `torch` built for CUDA ≥ 12.8 (required for RTX 50xx) + `pytabkit` / `tabpfn` |
-
-The plugin template `train_gbdt.py` defaults to CPU for every model. After `kg-start` copies it to `src/`, add a
-`--device {cpu,cuda}` flag that sets the XGBoost/CatBoost GPU params, and use `--device cuda` by default.
-
-### GPU scheduling rules (8 GB, one card)
-1. **One GPU job at a time.** Do not launch parallel `experiment-runner` agents that both use the GPU. A GPU job plus one
-   CPU job (LightGBM, sklearn, stacking) in parallel is fine.
-2. Long runs (> ~2 min) go in the background (`run_in_background`), logging to `artifacts/<exp>/train.log`. Check progress
-   with the log and `nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv`, not tight polling loops.
-3. Before starting a GPU job, check `nvidia-smi` that no other process is holding VRAM.
-4. Always smoke-test first (`--smoke`: 1 fold, few rounds) before a full 5-fold run.
-5. Free memory between folds/models in torch code: `del model; gc.collect(); torch.cuda.empty_cache()`.
-6. On CUDA out-of-memory: lower batch size / context size and retry once. Don't fall back to Kaggle.
-7. **TabPFN on 8 GB**: public runs used the full 560k-row context (17.5 GB) and are not reproducible here. Subsample the
-   context (start ≤ 50k rows, stratified, per fold), predict the validation/test rows in batches, small `n_estimators`.
-   Treat it as a stack member, not a main model. Its licence is non-commercial (allowed for Kaggle use).
+- Local: Linux, 12 CPU threads, 15 GB RAM, **no GPU**. Python env: `/home/nammovuivui/anaconda3/envs/airline-satisfaction/bin/python`
+  (3.12: pandas, sklearn, lightgbm, xgboost, catboost, torch-cpu). `kaggle` CLI on PATH. kgkit 1.6.2 is vendored in
+  `src/kgkit` (scripts need no PYTHONPATH); the plugin copy is `~/.claude/plugins/cache/claude-code-kaggle-grandmaster/kaggle-grandmaster/1.6.2`.
+  The plugin is installed for another project, so its skills are not auto-loaded here: read them from that path.
+- **Kaggle GPU (2x T4)** for every model that trains: `python -m kgkit gpu build --name <exp> --cmd "python src/<x>.py --name <exp> --folds {fold}" ...`
+  then `python -m kgkit gpu push kernels/<slug>`; hand-written kernels (TabPFN: `kernels/tabpfn-*`) go through
+  `kgkit gpu push <dir> --hours H`. Max 2 GPU sessions at once; weekly quota resets Saturday 00:00 UTC.
+  Use valid machine shapes only (`NvidiaTeslaT4`, `NvidiaTeslaP100`).
+- **Kaggle CPU** for the big stack over all public OOF libraries: `python src/build_stack_kernel.py` → `kaggle kernels push -p kernels/stack-cpu`
+  (links each library to `data/ext/<slug>`, runs `src/pool.py` + `src/stack.py`, saves `stack/` + `pool/`).
+- Local CPU: LB-layer analysis (`src/lbcand.py`, `src/tfm_pool.py`), smoke tests (`--smoke --device cpu`).
+- Network here is flaky (DNS): downloads go through `src/pull_datasets.sh` (retries) or retry loops.
 
 ### Throughput budget
-- XGBoost GPU 5-fold run on raw features: ~30 s → feature experiments are cheap, so screen many.
 - Deadline 2026-10-31: plan finals (stack + 2 picks) by 2026-10-29; no new model families after 2026-10-27.
 
 ## Strategy (from scouting, 2026-10-17)
@@ -111,6 +84,13 @@ The plugin template `train_gbdt.py` defaults to CPU for every model. After `kg-s
 - `/kaggle-grandmaster:kg-final` — choose the final submissions
 
 ## Current plan / notes
+
+- 2026-10-24 (session 3, /goal: public top 10 with Kaggle GPU+CPU, commit progress, file plugin UAT issues):
+  - LB moved: 10th = 0.96214, crowd at 0.96213 = 0.85 nina 0.96210 + 0.10 Mehran full-train TabPFN + 0.05 trust-the-cv.
+    LB probes 0012-0017 (ledger, tag lb-blend): every move away from those weights lost 1-3e-5 (see memory s6e10-lb-layer).
+  - New members in flight on Kaggle GPU: TabPFN-3.5 aux+catfd (kernels/tabpfn-aux), set transformer (src/train_settf.py,
+    kernels/s6e10-settf-v1), honest 5-fold TabPFN on Mehran's view (kernels/tabpfn-mehranview). Honest stack on Kaggle CPU.
+  - UAT issues filed: #43 (gpu push: unknown machine_shape -> bare 400), #44 (runner flattens inputs, collisions dropped).
 
 - 2026-10-17 (session 2, /goal: public top 10 or 10 subs today): repo github.com/TranBaDat2607/Predicting-Airline-Satisfaction (private).
   - Pool: `bash src/pull_datasets.sh <ds...>` (whole download, per-file fallback on 404) + `kaggle kernels output` into
