@@ -14,17 +14,24 @@ parts of a competition that are easy to get subtly wrong:
 - ``kgkit.featsearch``  brute-force feature generation + batch screening on the frozen folds
 - ``kgkit.eda``         a fast markdown EDA report focused on competition pitfalls
 - ``kgkit.experiment``  the experiment ledger (CV, LB, artefacts, git commit, decisions, lineage) + seeding
-- ``kgkit.compare``     paired fold test + paired bootstrap: is the new experiment really better?
+- ``kgkit.compare``     is the new experiment really better? Paired fold test, and the noise of a score or
+                        a paired difference on any metric (bootstrap, Bayesian bootstrap, influence CLT,
+                        projected to the public LB's size), seed noise from re-runs, ROPE
+- ``kgkit.evalset``     the evaluation set's fingerprint and the paired noise measured on it
 - ``kgkit.backlog``     the ranked idea backlog and screen-vs-full fidelity
-- ``kgkit.kernels``     study and reproduce public notebooks
-- ``kgkit.discussions`` competition forums (topics, search, write-ups, threads) from Meta Kaggle
+- ``kgkit.kernels``     study and reproduce public notebooks; their public score on record and title claims
+- ``kgkit.kaggle_search`` notebooks' best public scores from Kaggle's search API (run in a child process)
+- ``kgkit.discussions`` competition forums (topics, search, write-ups, threads), live or from Meta Kaggle
+- ``kgkit.datasets``    dataset download with a per-file fallback when the whole-dataset archive 404s
+- ``kgkit.pages``       a competition's own pages (evaluation, rules, data description) as text
+- ``kgkit.safety``      credential checks for uploads; a boundary around text written by other Kaggle users
 - ``kgkit.recheck``     re-draw the folds with a new seed and re-run old vs current: does the gain survive?
 - ``kgkit.submission``  submission validation against sample_submission
 - ``kgkit.state``       competition state (``.kaggle-gm/competition.json``)
-- ``kgkit.gpu``         training on Kaggle GPUs: quota, remote kernels, GPU-hour accounting
+- ``kgkit.gpu``         training on Kaggle GPUs/TPUs: quota, remote kernels, accelerator-hour accounting
 - ``kgkit.budget``      training-loop guard: session deadline, resume checkpoints, learning-curve pruning
 
 Run ``python -m kgkit --help`` for the command line interface.
 """
 
-__version__ = "1.3.1"
+__version__ = "1.6.2"
