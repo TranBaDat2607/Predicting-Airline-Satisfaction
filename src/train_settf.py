@@ -223,7 +223,7 @@ def predict(model, bt, idx, bs=8192):
 # ----------------------------------------------------------------------------------------------- stages
 def pretrain(f, args, out):
     dev = args.device
-    torch.manual_seed(0)
+    torch.manual_seed(args.seed)
     bt = Batcher(f, dev)
     model = make_model(f, args).to(dev)
     n = len(f["vid"])
@@ -231,10 +231,10 @@ def pretrain(f, args, out):
     opt = torch.optim.AdamW(model.parameters(), lr=args.pre_lr, weight_decay=0.01)
     sch = cosine(opt, steps, max(1, steps // 20))
     scaler = torch.amp.GradScaler(enabled=dev.startswith("cuda"))
-    gen = torch.Generator().manual_seed(1)
+    gen = torch.Generator().manual_seed(1 + args.seed)
     step, t0 = 0, time.time()
     for ep in range(args.pre_epochs):
-        perm = np.random.default_rng(ep).permutation(n)
+        perm = np.random.default_rng(ep + 1000 * args.seed).permutation(n)
         for s in range(0, n - args.bs + 1, args.bs):
             vid, xnum, side, summ, repl = bt.get(perm[s:s + args.bs], corrupt=args.corrupt, gen=gen)
             with torch.autocast(dev.split(":")[0], enabled=dev.startswith("cuda")):
@@ -256,7 +256,7 @@ def pretrain(f, args, out):
 
 def finetune(f, y, folds, args, out, fold):
     dev = args.device
-    torch.manual_seed(100 + fold)
+    torch.manual_seed(100 + fold + 1000 * args.seed)
     bt = Batcher(f, dev)
     model = make_model(f, args).to(dev)
     pre = pre_path(out)
@@ -266,7 +266,7 @@ def finetune(f, y, folds, args, out, fold):
     ntr = len(y)
     trn = np.where(folds != fold)[0]
     val = np.where(folds == fold)[0]
-    rng = np.random.default_rng(fold)
+    rng = np.random.default_rng(fold + 1000 * args.seed)
     inner = rng.random(len(trn)) < 0.05
     fit, hold = trn[~inner], trn[inner]
     yt = torch.as_tensor(y)
@@ -379,6 +379,7 @@ def main():
     ap.add_argument("--pre-lr", type=float, default=3e-4)
     ap.add_argument("--corrupt", type=float, default=0.15)
     ap.add_argument("--no-pretrain", action="store_true")
+    ap.add_argument("--seed", type=int, default=0, help="pretraining, fine-tuning and inner-holdout seed")
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--subsample", type=int, default=0, help="random train rows (with --smoke: default 20000)")
     args = ap.parse_args()
