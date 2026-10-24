@@ -17,3 +17,4 @@ catboost_info/
 kernels/*/output/
 kernels/*/*.log
 kernels/*/s6e10_*.py
+NEXT_STEPS.md
