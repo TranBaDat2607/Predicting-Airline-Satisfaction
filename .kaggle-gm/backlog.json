@@ -200,5 +200,22 @@
   "screen_gain": null,
   "full_gain": null,
   "created": "2026-10-24T04:51:52"
+ },
+ {
+  "id": 13,
+  "idea": "own 5-fold TabPFN on Mehran's view (OOF 0.96062) as stack member",
+  "evidence": "",
+  "source": "own",
+  "gain": 2.0,
+  "prob": 0.3,
+  "cost": 1.0,
+  "gpu_hours": 0.0,
+  "status": "done",
+  "first_experiment": "",
+  "exp_ids": [],
+  "result": "\"stack 0.962249 alone / 0.962247 with both settf (baseline 0.962249): no gain\"",
+  "screen_gain": null,
+  "full_gain": null,
+  "created": "2026-10-24T09:48:15"
  }
 ]
