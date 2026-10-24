@@ -1,0 +1,529 @@
+{
+ "jobs": [
+  {
+   "name": "settf_d384s7",
+   "cmd": "python src/train_settf.py --name settf_d384s7 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 7 --sigma 32 --epochs 3 --folds {fold}",
+   "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_done": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_incomplete": [],
+   "fold_status": {
+    "0": {
+     "fold": 0,
+     "status": "done",
+     "killed": false,
+     "seconds": 1050.1,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "1": {
+     "fold": 1,
+     "status": "done",
+     "killed": false,
+     "seconds": 406.0,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "2": {
+     "fold": 2,
+     "status": "done",
+     "killed": false,
+     "seconds": 408.0,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "3": {
+     "fold": 3,
+     "status": "done",
+     "killed": false,
+     "seconds": 408.0,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "4": {
+     "fold": 4,
+     "status": "done",
+     "killed": false,
+     "seconds": 406.0,
+     "gpu": 0,
+     "returncode": 0
+    }
+   },
+   "complete": true,
+   "assembled": true,
+   "errors": {},
+   "resume_checkpoints_removed": 0
+  },
+  {
+   "name": "settf_d384s8",
+   "cmd": "python src/train_settf.py --name settf_d384s8 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 8 --sigma 32 --epochs 3 --folds {fold}",
+   "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_done": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_incomplete": [],
+   "fold_status": {
+    "0": {
+     "fold": 0,
+     "status": "done",
+     "killed": false,
+     "seconds": 1068.1,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "1": {
+     "fold": 1,
+     "status": "done",
+     "killed": false,
+     "seconds": 414.0,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "2": {
+     "fold": 2,
+     "status": "done",
+     "killed": false,
+     "seconds": 414.0,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "3": {
+     "fold": 3,
+     "status": "done",
+     "killed": false,
+     "seconds": 414.0,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "4": {
+     "fold": 4,
+     "status": "done",
+     "killed": false,
+     "seconds": 414.0,
+     "gpu": 1,
+     "returncode": 0
+    }
+   },
+   "complete": true,
+   "assembled": true,
+   "errors": {},
+   "resume_checkpoints_removed": 0
+  },
+  {
+   "name": "settf_d256s9",
+   "cmd": "python src/train_settf.py --name settf_d256s9 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 9 --sigma 32 --epochs 3 --folds {fold}",
+   "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_done": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_incomplete": [],
+   "fold_status": {
+    "0": {
+     "fold": 0,
+     "status": "done",
+     "killed": false,
+     "seconds": 660.1,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "1": {
+     "fold": 1,
+     "status": "done",
+     "killed": false,
+     "seconds": 260.0,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "2": {
+     "fold": 2,
+     "status": "done",
+     "killed": false,
+     "seconds": 260.0,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "3": {
+     "fold": 3,
+     "status": "done",
+     "killed": false,
+     "seconds": 260.0,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "4": {
+     "fold": 4,
+     "status": "done",
+     "killed": false,
+     "seconds": 260.0,
+     "gpu": 0,
+     "returncode": 0
+    }
+   },
+   "complete": true,
+   "assembled": true,
+   "errors": {},
+   "resume_checkpoints_removed": 0
+  },
+  {
+   "name": "settf_d256s10",
+   "cmd": "python src/train_settf.py --name settf_d256s10 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 10 --sigma 32 --epochs 3 --folds {fold}",
+   "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_done": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_incomplete": [],
+   "fold_status": {
+    "0": {
+     "fold": 0,
+     "status": "done",
+     "killed": false,
+     "seconds": 668.1,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "1": {
+     "fold": 1,
+     "status": "done",
+     "killed": false,
+     "seconds": 264.0,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "2": {
+     "fold": 2,
+     "status": "done",
+     "killed": false,
+     "seconds": 264.0,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "3": {
+     "fold": 3,
+     "status": "done",
+     "killed": false,
+     "seconds": 264.0,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "4": {
+     "fold": 4,
+     "status": "done",
+     "killed": false,
+     "seconds": 264.0,
+     "gpu": 1,
+     "returncode": 0
+    }
+   },
+   "complete": true,
+   "assembled": true,
+   "errors": {},
+   "resume_checkpoints_removed": 0
+  }
+ ],
+ "accelerator": "NvidiaTeslaT4",
+ "resource": "GPU",
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "devices": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "started_utc": "2026-10-24T05:40:57Z",
+ "elapsed_s": 4520.5,
+ "budget_h": 3.5,
+ "deadline_hit": false,
+ "gpu_util": {
+  "0": {
+   "util_mean": 89.9,
+   "util_p10": 94,
+   "mem_peak_mb": 5281,
+   "n": 150
+  },
+  "1": {
+   "util_mean": 91.3,
+   "util_p10": 95,
+   "mem_peak_mb": 5281,
+   "n": 150
+  }
+ },
+ "ledger": [
+  {
+   "id": "0001_settf-d384s7",
+   "name": "settf_d384s7",
+   "time": "2026-10-24T06:55:23",
+   "metric": "roc_auc",
+   "cv": 0.9605027702901341,
+   "cv_std": 0.0003953376300312717,
+   "fold_scores": [
+    0.9606731041181433,
+    0.9598113289950594,
+    0.9609874540559873,
+    0.9607196283006398,
+    0.9605217083572108
+   ],
+   "model": "settf",
+   "params": {
+    "name": "settf_d384s7",
+    "notes": "",
+    "assemble": true,
+    "stage": "assemble",
+    "out": null,
+    "device": "cuda",
+    "d": 384,
+    "layers": 6,
+    "heads": 8,
+    "sigma": 32.0,
+    "drop": 0.1,
+    "bs": 512,
+    "lr": 0.0002,
+    "lr_tok": 0.001,
+    "epochs": 3.0,
+    "evals_per_epoch": 4,
+    "label_smooth": 0.0,
+    "pre_epochs": 3,
+    "pre_lr": 0.0003,
+    "corrupt": 0.15,
+    "no_pretrain": false,
+    "seed": 7,
+    "smoke": false,
+    "subsample": 0
+   },
+   "n_features": null,
+   "features": null,
+   "tags": [],
+   "notes": "set transformer: value-embedding tokens + side features, RTD pretraining",
+   "lb_public": null,
+   "lb_private": null,
+   "submission": null,
+   "folds_hash": "87996ac2602b",
+   "recheck": null,
+   "parent": null,
+   "decision": null,
+   "git_commit": null,
+   "git_dirty": null,
+   "task": "binary",
+   "oof_path": "artifacts/0001_settf-d384s7/oof.npy",
+   "test_path": "artifacts/0001_settf-d384s7/test.npy"
+  },
+  {
+   "id": "0002_settf-d384s8",
+   "name": "settf_d384s8",
+   "time": "2026-10-24T06:55:41",
+   "metric": "roc_auc",
+   "cv": 0.9604752998655136,
+   "cv_std": 0.0005376042445420898,
+   "fold_scores": [
+    0.9609950335979038,
+    0.95968032948465,
+    0.961227886523334,
+    0.9605894186419845,
+    0.9603705813879129
+   ],
+   "model": "settf",
+   "params": {
+    "name": "settf_d384s8",
+    "notes": "",
+    "assemble": true,
+    "stage": "assemble",
+    "out": null,
+    "device": "cuda",
+    "d": 384,
+    "layers": 6,
+    "heads": 8,
+    "sigma": 32.0,
+    "drop": 0.1,
+    "bs": 512,
+    "lr": 0.0002,
+    "lr_tok": 0.001,
+    "epochs": 3.0,
+    "evals_per_epoch": 4,
+    "label_smooth": 0.0,
+    "pre_epochs": 3,
+    "pre_lr": 0.0003,
+    "corrupt": 0.15,
+    "no_pretrain": false,
+    "seed": 8,
+    "smoke": false,
+    "subsample": 0
+   },
+   "n_features": null,
+   "features": null,
+   "tags": [],
+   "notes": "set transformer: value-embedding tokens + side features, RTD pretraining",
+   "lb_public": null,
+   "lb_private": null,
+   "submission": null,
+   "folds_hash": "87996ac2602b",
+   "recheck": null,
+   "parent": null,
+   "decision": null,
+   "git_commit": null,
+   "git_dirty": null,
+   "task": "binary",
+   "oof_path": "artifacts/0002_settf-d384s8/oof.npy",
+   "test_path": "artifacts/0002_settf-d384s8/test.npy"
+  },
+  {
+   "id": "0003_settf-d256s9",
+   "name": "settf_d256s9",
+   "time": "2026-10-24T06:55:59",
+   "metric": "roc_auc",
+   "cv": 0.9604541212091512,
+   "cv_std": 0.0005531470079899023,
+   "fold_scores": [
+    0.9606033845223091,
+    0.9596614595392824,
+    0.9613407687961979,
+    0.9608026710626806,
+    0.960330060875499
+   ],
+   "model": "settf",
+   "params": {
+    "name": "settf_d256s9",
+    "notes": "",
+    "assemble": true,
+    "stage": "assemble",
+    "out": null,
+    "device": "cuda",
+    "d": 256,
+    "layers": 6,
+    "heads": 8,
+    "sigma": 32.0,
+    "drop": 0.1,
+    "bs": 512,
+    "lr": 0.0002,
+    "lr_tok": 0.001,
+    "epochs": 3.0,
+    "evals_per_epoch": 4,
+    "label_smooth": 0.0,
+    "pre_epochs": 3,
+    "pre_lr": 0.0003,
+    "corrupt": 0.15,
+    "no_pretrain": false,
+    "seed": 9,
+    "smoke": false,
+    "subsample": 0
+   },
+   "n_features": null,
+   "features": null,
+   "tags": [],
+   "notes": "set transformer: value-embedding tokens + side features, RTD pretraining",
+   "lb_public": null,
+   "lb_private": null,
+   "submission": null,
+   "folds_hash": "87996ac2602b",
+   "recheck": null,
+   "parent": null,
+   "decision": null,
+   "git_commit": null,
+   "git_dirty": null,
+   "task": "binary",
+   "oof_path": "artifacts/0003_settf-d256s9/oof.npy",
+   "test_path": "artifacts/0003_settf-d256s9/test.npy"
+  },
+  {
+   "id": "0004_settf-d256s10",
+   "name": "settf_d256s10",
+   "time": "2026-10-24T06:56:17",
+   "metric": "roc_auc",
+   "cv": 0.9606622343285814,
+   "cv_std": 0.0005574826661783696,
+   "fold_scores": [
+    0.9607272145203114,
+    0.9597907219759296,
+    0.9615439577978446,
+    0.9608070149369339,
+    0.9606476067330856
+   ],
+   "model": "settf",
+   "params": {
+    "name": "settf_d256s10",
+    "notes": "",
+    "assemble": true,
+    "stage": "assemble",
+    "out": null,
+    "device": "cuda",
+    "d": 256,
+    "layers": 6,
+    "heads": 8,
+    "sigma": 32.0,
+    "drop": 0.1,
+    "bs": 512,
+    "lr": 0.0002,
+    "lr_tok": 0.001,
+    "epochs": 3.0,
+    "evals_per_epoch": 4,
+    "label_smooth": 0.0,
+    "pre_epochs": 3,
+    "pre_lr": 0.0003,
+    "corrupt": 0.15,
+    "no_pretrain": false,
+    "seed": 10,
+    "smoke": false,
+    "subsample": 0
+   },
+   "n_features": null,
+   "features": null,
+   "tags": [],
+   "notes": "set transformer: value-embedding tokens + side features, RTD pretraining",
+   "lb_public": null,
+   "lb_private": null,
+   "submission": null,
+   "folds_hash": "87996ac2602b",
+   "recheck": null,
+   "parent": null,
+   "decision": null,
+   "git_commit": null,
+   "git_dirty": null,
+   "task": "binary",
+   "oof_path": "artifacts/0004_settf-d256s10/oof.npy",
+   "test_path": "artifacts/0004_settf-d256s10/test.npy"
+  }
+ ],
+ "git_commit": "2fc0830",
+ "git_dirty": true,
+ "build_id": "s6e10-settf-v4@2026-10-24T05:40:06Z"
+}

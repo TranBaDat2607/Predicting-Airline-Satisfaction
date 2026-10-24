@@ -1,0 +1,16 @@
+06:39:42 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda
+06:39:42 fold 3: loaded artifacts/settf_d256s10/pretrained_1.pt
+06:40:02 fold 3 ep 0.25 loss 0.2249 inner AUC 0.957776 (19s)
+06:40:21 fold 3 ep 0.50 loss 0.2270 inner AUC 0.958991 (38s)
+06:40:39 fold 3 ep 0.75 loss 0.2729 inner AUC 0.959832 (56s)
+06:40:58 fold 3 ep 1.00 loss 0.2433 inner AUC 0.960207 (75s)
+06:41:16 fold 3 ep 1.25 loss 0.2191 inner AUC 0.960594 (93s)
+06:41:35 fold 3 ep 1.50 loss 0.2353 inner AUC 0.961245 (112s)
+06:41:53 fold 3 ep 1.75 loss 0.2013 inner AUC 0.961907 (130s)
+06:42:12 fold 3 ep 2.00 loss 0.2144 inner AUC 0.961889 (149s)
+06:42:31 fold 3 ep 2.25 loss 0.1838 inner AUC 0.961879 (168s)
+06:42:49 fold 3 ep 2.50 loss 0.2123 inner AUC 0.962048 (186s)
+06:43:08 fold 3 ep 2.74 loss 0.2342 inner AUC 0.962231 (205s)
+06:43:27 fold 3 ep 2.99 loss 0.2099 inner AUC 0.962221 (223s)
+06:43:28 fold 3 ep 3.00 loss 0.1823 inner AUC 0.962220 (225s)
+06:43:45 fold 3: VAL AUC 0.960807 (inner best 0.962231) in 242s

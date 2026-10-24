@@ -1,0 +1,406 @@
+{
+ "jobs": [
+  {
+   "name": "settf_d512s1",
+   "cmd": "python src/train_settf.py --name settf_d512s1 --d 512 --layers 8 --heads 8 --sigma 32 --epochs 3 --seed 1 --folds {fold}",
+   "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_done": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_incomplete": [],
+   "fold_status": {
+    "0": {
+     "fold": 0,
+     "status": "done",
+     "killed": false,
+     "seconds": 1838.1,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "1": {
+     "fold": 1,
+     "status": "done",
+     "killed": false,
+     "seconds": 694.0,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "2": {
+     "fold": 2,
+     "status": "done",
+     "killed": false,
+     "seconds": 2010.1,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "3": {
+     "fold": 3,
+     "status": "done",
+     "killed": false,
+     "seconds": 770.0,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "4": {
+     "fold": 4,
+     "status": "done",
+     "killed": false,
+     "seconds": 772.0,
+     "gpu": 1,
+     "returncode": 0
+    }
+   },
+   "complete": true,
+   "assembled": true,
+   "errors": {},
+   "resume_checkpoints_removed": 0
+  },
+  {
+   "name": "settf_d768",
+   "cmd": "python src/train_settf.py --name settf_d768 --d 768 --layers 8 --heads 12 --sigma 32 --epochs 3 --seed 2 --folds {fold}",
+   "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_done": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_incomplete": [],
+   "fold_status": {
+    "0": {
+     "fold": 0,
+     "status": "done",
+     "killed": false,
+     "seconds": 3730.3,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "1": {
+     "fold": 1,
+     "status": "done",
+     "killed": false,
+     "seconds": 3232.2,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "2": {
+     "fold": 2,
+     "status": "done",
+     "killed": false,
+     "seconds": 1238.1,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "3": {
+     "fold": 3,
+     "status": "done",
+     "killed": false,
+     "seconds": 1242.1,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "4": {
+     "fold": 4,
+     "status": "done",
+     "killed": false,
+     "seconds": 1438.1,
+     "gpu": 1,
+     "returncode": 0
+    }
+   },
+   "complete": true,
+   "assembled": true,
+   "errors": {},
+   "resume_checkpoints_removed": 0
+  },
+  {
+   "name": "settf_d384",
+   "cmd": "python src/train_settf.py --name settf_d384 --d 384 --layers 6 --heads 8 --sigma 32 --epochs 3 --lr 2e-4 --seed 3 --folds {fold}",
+   "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_done": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "folds_incomplete": [],
+   "fold_status": {
+    "0": {
+     "fold": 0,
+     "status": "done",
+     "killed": false,
+     "seconds": 980.1,
+     "gpu": 0,
+     "returncode": 0
+    },
+    "1": {
+     "fold": 1,
+     "status": "done",
+     "killed": false,
+     "seconds": 1060.1,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "2": {
+     "fold": 2,
+     "status": "done",
+     "killed": false,
+     "seconds": 414.0,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "3": {
+     "fold": 3,
+     "status": "done",
+     "killed": false,
+     "seconds": 418.0,
+     "gpu": 1,
+     "returncode": 0
+    },
+    "4": {
+     "fold": 4,
+     "status": "done",
+     "killed": false,
+     "seconds": 382.0,
+     "gpu": 0,
+     "returncode": 0
+    }
+   },
+   "complete": true,
+   "assembled": true,
+   "errors": {},
+   "resume_checkpoints_removed": 0
+  }
+ ],
+ "accelerator": "NvidiaTeslaT4",
+ "resource": "GPU",
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "devices": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "started_utc": "2026-10-24T02:32:06Z",
+ "elapsed_s": 10667.1,
+ "budget_h": 3.5,
+ "deadline_hit": false,
+ "gpu_util": {
+  "0": {
+   "util_mean": 87.5,
+   "util_p10": 0,
+   "mem_peak_mb": 11591,
+   "n": 355
+  },
+  "1": {
+   "util_mean": 97.6,
+   "util_p10": 99,
+   "mem_peak_mb": 11591,
+   "n": 355
+  }
+ },
+ "ledger": [
+  {
+   "id": "0001_settf-d512s1",
+   "name": "settf_d512s1",
+   "time": "2026-10-24T05:29:16",
+   "metric": "roc_auc",
+   "cv": 0.9605662830168302,
+   "cv_std": 0.0005044630411181457,
+   "fold_scores": [
+    0.9608093604058402,
+    0.9598935967008402,
+    0.961424827067142,
+    0.9609024103844526,
+    0.960490453238358
+   ],
+   "model": "settf",
+   "params": {
+    "name": "settf_d512s1",
+    "notes": "",
+    "assemble": true,
+    "stage": "assemble",
+    "out": null,
+    "device": "cuda",
+    "d": 512,
+    "layers": 8,
+    "heads": 8,
+    "sigma": 32.0,
+    "drop": 0.1,
+    "bs": 512,
+    "lr": 0.0001,
+    "lr_tok": 0.001,
+    "epochs": 3.0,
+    "evals_per_epoch": 4,
+    "label_smooth": 0.0,
+    "pre_epochs": 3,
+    "pre_lr": 0.0003,
+    "corrupt": 0.15,
+    "no_pretrain": false,
+    "seed": 1,
+    "smoke": false,
+    "subsample": 0
+   },
+   "n_features": null,
+   "features": null,
+   "tags": [],
+   "notes": "set transformer: value-embedding tokens + side features, RTD pretraining",
+   "lb_public": null,
+   "lb_private": null,
+   "submission": null,
+   "folds_hash": "87996ac2602b",
+   "recheck": null,
+   "parent": null,
+   "decision": null,
+   "git_commit": null,
+   "git_dirty": null,
+   "task": "binary",
+   "oof_path": "artifacts/0001_settf-d512s1/oof.npy",
+   "test_path": "artifacts/0001_settf-d512s1/test.npy"
+  },
+  {
+   "id": "0002_settf-d768",
+   "name": "settf_d768",
+   "time": "2026-10-24T05:29:34",
+   "metric": "roc_auc",
+   "cv": 0.9603642735206538,
+   "cv_std": 0.0006624477815616779,
+   "fold_scores": [
+    0.9606147171834571,
+    0.9595138386881918,
+    0.9615029814186731,
+    0.9609042324029738,
+    0.9602616221971769
+   ],
+   "model": "settf",
+   "params": {
+    "name": "settf_d768",
+    "notes": "",
+    "assemble": true,
+    "stage": "assemble",
+    "out": null,
+    "device": "cuda",
+    "d": 768,
+    "layers": 8,
+    "heads": 12,
+    "sigma": 32.0,
+    "drop": 0.1,
+    "bs": 512,
+    "lr": 0.0001,
+    "lr_tok": 0.001,
+    "epochs": 3.0,
+    "evals_per_epoch": 4,
+    "label_smooth": 0.0,
+    "pre_epochs": 3,
+    "pre_lr": 0.0003,
+    "corrupt": 0.15,
+    "no_pretrain": false,
+    "seed": 2,
+    "smoke": false,
+    "subsample": 0
+   },
+   "n_features": null,
+   "features": null,
+   "tags": [],
+   "notes": "set transformer: value-embedding tokens + side features, RTD pretraining",
+   "lb_public": null,
+   "lb_private": null,
+   "submission": null,
+   "folds_hash": "87996ac2602b",
+   "recheck": null,
+   "parent": null,
+   "decision": null,
+   "git_commit": null,
+   "git_dirty": null,
+   "task": "binary",
+   "oof_path": "artifacts/0002_settf-d768/oof.npy",
+   "test_path": "artifacts/0002_settf-d768/test.npy"
+  },
+  {
+   "id": "0003_settf-d384",
+   "name": "settf_d384",
+   "time": "2026-10-24T05:29:52",
+   "metric": "roc_auc",
+   "cv": 0.9607060182175577,
+   "cv_std": 0.00043452291214512463,
+   "fold_scores": [
+    0.9609968027515952,
+    0.9599281782192081,
+    0.9611852048341529,
+    0.9608531756364943,
+    0.960640619949059
+   ],
+   "model": "settf",
+   "params": {
+    "name": "settf_d384",
+    "notes": "",
+    "assemble": true,
+    "stage": "assemble",
+    "out": null,
+    "device": "cuda",
+    "d": 384,
+    "layers": 6,
+    "heads": 8,
+    "sigma": 32.0,
+    "drop": 0.1,
+    "bs": 512,
+    "lr": 0.0002,
+    "lr_tok": 0.001,
+    "epochs": 3.0,
+    "evals_per_epoch": 4,
+    "label_smooth": 0.0,
+    "pre_epochs": 3,
+    "pre_lr": 0.0003,
+    "corrupt": 0.15,
+    "no_pretrain": false,
+    "seed": 3,
+    "smoke": false,
+    "subsample": 0
+   },
+   "n_features": null,
+   "features": null,
+   "tags": [],
+   "notes": "set transformer: value-embedding tokens + side features, RTD pretraining",
+   "lb_public": null,
+   "lb_private": null,
+   "submission": null,
+   "folds_hash": "87996ac2602b",
+   "recheck": null,
+   "parent": null,
+   "decision": null,
+   "git_commit": null,
+   "git_dirty": null,
+   "task": "binary",
+   "oof_path": "artifacts/0003_settf-d384/oof.npy",
+   "test_path": "artifacts/0003_settf-d384/test.npy"
+  }
+ ],
+ "git_commit": "6ebb710",
+ "git_dirty": true,
+ "build_id": "s6e10-settf-v2@2026-10-24T00:19:53Z"
+}
