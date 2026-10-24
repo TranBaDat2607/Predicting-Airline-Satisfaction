@@ -3,6 +3,17 @@
 _Updated 2026-10-23 ~20:45 UTC (session 3). Goal: public LB top 10. The line is **0.96214** (10th place) → we need
 **≥ 0.96215**; ties rank by earlier submission. Our best public: **0.96212** (several LB-layer probes); 0.96189 before._
 
+## Update 2026-10-24 00:35 UTC
+
+- **Our best public: 0.96213** (0032/0033/0034): 0.85-0.75 nina210 + 0.10 Mehran + 0.05-0.15 **own set transformer**
+  (mean of settf d512/d256 test preds). It is the only direction that does not lose (20 % → 0.96212); every other
+  probe (19, incl. 4 re-draws of Mehran's file) lost 1-4e-5. Need 0.96215 for top 10.
+- Lever: a stronger/cleaner set-transformer direction. `kernels/s6e10-settf-v2` (d512 seed 1, d768, d384) is queued by
+  `src/gpu_queue.sh` for the first free GPU slot; a d192 CPU run is training locally (`artifacts/settf_cpu192/`).
+  Then average all settf models and re-probe 0.10 / 0.125.
+- GPU now: `tranbadat/s6e10-tabpfn35-mehranview` (5-fold, OOF) and `tranbadat/s6e10-tabpfn35fast-catfd10` (fast checkpoint).
+- `src/lb_surface.py`: LB-surface fit over 61 scored files has no predictive power near A (do not spend probes on it).
+
 ## Where we stand
 
 | | |
