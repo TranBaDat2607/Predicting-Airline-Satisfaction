@@ -3,6 +3,16 @@
 _Updated 2026-10-23 ~20:45 UTC (session 3). Goal: public LB top 10. The line is **0.96214** (10th place) → we need
 **≥ 0.96215**; ties rank by earlier submission. Our best public: **0.96212** (several LB-layer probes); 0.96189 before._
 
+## Update 2026-10-24 06:30 UTC
+
+- **Public 0.96214** (0044/0045): 0.80/0.775 nina210 + 0.10 Mehran + 0.10/0.125 **8-model set-transformer mean**
+  (OOF 0.96122). 11th, tied with 10th (Aurrog 0.96214) but listed below. Equal rounded scores are ordered by exact
+  score, so the 2-model probes (0.96213) already ranked above the A crowd. Need 0.96215.
+- The LB rewards settf *quality*: 2 models (OOF 0.96087) 0.96213 → 8 models (0.96122) 0.96214. On OOF it adds nothing to
+  the honest stack (5-mean member: 0.962247; SRIM LGB member: 0.962249), so it is an LB-layer direction only.
+- GPU now: `s6e10-settf-v4` (d384 s7/s8, d256 s9/s10) and `s6e10-settf-v5` (d512 s11/s12, d384 s13, d256 s14) → 16 models.
+- Next probes (2026-10-25): 16-model mean at 0.10 / 0.125 / 0.15; then keep trust-cv (0.05) next to it.
+
 ## Update 2026-10-24 00:35 UTC
 
 - **Our best public: 0.96213** (0032/0033/0034): 0.85-0.75 nina210 + 0.10 Mehran + 0.05-0.15 **own set transformer**
