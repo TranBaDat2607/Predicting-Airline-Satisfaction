@@ -1,0 +1,24 @@
+{
+  "kernel": "tranbadat/s6e10-settf-v2",
+  "name": "settf_d512s1",
+  "jobs": [
+    "settf_d512s1",
+    "settf_d768",
+    "settf_d384"
+  ],
+  "hours": 3.5,
+  "accelerator": "NvidiaTeslaT4",
+  "resource": "GPU",
+  "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cmd": "python src/train_settf.py --name settf_d512s1 --d 512 --layers 8 --heads 8 --sigma 32 --epochs 3 --seed 1 --folds {fold}",
+  "build_id": "s6e10-settf-v2@2026-10-24T00:19:53Z",
+  "prune": null,
+  "resume_from": [],
+  "bundle_kb": 399.8
+}
