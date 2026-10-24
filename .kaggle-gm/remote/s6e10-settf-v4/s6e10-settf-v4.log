@@ -1,0 +1,512 @@
+[{"stream_name":"stdout","time":0.745451486,"data":"[kg    0.0m] jobs ['settf_d384s7', 'settf_d384s8', 'settf_d256s9', 'settf_d256s10'] | accelerator NvidiaTeslaT4 | gpus: ['Tesla T4, 15360 MiB', 'Tesla T4, 15360 MiB'] | budget 3.50h (graceful stop at 3.22h)\n"}
+,{"stream_name":"stdout","time":0.771857008,"data":"[kg    0.0m] linked 3 entries of /kaggle/input/competitions/playground-series-s6e10 into data/\n"}
+,{"stream_name":"stdout","time":0.791151698,"data":"[kg    0.0m] linked 27 entries of /kaggle/input/datasets/sachith7/s6e10-stack-oof-predictions into data/\n"}
+,{"stream_name":"stdout","time":0.79726256,"data":"[kg    0.0m] linked 0 entries of /kaggle/input/datasets/teejmahal20/airline-passenger-satisfaction into data/\n"}
+,{"stream_name":"stdout","time":0.799969714,"data":"[kg    0.0m] settf_d384s7/f0 -\u003e gpu 0: python src/train_settf.py --name settf_d384s7 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 7 --sigma 32 --epochs 3 --folds 0\n"}
+,{"stream_name":"stdout","time":0.800165192,"data":"[kg    0.0m] settf_d384s8/f0 -\u003e gpu 1: python src/train_settf.py --name settf_d384s8 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 8 --sigma 32 --epochs 3 --folds 0\n"}
+,{"stream_name":"stdout","time":26.46602336,"data":"[settf_d384s7/f0] 05:41:23 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":26.509561572,"data":"[settf_d384s8/f0] 05:41:23 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":53.03686937,"data":"[settf_d384s7/f0] 05:41:49 pretrain ep 0 step 200/5856 rtd loss 0.2144 (21s)\n"}
+,{"stream_name":"stdout","time":53.331158259,"data":"[settf_d384s8/f0] 05:41:50 pretrain ep 0 step 200/5856 rtd loss 0.2101 (21s)\n"}
+,{"stream_name":"stdout","time":73.331070388,"data":"[settf_d384s7/f0] 05:42:10 pretrain ep 0 step 400/5856 rtd loss 0.1626 (41s)\n"}
+,{"stream_name":"stdout","time":73.922433582,"data":"[settf_d384s8/f0] 05:42:10 pretrain ep 0 step 400/5856 rtd loss 0.1566 (42s)\n"}
+,{"stream_name":"stdout","time":94.272073159,"data":"[settf_d384s7/f0] 05:42:31 pretrain ep 0 step 600/5856 rtd loss 0.1200 (62s)\n"}
+,{"stream_name":"stdout","time":95.298947177,"data":"[settf_d384s8/f0] 05:42:32 pretrain ep 0 step 600/5856 rtd loss 0.1302 (63s)\n"}
+,{"stream_name":"stdout","time":116.132720539,"data":"[settf_d384s7/f0] 05:42:52 pretrain ep 0 step 800/5856 rtd loss 0.1172 (84s)\n"}
+,{"stream_name":"stdout","time":117.653750021,"data":"[settf_d384s8/f0] 05:42:54 pretrain ep 0 step 800/5856 rtd loss 0.1221 (86s)\n"}
+,{"stream_name":"stdout","time":138.07711049,"data":"[settf_d384s7/f0] 05:43:14 pretrain ep 0 step 1000/5856 rtd loss 0.0996 (106s)\n"}
+,{"stream_name":"stdout","time":139.945720071,"data":"[settf_d384s8/f0] 05:43:16 pretrain ep 0 step 1000/5856 rtd loss 0.1038 (108s)\n"}
+,{"stream_name":"stdout","time":159.266387426,"data":"[settf_d384s7/f0] 05:43:36 pretrain ep 0 step 1200/5856 rtd loss 0.1013 (127s)\n"}
+,{"stream_name":"stdout","time":161.544322084,"data":"[settf_d384s8/f0] 05:43:38 pretrain ep 0 step 1200/5856 rtd loss 0.1033 (130s)\n"}
+,{"stream_name":"stdout","time":180.496219279,"data":"[settf_d384s7/f0] 05:43:57 pretrain ep 0 step 1400/5856 rtd loss 0.0979 (148s)\n"}
+,{"stream_name":"stdout","time":183.23030679,"data":"[settf_d384s8/f0] 05:44:00 pretrain ep 0 step 1400/5856 rtd loss 0.0970 (151s)\n"}
+,{"stream_name":"stdout","time":202.057536197,"data":"[settf_d384s7/f0] 05:44:18 pretrain ep 0 step 1600/5856 rtd loss 0.0969 (170s)\n"}
+,{"stream_name":"stdout","time":205.222700685,"data":"[settf_d384s8/f0] 05:44:22 pretrain ep 0 step 1600/5856 rtd loss 0.0919 (173s)\n"}
+,{"stream_name":"stdout","time":223.661332201,"data":"[settf_d384s7/f0] 05:44:40 pretrain ep 0 step 1800/5856 rtd loss 0.0942 (192s)\n"}
+,{"stream_name":"stdout","time":227.252027033,"data":"[settf_d384s8/f0] 05:44:44 pretrain ep 0 step 1800/5856 rtd loss 0.0961 (195s)\n"}
+,{"stream_name":"stdout","time":245.053451678,"data":"[settf_d384s7/f0] 05:45:01 pretrain ep 1 step 2000/5856 rtd loss 0.0880 (213s)\n"}
+,{"stream_name":"stdout","time":249.08016317,"data":"[settf_d384s8/f0] 05:45:05 pretrain ep 1 step 2000/5856 rtd loss 0.0948 (217s)\n"}
+,{"stream_name":"stdout","time":266.545481546,"data":"[settf_d384s7/f0] 05:45:23 pretrain ep 1 step 2200/5856 rtd loss 0.0908 (235s)\n"}
+,{"stream_name":"stdout","time":271.055066117,"data":"[settf_d384s8/f0] 05:45:27 pretrain ep 1 step 2200/5856 rtd loss 0.0864 (239s)\n"}
+,{"stream_name":"stdout","time":288.164133043,"data":"[settf_d384s7/f0] 05:45:44 pretrain ep 1 step 2400/5856 rtd loss 0.0833 (256s)\n"}
+,{"stream_name":"stdout","time":293.129234243,"data":"[settf_d384s8/f0] 05:45:49 pretrain ep 1 step 2400/5856 rtd loss 0.0898 (261s)\n"}
+,{"stream_name":"stdout","time":309.821980903,"data":"[settf_d384s7/f0] 05:46:06 pretrain ep 1 step 2600/5856 rtd loss 0.0842 (278s)\n"}
+,{"stream_name":"stdout","time":315.228099942,"data":"[settf_d384s8/f0] 05:46:12 pretrain ep 1 step 2600/5856 rtd loss 0.0796 (283s)\n"}
+,{"stream_name":"stdout","time":331.369957093,"data":"[settf_d384s7/f0] 05:46:28 pretrain ep 1 step 2800/5856 rtd loss 0.0815 (299s)\n"}
+,{"stream_name":"stdout","time":337.210194058,"data":"[settf_d384s8/f0] 05:46:34 pretrain ep 1 step 2800/5856 rtd loss 0.0823 (305s)\n"}
+,{"stream_name":"stdout","time":352.933850623,"data":"[settf_d384s7/f0] 05:46:49 pretrain ep 1 step 3000/5856 rtd loss 0.0750 (321s)\n"}
+,{"stream_name":"stdout","time":359.244423702,"data":"[settf_d384s8/f0] 05:46:56 pretrain ep 1 step 3000/5856 rtd loss 0.0806 (327s)\n"}
+,{"stream_name":"stdout","time":374.520053824,"data":"[settf_d384s7/f0] 05:47:11 pretrain ep 1 step 3200/5856 rtd loss 0.0754 (342s)\n"}
+,{"stream_name":"stdout","time":381.326108878,"data":"[settf_d384s8/f0] 05:47:18 pretrain ep 1 step 3200/5856 rtd loss 0.0758 (349s)\n"}
+,{"stream_name":"stdout","time":396.134428833,"data":"[settf_d384s7/f0] 05:47:32 pretrain ep 1 step 3400/5856 rtd loss 0.0674 (364s)\n"}
+,{"stream_name":"stdout","time":403.438128762,"data":"[settf_d384s8/f0] 05:47:40 pretrain ep 1 step 3400/5856 rtd loss 0.0794 (371s)\n"}
+,{"stream_name":"stdout","time":417.73394387,"data":"[settf_d384s7/f0] 05:47:54 pretrain ep 1 step 3600/5856 rtd loss 0.0730 (386s)\n"}
+,{"stream_name":"stdout","time":425.514307348,"data":"[settf_d384s8/f0] 05:48:02 pretrain ep 1 step 3600/5856 rtd loss 0.0799 (393s)\n"}
+,{"stream_name":"stdout","time":439.243321079,"data":"[settf_d384s7/f0] 05:48:16 pretrain ep 1 step 3800/5856 rtd loss 0.0721 (407s)\n"}
+,{"stream_name":"stdout","time":447.473787813,"data":"[settf_d384s8/f0] 05:48:24 pretrain ep 1 step 3800/5856 rtd loss 0.0706 (415s)\n"}
+,{"stream_name":"stdout","time":460.76521508,"data":"[settf_d384s7/f0] 05:48:37 pretrain ep 2 step 4000/5856 rtd loss 0.0698 (429s)\n"}
+,{"stream_name":"stdout","time":469.47378062,"data":"[settf_d384s8/f0] 05:48:46 pretrain ep 2 step 4000/5856 rtd loss 0.0695 (437s)\n"}
+,{"stream_name":"stdout","time":482.305118958,"data":"[settf_d384s7/f0] 05:48:59 pretrain ep 2 step 4200/5856 rtd loss 0.0689 (450s)\n"}
+,{"stream_name":"stdout","time":491.475202901,"data":"[settf_d384s8/f0] 05:49:08 pretrain ep 2 step 4200/5856 rtd loss 0.0709 (459s)\n"}
+,{"stream_name":"stdout","time":503.796284386,"data":"[settf_d384s7/f0] 05:49:20 pretrain ep 2 step 4400/5856 rtd loss 0.0642 (472s)\n"}
+,{"stream_name":"stdout","time":513.382360592,"data":"[settf_d384s8/f0] 05:49:30 pretrain ep 2 step 4400/5856 rtd loss 0.0760 (481s)\n"}
+,{"stream_name":"stdout","time":525.205372146,"data":"[settf_d384s7/f0] 05:49:42 pretrain ep 2 step 4600/5856 rtd loss 0.0708 (493s)\n"}
+,{"stream_name":"stdout","time":535.296505591,"data":"[settf_d384s8/f0] 05:49:52 pretrain ep 2 step 4600/5856 rtd loss 0.0690 (503s)\n"}
+,{"stream_name":"stdout","time":546.698926461,"data":"[settf_d384s7/f0] 05:50:03 pretrain ep 2 step 4800/5856 rtd loss 0.0666 (515s)\n"}
+,{"stream_name":"stdout","time":557.281674541,"data":"[settf_d384s8/f0] 05:50:14 pretrain ep 2 step 4800/5856 rtd loss 0.0715 (525s)\n"}
+,{"stream_name":"stdout","time":568.20978524,"data":"[settf_d384s7/f0] 05:50:25 pretrain ep 2 step 5000/5856 rtd loss 0.0659 (536s)\n"}
+,{"stream_name":"stdout","time":579.294528957,"data":"[settf_d384s8/f0] 05:50:36 pretrain ep 2 step 5000/5856 rtd loss 0.0654 (547s)\n"}
+,{"stream_name":"stdout","time":589.782843079,"data":"[settf_d384s7/f0] 05:50:46 pretrain ep 2 step 5200/5856 rtd loss 0.0653 (558s)\n"}
+,{"stream_name":"stdout","time":601.378540157,"data":"[settf_d384s8/f0] 05:50:58 pretrain ep 2 step 5200/5856 rtd loss 0.0697 (569s)\n"}
+,{"stream_name":"stdout","time":611.413869001,"data":"[settf_d384s7/f0] 05:51:08 pretrain ep 2 step 5400/5856 rtd loss 0.0675 (579s)\n"}
+,{"stream_name":"stdout","time":623.487650662,"data":"[settf_d384s8/f0] 05:51:20 pretrain ep 2 step 5400/5856 rtd loss 0.0691 (591s)\n"}
+,{"stream_name":"stdout","time":633.000953594,"data":"[settf_d384s7/f0] 05:51:29 pretrain ep 2 step 5600/5856 rtd loss 0.0628 (601s)\n"}
+,{"stream_name":"stdout","time":645.526827447,"data":"[settf_d384s8/f0] 05:51:42 pretrain ep 2 step 5600/5856 rtd loss 0.0638 (613s)\n"}
+,{"stream_name":"stdout","time":654.559599036,"data":"[settf_d384s7/f0] 05:51:51 pretrain ep 2 step 5800/5856 rtd loss 0.0603 (623s)\n"}
+,{"stream_name":"stdout","time":660.658750528,"data":"[settf_d384s7/f0] 05:51:57 pretrain done in 629s\n"}
+,{"stream_name":"stdout","time":660.792465978,"data":"[settf_d384s7/f0] 05:51:57 fold 0: loaded artifacts/settf_d384s7/pretrained_0.pt\n"}
+,{"stream_name":"stdout","time":667.572533277,"data":"[settf_d384s8/f0] 05:52:04 pretrain ep 2 step 5800/5856 rtd loss 0.0637 (636s)\n"}
+,{"stream_name":"stdout","time":673.793179737,"data":"[settf_d384s8/f0] 05:52:10 pretrain done in 642s\n"}
+,{"stream_name":"stdout","time":673.913829697,"data":"[settf_d384s8/f0] 05:52:10 fold 0: loaded artifacts/settf_d384s8/pretrained_1.pt\n"}
+,{"stream_name":"stdout","time":690.480844933,"data":"[settf_d384s7/f0] 05:52:27 fold 0 ep 0.25 loss 0.2264 inner AUC 0.956094 (30s)\n"}
+,{"stream_name":"stdout","time":704.215178752,"data":"[settf_d384s8/f0] 05:52:41 fold 0 ep 0.25 loss 0.2509 inner AUC 0.958081 (30s)\n"}
+,{"stream_name":"stdout","time":720.101095364,"data":"[settf_d384s7/f0] 05:52:56 fold 0 ep 0.50 loss 0.2781 inner AUC 0.957576 (59s)\n"}
+,{"stream_name":"stdout","time":734.443270139,"data":"[settf_d384s8/f0] 05:53:11 fold 0 ep 0.50 loss 0.2126 inner AUC 0.958582 (61s)\n"}
+,{"stream_name":"stdout","time":749.634460573,"data":"[settf_d384s7/f0] 05:53:26 fold 0 ep 0.75 loss 0.2698 inner AUC 0.958878 (89s)\n"}
+,{"stream_name":"stdout","time":764.671112953,"data":"[settf_d384s8/f0] 05:53:41 fold 0 ep 0.75 loss 0.2195 inner AUC 0.959816 (91s)\n"}
+,{"stream_name":"stdout","time":779.216993584,"data":"[settf_d384s7/f0] 05:53:56 fold 0 ep 1.00 loss 0.2518 inner AUC 0.959453 (118s)\n"}
+,{"stream_name":"stdout","time":794.933241286,"data":"[settf_d384s8/f0] 05:54:11 fold 0 ep 1.00 loss 0.2167 inner AUC 0.960209 (121s)\n"}
+,{"stream_name":"stdout","time":808.832437164,"data":"[settf_d384s7/f0] 05:54:25 fold 0 ep 1.25 loss 0.1999 inner AUC 0.959692 (148s)\n"}
+,{"stream_name":"stdout","time":825.153502908,"data":"[settf_d384s8/f0] 05:54:41 fold 0 ep 1.25 loss 0.2944 inner AUC 0.960611 (151s)\n"}
+,{"stream_name":"stdout","time":838.406945259,"data":"[settf_d384s7/f0] 05:54:55 fold 0 ep 1.50 loss 0.2134 inner AUC 0.960112 (178s)\n"}
+,{"stream_name":"stdout","time":855.428909828,"data":"[settf_d384s8/f0] 05:55:12 fold 0 ep 1.50 loss 0.2306 inner AUC 0.960682 (182s)\n"}
+,{"stream_name":"stdout","time":868.01276495,"data":"[settf_d384s7/f0] 05:55:24 fold 0 ep 1.75 loss 0.2401 inner AUC 0.960727 (207s)\n"}
+,{"stream_name":"stdout","time":885.728372366,"data":"[settf_d384s8/f0] 05:55:42 fold 0 ep 1.75 loss 0.2095 inner AUC 0.960902 (212s)\n"}
+,{"stream_name":"stdout","time":897.635531943,"data":"[settf_d384s7/f0] 05:55:54 fold 0 ep 2.00 loss 0.1847 inner AUC 0.960865 (237s)\n"}
+,{"stream_name":"stdout","time":916.01132288,"data":"[settf_d384s8/f0] 05:56:12 fold 0 ep 2.00 loss 0.2645 inner AUC 0.961519 (242s)\n"}
+,{"stream_name":"stdout","time":927.240635831,"data":"[settf_d384s7/f0] 05:56:24 fold 0 ep 2.25 loss 0.1946 inner AUC 0.960905 (266s)\n"}
+,{"stream_name":"stdout","time":946.229291735,"data":"[settf_d384s8/f0] 05:56:43 fold 0 ep 2.25 loss 0.2559 inner AUC 0.961633 (272s)\n"}
+,{"stream_name":"stdout","time":956.813625123,"data":"[settf_d384s7/f0] 05:56:53 fold 0 ep 2.50 loss 0.2140 inner AUC 0.960952 (296s)\n"}
+,{"stream_name":"stdout","time":976.505798526,"data":"[settf_d384s8/f0] 05:57:13 fold 0 ep 2.50 loss 0.2400 inner AUC 0.961472 (303s)\n"}
+,{"stream_name":"stdout","time":986.44036131,"data":"[settf_d384s7/f0] 05:57:23 fold 0 ep 2.74 loss 0.2417 inner AUC 0.960862 (326s)\n"}
+,{"stream_name":"stdout","time":1006.793003509,"data":"[settf_d384s8/f0] 05:57:43 fold 0 ep 2.75 loss 0.2121 inner AUC 0.961560 (333s)\n"}
+,{"stream_name":"stdout","time":1016.107245953,"data":"[settf_d384s7/f0] 05:57:52 fold 0 ep 2.99 loss 0.2211 inner AUC 0.960882 (355s)\n"}
+,{"stream_name":"stdout","time":1018.525502217,"data":"[settf_d384s7/f0] 05:57:55 fold 0 ep 3.00 loss 0.2075 inner AUC 0.960882 (358s)\n"}
+,{"stream_name":"stdout","time":1037.056985359,"data":"[settf_d384s8/f0] 05:58:13 fold 0 ep 3.00 loss 0.2312 inner AUC 0.961534 (363s)\n"}
+,{"stream_name":"stdout","time":1039.209312418,"data":"[settf_d384s8/f0] 05:58:16 fold 0 ep 3.00 loss 0.2035 inner AUC 0.961534 (365s)\n"}
+,{"stream_name":"stdout","time":1046.284708138,"data":"[settf_d384s7/f0] 05:58:23 fold 0: VAL AUC 0.960673 (inner best 0.960952) in 385s\n"}
+,{"stream_name":"stdout","time":1050.876387417,"data":"[kg   17.5m] settf_d384s7/f0 finished rc=0 in 17.5 min\n"}
+,{"stream_name":"stdout","time":1050.876419304,"data":"[kg   17.5m] settf_d256s9/f0 -\u003e gpu 0: python src/train_settf.py --name settf_d256s9 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 9 --sigma 32 --epochs 3 --folds 0\n"}
+,{"stream_name":"stdout","time":1067.504440933,"data":"[settf_d384s8/f0] 05:58:44 fold 0: VAL AUC 0.960995 (inner best 0.961633) in 394s\n"}
+,{"stream_name":"stdout","time":1068.370774353,"data":"[settf_d256s9/f0] 05:58:45 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":1068.878925678,"data":"[kg   17.8m] settf_d384s8/f0 finished rc=0 in 17.8 min\n"}
+,{"stream_name":"stdout","time":1068.87895382,"data":"[kg   17.8m] settf_d256s10/f0 -\u003e gpu 1: python src/train_settf.py --name settf_d256s10 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 10 --sigma 32 --epochs 3 --folds 0\n"}
+,{"stream_name":"stdout","time":1083.729238395,"data":"[settf_d256s9/f0] 05:59:00 pretrain ep 0 step 200/5856 rtd loss 0.2271 (14s)\n"}
+,{"stream_name":"stdout","time":1087.631069856,"data":"[settf_d256s10/f0] 05:59:04 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":1097.118180372,"data":"[settf_d256s9/f0] 05:59:13 pretrain ep 0 step 400/5856 rtd loss 0.1557 (27s)\n"}
+,{"stream_name":"stdout","time":1103.272380944,"data":"[settf_d256s10/f0] 05:59:20 pretrain ep 0 step 200/5856 rtd loss 0.2266 (14s)\n"}
+,{"stream_name":"stdout","time":1110.786331453,"data":"[settf_d256s9/f0] 05:59:27 pretrain ep 0 step 600/5856 rtd loss 0.1407 (41s)\n"}
+,{"stream_name":"stdout","time":1117.096970732,"data":"[settf_d256s10/f0] 05:59:33 pretrain ep 0 step 400/5856 rtd loss 0.1726 (28s)\n"}
+,{"stream_name":"stdout","time":1124.773192222,"data":"[settf_d256s9/f0] 05:59:41 pretrain ep 0 step 800/5856 rtd loss 0.1203 (55s)\n"}
+,{"stream_name":"stdout","time":1131.180105426,"data":"[settf_d256s10/f0] 05:59:48 pretrain ep 0 step 600/5856 rtd loss 0.1401 (42s)\n"}
+,{"stream_name":"stdout","time":1138.731216014,"data":"[settf_d256s9/f0] 05:59:55 pretrain ep 0 step 1000/5856 rtd loss 0.1189 (69s)\n"}
+,{"stream_name":"stdout","time":1145.122110961,"data":"[settf_d256s10/f0] 06:00:01 pretrain ep 0 step 800/5856 rtd loss 0.1175 (56s)\n"}
+,{"stream_name":"stdout","time":1152.434626232,"data":"[settf_d256s9/f0] 06:00:09 pretrain ep 0 step 1200/5856 rtd loss 0.1126 (83s)\n"}
+,{"stream_name":"stdout","time":1158.827453184,"data":"[settf_d256s10/f0] 06:00:15 pretrain ep 0 step 1000/5856 rtd loss 0.1149 (70s)\n"}
+,{"stream_name":"stdout","time":1166.042721652,"data":"[settf_d256s9/f0] 06:00:22 pretrain ep 0 step 1400/5856 rtd loss 0.1035 (96s)\n"}
+,{"stream_name":"stdout","time":1172.388660984,"data":"[settf_d256s10/f0] 06:00:29 pretrain ep 0 step 1200/5856 rtd loss 0.1048 (83s)\n"}
+,{"stream_name":"stdout","time":1179.592735739,"data":"[settf_d256s9/f0] 06:00:36 pretrain ep 0 step 1600/5856 rtd loss 0.1003 (110s)\n"}
+,{"stream_name":"stdout","time":1185.98215239,"data":"[settf_d256s10/f0] 06:00:42 pretrain ep 0 step 1400/5856 rtd loss 0.0939 (97s)\n"}
+,{"stream_name":"stdout","time":1193.174500938,"data":"[settf_d256s9/f0] 06:00:50 pretrain ep 0 step 1800/5856 rtd loss 0.0903 (123s)\n"}
+,{"stream_name":"stdout","time":1199.658165495,"data":"[settf_d256s10/f0] 06:00:56 pretrain ep 0 step 1600/5856 rtd loss 0.0991 (111s)\n"}
+,{"stream_name":"stdout","time":1206.858664201,"data":"[settf_d256s9/f0] 06:01:03 pretrain ep 1 step 2000/5856 rtd loss 0.0920 (137s)\n"}
+,{"stream_name":"stdout","time":1213.449894631,"data":"[settf_d256s10/f0] 06:01:10 pretrain ep 0 step 1800/5856 rtd loss 0.0927 (124s)\n"}
+,{"stream_name":"stdout","time":1220.574129115,"data":"[settf_d256s9/f0] 06:01:17 pretrain ep 1 step 2200/5856 rtd loss 0.0853 (151s)\n"}
+,{"stream_name":"stdout","time":1227.230110641,"data":"[settf_d256s10/f0] 06:01:24 pretrain ep 1 step 2000/5856 rtd loss 0.0939 (138s)\n"}
+,{"stream_name":"stdout","time":1234.154087575,"data":"[settf_d256s9/f0] 06:01:30 pretrain ep 1 step 2400/5856 rtd loss 0.0903 (164s)\n"}
+,{"stream_name":"stdout","time":1241.043168988,"data":"[settf_d256s10/f0] 06:01:37 pretrain ep 1 step 2200/5856 rtd loss 0.0929 (152s)\n"}
+,{"stream_name":"stdout","time":1247.81774474,"data":"[settf_d256s9/f0] 06:01:44 pretrain ep 1 step 2600/5856 rtd loss 0.0892 (178s)\n"}
+,{"stream_name":"stdout","time":1254.749896084,"data":"[settf_d256s10/f0] 06:01:51 pretrain ep 1 step 2400/5856 rtd loss 0.0876 (166s)\n"}
+,{"stream_name":"stdout","time":1261.41033495,"data":"[settf_d256s9/f0] 06:01:58 pretrain ep 1 step 2800/5856 rtd loss 0.0891 (192s)\n"}
+,{"stream_name":"stdout","time":1268.446711819,"data":"[settf_d256s10/f0] 06:02:05 pretrain ep 1 step 2600/5856 rtd loss 0.0918 (179s)\n"}
+,{"stream_name":"stdout","time":1275.080924828,"data":"[settf_d256s9/f0] 06:02:11 pretrain ep 1 step 3000/5856 rtd loss 0.0785 (205s)\n"}
+,{"stream_name":"stdout","time":1282.119814061,"data":"[settf_d256s10/f0] 06:02:18 pretrain ep 1 step 2800/5856 rtd loss 0.0881 (193s)\n"}
+,{"stream_name":"stdout","time":1288.610468643,"data":"[settf_d256s9/f0] 06:02:25 pretrain ep 1 step 3200/5856 rtd loss 0.0878 (219s)\n"}
+,{"stream_name":"stdout","time":1295.839291212,"data":"[settf_d256s10/f0] 06:02:32 pretrain ep 1 step 3000/5856 rtd loss 0.0846 (207s)\n"}
+,{"stream_name":"stdout","time":1302.169083772,"data":"[settf_d256s9/f0] 06:02:39 pretrain ep 1 step 3400/5856 rtd loss 0.0843 (232s)\n"}
+,{"stream_name":"stdout","time":1309.587671209,"data":"[settf_d256s10/f0] 06:02:46 pretrain ep 1 step 3200/5856 rtd loss 0.0862 (221s)\n"}
+,{"stream_name":"stdout","time":1315.760780606,"data":"[settf_d256s9/f0] 06:02:52 pretrain ep 1 step 3600/5856 rtd loss 0.0844 (246s)\n"}
+,{"stream_name":"stdout","time":1323.349963517,"data":"[settf_d256s10/f0] 06:03:00 pretrain ep 1 step 3400/5856 rtd loss 0.0852 (234s)\n"}
+,{"stream_name":"stdout","time":1329.400967689,"data":"[settf_d256s9/f0] 06:03:06 pretrain ep 1 step 3800/5856 rtd loss 0.0755 (260s)\n"}
+,{"stream_name":"stdout","time":1337.112139726,"data":"[settf_d256s10/f0] 06:03:13 pretrain ep 1 step 3600/5856 rtd loss 0.0847 (248s)\n"}
+,{"stream_name":"stdout","time":1343.037727257,"data":"[settf_d256s9/f0] 06:03:19 pretrain ep 2 step 4000/5856 rtd loss 0.0746 (273s)\n"}
+,{"stream_name":"stdout","time":1350.880242577,"data":"[settf_d256s10/f0] 06:03:27 pretrain ep 1 step 3800/5856 rtd loss 0.0760 (262s)\n"}
+,{"stream_name":"stdout","time":1356.682230699,"data":"[settf_d256s9/f0] 06:03:33 pretrain ep 2 step 4200/5856 rtd loss 0.0742 (287s)\n"}
+,{"stream_name":"stdout","time":1364.645087509,"data":"[settf_d256s10/f0] 06:03:41 pretrain ep 2 step 4000/5856 rtd loss 0.0838 (276s)\n"}
+,{"stream_name":"stdout","time":1370.324808503,"data":"[settf_d256s9/f0] 06:03:47 pretrain ep 2 step 4400/5856 rtd loss 0.0734 (301s)\n"}
+,{"stream_name":"stdout","time":1378.41599341,"data":"[settf_d256s10/f0] 06:03:55 pretrain ep 2 step 4200/5856 rtd loss 0.0780 (289s)\n"}
+,{"stream_name":"stdout","time":1384.000232644,"data":"[settf_d256s9/f0] 06:04:00 pretrain ep 2 step 4600/5856 rtd loss 0.0767 (314s)\n"}
+,{"stream_name":"stdout","time":1392.161088956,"data":"[settf_d256s10/f0] 06:04:08 pretrain ep 2 step 4400/5856 rtd loss 0.0836 (303s)\n"}
+,{"stream_name":"stdout","time":1397.58019372,"data":"[settf_d256s9/f0] 06:04:14 pretrain ep 2 step 4800/5856 rtd loss 0.0718 (328s)\n"}
+,{"stream_name":"stdout","time":1405.863110067,"data":"[settf_d256s10/f0] 06:04:22 pretrain ep 2 step 4600/5856 rtd loss 0.0757 (317s)\n"}
+,{"stream_name":"stdout","time":1411.184362872,"data":"[settf_d256s9/f0] 06:04:28 pretrain ep 2 step 5000/5856 rtd loss 0.0733 (341s)\n"}
+,{"stream_name":"stdout","time":1419.609416393,"data":"[settf_d256s10/f0] 06:04:36 pretrain ep 2 step 4800/5856 rtd loss 0.0746 (331s)\n"}
+,{"stream_name":"stdout","time":1424.789865627,"data":"[settf_d256s9/f0] 06:04:41 pretrain ep 2 step 5200/5856 rtd loss 0.0728 (355s)\n"}
+,{"stream_name":"stdout","time":1433.375776452,"data":"[settf_d256s10/f0] 06:04:50 pretrain ep 2 step 5000/5856 rtd loss 0.0809 (344s)\n"}
+,{"stream_name":"stdout","time":1438.397216709,"data":"[settf_d256s9/f0] 06:04:55 pretrain ep 2 step 5400/5856 rtd loss 0.0701 (369s)\n"}
+,{"stream_name":"stdout","time":1447.097840184,"data":"[settf_d256s10/f0] 06:05:03 pretrain ep 2 step 5200/5856 rtd loss 0.0705 (358s)\n"}
+,{"stream_name":"stdout","time":1452.050976772,"data":"[settf_d256s9/f0] 06:05:08 pretrain ep 2 step 5600/5856 rtd loss 0.0753 (382s)\n"}
+,{"stream_name":"stdout","time":1460.830585671,"data":"[settf_d256s10/f0] 06:05:17 pretrain ep 2 step 5400/5856 rtd loss 0.0796 (372s)\n"}
+,{"stream_name":"stdout","time":1465.676095725,"data":"[settf_d256s9/f0] 06:05:22 pretrain ep 2 step 5800/5856 rtd loss 0.0709 (396s)\n"}
+,{"stream_name":"stdout","time":1469.514800309,"data":"[settf_d256s9/f0] 06:05:26 pretrain done in 400s\n"}
+,{"stream_name":"stdout","time":1469.593187734,"data":"[settf_d256s9/f0] 06:05:26 fold 0: loaded artifacts/settf_d256s9/pretrained_0.pt\n"}
+,{"stream_name":"stdout","time":1474.551195555,"data":"[settf_d256s10/f0] 06:05:31 pretrain ep 2 step 5600/5856 rtd loss 0.0786 (385s)\n"}
+,{"stream_name":"stdout","time":1488.008637736,"data":"[settf_d256s9/f0] 06:05:44 fold 0 ep 0.25 loss 0.2649 inner AUC 0.957367 (18s)\n"}
+,{"stream_name":"stdout","time":1488.282157359,"data":"[settf_d256s10/f0] 06:05:45 pretrain ep 2 step 5800/5856 rtd loss 0.0724 (399s)\n"}
+,{"stream_name":"stdout","time":1492.16769716,"data":"[settf_d256s10/f0] 06:05:49 pretrain done in 403s\n"}
+,{"stream_name":"stdout","time":1492.252208352,"data":"[settf_d256s10/f0] 06:05:49 fold 0: loaded artifacts/settf_d256s10/pretrained_1.pt\n"}
+,{"stream_name":"stdout","time":1506.402551603,"data":"[settf_d256s9/f0] 06:06:03 fold 0 ep 0.50 loss 0.2597 inner AUC 0.958909 (37s)\n"}
+,{"stream_name":"stdout","time":1510.863053135,"data":"[settf_d256s10/f0] 06:06:07 fold 0 ep 0.25 loss 0.1838 inner AUC 0.957374 (19s)\n"}
+,{"stream_name":"stdout","time":1524.752377353,"data":"[settf_d256s9/f0] 06:06:21 fold 0 ep 0.75 loss 0.2080 inner AUC 0.959083 (55s)\n"}
+,{"stream_name":"stdout","time":1529.475734139,"data":"[settf_d256s10/f0] 06:06:26 fold 0 ep 0.50 loss 0.2545 inner AUC 0.959371 (37s)\n"}
+,{"stream_name":"stdout","time":1543.142233352,"data":"[settf_d256s9/f0] 06:06:39 fold 0 ep 1.00 loss 0.2273 inner AUC 0.960527 (74s)\n"}
+,{"stream_name":"stdout","time":1548.110024379,"data":"[settf_d256s10/f0] 06:06:44 fold 0 ep 0.75 loss 0.2128 inner AUC 0.959844 (56s)\n"}
+,{"stream_name":"stdout","time":1561.558396888,"data":"[settf_d256s9/f0] 06:06:58 fold 0 ep 1.25 loss 0.1895 inner AUC 0.961528 (92s)\n"}
+,{"stream_name":"stdout","time":1566.717711082,"data":"[settf_d256s10/f0] 06:07:03 fold 0 ep 1.00 loss 0.2154 inner AUC 0.961381 (74s)\n"}
+,{"stream_name":"stdout","time":1579.943689811,"data":"[settf_d256s9/f0] 06:07:16 fold 0 ep 1.50 loss 0.1954 inner AUC 0.961680 (110s)\n"}
+,{"stream_name":"stdout","time":1585.346622956,"data":"[settf_d256s10/f0] 06:07:22 fold 0 ep 1.25 loss 0.2523 inner AUC 0.961592 (93s)\n"}
+,{"stream_name":"stdout","time":1598.311314889,"data":"[settf_d256s9/f0] 06:07:35 fold 0 ep 1.75 loss 0.2299 inner AUC 0.962190 (129s)\n"}
+,{"stream_name":"stdout","time":1603.989969722,"data":"[settf_d256s10/f0] 06:07:40 fold 0 ep 1.50 loss 0.2935 inner AUC 0.962201 (112s)\n"}
+,{"stream_name":"stdout","time":1616.704399268,"data":"[settf_d256s9/f0] 06:07:53 fold 0 ep 2.00 loss 0.1858 inner AUC 0.962353 (147s)\n"}
+,{"stream_name":"stdout","time":1622.602585586,"data":"[settf_d256s10/f0] 06:07:59 fold 0 ep 1.75 loss 0.2343 inner AUC 0.962118 (130s)\n"}
+,{"stream_name":"stdout","time":1635.133100665,"data":"[settf_d256s9/f0] 06:08:11 fold 0 ep 2.25 loss 0.2138 inner AUC 0.962372 (166s)\n"}
+,{"stream_name":"stdout","time":1641.227383781,"data":"[settf_d256s10/f0] 06:08:18 fold 0 ep 2.00 loss 0.2665 inner AUC 0.962347 (149s)\n"}
+,{"stream_name":"stdout","time":1653.541295038,"data":"[settf_d256s9/f0] 06:08:30 fold 0 ep 2.50 loss 0.2682 inner AUC 0.962504 (184s)\n"}
+,{"stream_name":"stdout","time":1659.847705602,"data":"[settf_d256s10/f0] 06:08:36 fold 0 ep 2.25 loss 0.2168 inner AUC 0.962272 (168s)\n"}
+,{"stream_name":"stdout","time":1671.901369648,"data":"[settf_d256s9/f0] 06:08:48 fold 0 ep 2.74 loss 0.1917 inner AUC 0.962488 (202s)\n"}
+,{"stream_name":"stdout","time":1678.477616972,"data":"[settf_d256s10/f0] 06:08:55 fold 0 ep 2.50 loss 0.2069 inner AUC 0.962430 (186s)\n"}
+,{"stream_name":"stdout","time":1690.304039441,"data":"[settf_d256s9/f0] 06:09:07 fold 0 ep 2.99 loss 0.1734 inner AUC 0.962497 (221s)\n"}
+,{"stream_name":"stdout","time":1691.804230175,"data":"[settf_d256s9/f0] 06:09:08 fold 0 ep 3.00 loss 0.1940 inner AUC 0.962497 (222s)\n"}
+,{"stream_name":"stdout","time":1697.089201843,"data":"[settf_d256s10/f0] 06:09:13 fold 0 ep 2.74 loss 0.2774 inner AUC 0.962403 (205s)\n"}
+,{"stream_name":"stdout","time":1708.87082872,"data":"[settf_d256s9/f0] 06:09:25 fold 0: VAL AUC 0.960603 (inner best 0.962504) in 239s\n"}
+,{"stream_name":"stdout","time":1710.930027584,"data":"[kg   28.5m] settf_d256s9/f0 finished rc=0 in 11.0 min\n"}
+,{"stream_name":"stdout","time":1710.930064851,"data":"[kg   28.5m] settf_d384s7/f1 -\u003e gpu 0: python src/train_settf.py --name settf_d384s7 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 7 --sigma 32 --epochs 3 --folds 1\n"}
+,{"stream_name":"stdout","time":1715.752224999,"data":"[settf_d256s10/f0] 06:09:32 fold 0 ep 2.99 loss 0.2155 inner AUC 0.962371 (223s)\n"}
+,{"stream_name":"stdout","time":1717.278566245,"data":"[settf_d256s10/f0] 06:09:34 fold 0 ep 3.00 loss 0.2111 inner AUC 0.962370 (225s)\n"}
+,{"stream_name":"stdout","time":1728.344080642,"data":"[settf_d384s7/f1] 06:09:45 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":1728.694267893,"data":"[settf_d384s7/f1] 06:09:45 fold 1: loaded artifacts/settf_d384s7/pretrained_0.pt\n"}
+,{"stream_name":"stdout","time":1734.737787578,"data":"[settf_d256s10/f0] 06:09:51 fold 0: VAL AUC 0.960727 (inner best 0.962430) in 242s\n"}
+,{"stream_name":"stdout","time":1736.934628843,"data":"[kg   28.9m] settf_d256s10/f0 finished rc=0 in 11.1 min\n"}
+,{"stream_name":"stdout","time":1736.934664948,"data":"[kg   28.9m] settf_d384s8/f1 -\u003e gpu 1: python src/train_settf.py --name settf_d384s8 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 8 --sigma 32 --epochs 3 --folds 1\n"}
+,{"stream_name":"stdout","time":1754.819887214,"data":"[settf_d384s8/f1] 06:10:11 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":1755.161354938,"data":"[settf_d384s8/f1] 06:10:11 fold 1: loaded artifacts/settf_d384s8/pretrained_1.pt\n"}
+,{"stream_name":"stdout","time":1758.790915443,"data":"[settf_d384s7/f1] 06:10:15 fold 1 ep 0.25 loss 0.2340 inner AUC 0.954995 (29s)\n"}
+,{"stream_name":"stdout","time":1786.812223996,"data":"[settf_d384s8/f1] 06:10:43 fold 1 ep 0.25 loss 0.2526 inner AUC 0.957430 (31s)\n"}
+,{"stream_name":"stdout","time":1789.101513543,"data":"[settf_d384s7/f1] 06:10:45 fold 1 ep 0.50 loss 0.2159 inner AUC 0.957259 (59s)\n"}
+,{"stream_name":"stdout","time":1817.391560065,"data":"[settf_d384s8/f1] 06:11:14 fold 1 ep 0.50 loss 0.2310 inner AUC 0.956981 (61s)\n"}
+,{"stream_name":"stdout","time":1819.40006507,"data":"[settf_d384s7/f1] 06:11:16 fold 1 ep 0.75 loss 0.2138 inner AUC 0.958735 (90s)\n"}
+,{"stream_name":"stdout","time":1847.046289989,"data":"[settf_d384s8/f1] 06:11:43 fold 1 ep 0.75 loss 0.2427 inner AUC 0.959124 (91s)\n"}
+,{"stream_name":"stdout","time":1848.684119892,"data":"[settf_d384s7/f1] 06:11:45 fold 1 ep 1.00 loss 0.2467 inner AUC 0.958699 (119s)\n"}
+,{"stream_name":"stdout","time":1877.126101615,"data":"[settf_d384s8/f1] 06:12:13 fold 1 ep 1.00 loss 0.2554 inner AUC 0.958906 (121s)\n"}
+,{"stream_name":"stdout","time":1878.365115867,"data":"[settf_d384s7/f1] 06:12:15 fold 1 ep 1.25 loss 0.2181 inner AUC 0.959546 (149s)\n"}
+,{"stream_name":"stdout","time":1907.368048902,"data":"[settf_d384s8/f1] 06:12:44 fold 1 ep 1.25 loss 0.2707 inner AUC 0.959978 (151s)\n"}
+,{"stream_name":"stdout","time":1908.065140449,"data":"[settf_d384s7/f1] 06:12:44 fold 1 ep 1.50 loss 0.2048 inner AUC 0.959946 (178s)\n"}
+,{"stream_name":"stdout","time":1937.343819662,"data":"[settf_d384s8/f1] 06:13:14 fold 1 ep 1.50 loss 0.2346 inner AUC 0.960114 (181s)\n"}
+,{"stream_name":"stdout","time":1937.511759726,"data":"[settf_d384s7/f1] 06:13:14 fold 1 ep 1.75 loss 0.2403 inner AUC 0.960025 (208s)\n"}
+,{"stream_name":"stdout","time":1967.078193988,"data":"[settf_d384s7/f1] 06:13:43 fold 1 ep 2.00 loss 0.2433 inner AUC 0.959677 (237s)\n"}
+,{"stream_name":"stdout","time":1967.467321031,"data":"[settf_d384s8/f1] 06:13:44 fold 1 ep 1.75 loss 0.2202 inner AUC 0.960763 (211s)\n"}
+,{"stream_name":"stdout","time":1996.682730185,"data":"[settf_d384s7/f1] 06:14:13 fold 1 ep 2.25 loss 0.2260 inner AUC 0.959971 (267s)\n"}
+,{"stream_name":"stdout","time":1997.62064043,"data":"[settf_d384s8/f1] 06:14:14 fold 1 ep 2.00 loss 0.2510 inner AUC 0.960860 (241s)\n"}
+,{"stream_name":"stdout","time":2026.297869452,"data":"[settf_d384s7/f1] 06:14:43 fold 1 ep 2.50 loss 0.2019 inner AUC 0.960291 (297s)\n"}
+,{"stream_name":"stdout","time":2027.841029202,"data":"[settf_d384s8/f1] 06:14:44 fold 1 ep 2.25 loss 0.1771 inner AUC 0.961173 (272s)\n"}
+,{"stream_name":"stdout","time":2055.886334427,"data":"[settf_d384s7/f1] 06:15:12 fold 1 ep 2.74 loss 0.2174 inner AUC 0.960331 (326s)\n"}
+,{"stream_name":"stdout","time":2058.047116135,"data":"[settf_d384s8/f1] 06:15:14 fold 1 ep 2.50 loss 0.2386 inner AUC 0.960778 (302s)\n"}
+,{"stream_name":"stdout","time":2085.500125453,"data":"[settf_d384s7/f1] 06:15:42 fold 1 ep 2.99 loss 0.2148 inner AUC 0.960322 (356s)\n"}
+,{"stream_name":"stdout","time":2087.910931848,"data":"[settf_d384s7/f1] 06:15:44 fold 1 ep 3.00 loss 0.2614 inner AUC 0.960322 (358s)\n"}
+,{"stream_name":"stdout","time":2088.333002177,"data":"[settf_d384s8/f1] 06:15:45 fold 1 ep 2.75 loss 0.1863 inner AUC 0.960972 (332s)\n"}
+,{"stream_name":"stdout","time":2115.69922352,"data":"[settf_d384s7/f1] 06:16:12 fold 1: VAL AUC 0.959811 (inner best 0.960331) in 386s\n"}
+,{"stream_name":"stdout","time":2116.958915911,"data":"[kg   35.3m] settf_d384s7/f1 finished rc=0 in 6.8 min\n"}
+,{"stream_name":"stdout","time":2116.958948533,"data":"[kg   35.3m] settf_d256s9/f1 -\u003e gpu 0: python src/train_settf.py --name settf_d256s9 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 9 --sigma 32 --epochs 3 --folds 1\n"}
+,{"stream_name":"stdout","time":2118.599653339,"data":"[settf_d384s8/f1] 06:16:15 fold 1 ep 3.00 loss 0.1705 inner AUC 0.960976 (362s)\n"}
+,{"stream_name":"stdout","time":2120.761983392,"data":"[settf_d384s8/f1] 06:16:17 fold 1 ep 3.00 loss 0.2060 inner AUC 0.960976 (365s)\n"}
+,{"stream_name":"stdout","time":2134.204254145,"data":"[settf_d256s9/f1] 06:16:31 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":2134.531434661,"data":"[settf_d256s9/f1] 06:16:31 fold 1: loaded artifacts/settf_d256s9/pretrained_0.pt\n"}
+,{"stream_name":"stdout","time":2149.056193394,"data":"[settf_d384s8/f1] 06:16:45 fold 1: VAL AUC 0.959680 (inner best 0.961173) in 393s\n"}
+,{"stream_name":"stdout","time":2150.964333773,"data":"[kg   35.8m] settf_d384s8/f1 finished rc=0 in 6.9 min\n"}
+,{"stream_name":"stdout","time":2150.964363367,"data":"[kg   35.8m] settf_d256s10/f1 -\u003e gpu 1: python src/train_settf.py --name settf_d256s10 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 10 --sigma 32 --epochs 3 --folds 1\n"}
+,{"stream_name":"stdout","time":2154.027340469,"data":"[settf_d256s9/f1] 06:16:50 fold 1 ep 0.25 loss 0.2019 inner AUC 0.958355 (18s)\n"}
+,{"stream_name":"stdout","time":2169.187939289,"data":"[settf_d256s10/f1] 06:17:06 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":2169.506960378,"data":"[settf_d256s10/f1] 06:17:06 fold 1: loaded artifacts/settf_d256s10/pretrained_1.pt\n"}
+,{"stream_name":"stdout","time":2172.114073912,"data":"[settf_d256s9/f1] 06:17:08 fold 1 ep 0.50 loss 0.2361 inner AUC 0.958844 (37s)\n"}
+,{"stream_name":"stdout","time":2189.692524355,"data":"[settf_d256s10/f1] 06:17:26 fold 1 ep 0.25 loss 0.2078 inner AUC 0.955965 (19s)\n"}
+,{"stream_name":"stdout","time":2190.641390269,"data":"[settf_d256s9/f1] 06:17:27 fold 1 ep 0.75 loss 0.2538 inner AUC 0.960522 (55s)\n"}
+,{"stream_name":"stdout","time":2208.516140053,"data":"[settf_d256s10/f1] 06:17:45 fold 1 ep 0.50 loss 0.1982 inner AUC 0.957217 (38s)\n"}
+,{"stream_name":"stdout","time":2209.4920652,"data":"[settf_d256s9/f1] 06:17:46 fold 1 ep 1.00 loss 0.2312 inner AUC 0.962116 (74s)\n"}
+,{"stream_name":"stdout","time":2227.1023442,"data":"[settf_d256s10/f1] 06:18:03 fold 1 ep 0.75 loss 0.2208 inner AUC 0.958011 (56s)\n"}
+,{"stream_name":"stdout","time":2227.995967417,"data":"[settf_d256s9/f1] 06:18:04 fold 1 ep 1.25 loss 0.2510 inner AUC 0.962040 (92s)\n"}
+,{"stream_name":"stdout","time":2245.59256238,"data":"[settf_d256s10/f1] 06:18:22 fold 1 ep 1.00 loss 0.2051 inner AUC 0.959046 (75s)\n"}
+,{"stream_name":"stdout","time":2246.286763655,"data":"[settf_d256s9/f1] 06:18:23 fold 1 ep 1.50 loss 0.2460 inner AUC 0.962419 (111s)\n"}
+,{"stream_name":"stdout","time":2264.102396538,"data":"[settf_d256s10/f1] 06:18:40 fold 1 ep 1.25 loss 0.1890 inner AUC 0.959754 (93s)\n"}
+,{"stream_name":"stdout","time":2264.566572934,"data":"[settf_d256s9/f1] 06:18:41 fold 1 ep 1.75 loss 0.1957 inner AUC 0.962774 (129s)\n"}
+,{"stream_name":"stdout","time":2282.717275563,"data":"[settf_d256s10/f1] 06:18:59 fold 1 ep 1.50 loss 0.2516 inner AUC 0.959677 (112s)\n"}
+,{"stream_name":"stdout","time":2283.013831595,"data":"[settf_d256s9/f1] 06:18:59 fold 1 ep 2.00 loss 0.2607 inner AUC 0.962572 (147s)\n"}
+,{"stream_name":"stdout","time":2301.366057484,"data":"[settf_d256s10/f1] 06:19:18 fold 1 ep 1.75 loss 0.2387 inner AUC 0.960333 (131s)\n"}
+,{"stream_name":"stdout","time":2301.554807335,"data":"[settf_d256s9/f1] 06:19:18 fold 1 ep 2.25 loss 0.2295 inner AUC 0.962672 (166s)\n"}
+,{"stream_name":"stdout","time":2320.004678527,"data":"[settf_d256s10/f1] 06:19:36 fold 1 ep 2.00 loss 0.2472 inner AUC 0.960276 (149s)\n"}
+,{"stream_name":"stdout","time":2320.03221092,"data":"[settf_d256s9/f1] 06:19:36 fold 1 ep 2.50 loss 0.2179 inner AUC 0.962732 (184s)\n"}
+,{"stream_name":"stdout","time":2338.505766878,"data":"[settf_d256s9/f1] 06:19:55 fold 1 ep 2.74 loss 0.2442 inner AUC 0.962717 (203s)\n"}
+,{"stream_name":"stdout","time":2338.650391542,"data":"[settf_d256s10/f1] 06:19:55 fold 1 ep 2.25 loss 0.2381 inner AUC 0.960227 (168s)\n"}
+,{"stream_name":"stdout","time":2356.991696665,"data":"[settf_d256s9/f1] 06:20:13 fold 1 ep 2.99 loss 0.2591 inner AUC 0.962720 (221s)\n"}
+,{"stream_name":"stdout","time":2357.27014363,"data":"[settf_d256s10/f1] 06:20:14 fold 1 ep 2.50 loss 0.1950 inner AUC 0.960325 (187s)\n"}
+,{"stream_name":"stdout","time":2358.482478377,"data":"[settf_d256s9/f1] 06:20:15 fold 1 ep 3.00 loss 0.2077 inner AUC 0.962721 (223s)\n"}
+,{"stream_name":"stdout","time":2375.512238347,"data":"[settf_d256s9/f1] 06:20:32 fold 1: VAL AUC 0.959661 (inner best 0.962774) in 240s\n"}
+,{"stream_name":"stdout","time":2375.879874492,"data":"[settf_d256s10/f1] 06:20:32 fold 1 ep 2.74 loss 0.2438 inner AUC 0.960354 (205s)\n"}
+,{"stream_name":"stdout","time":2376.980762176,"data":"[kg   39.6m] settf_d256s9/f1 finished rc=0 in 4.3 min\n"}
+,{"stream_name":"stdout","time":2376.980798148,"data":"[kg   39.6m] settf_d384s7/f2 -\u003e gpu 0: python src/train_settf.py --name settf_d384s7 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 7 --sigma 32 --epochs 3 --folds 2\n"}
+,{"stream_name":"stdout","time":2394.526250721,"data":"[settf_d256s10/f1] 06:20:51 fold 1 ep 2.99 loss 0.2158 inner AUC 0.960341 (224s)\n"}
+,{"stream_name":"stdout","time":2395.3031724,"data":"[settf_d384s7/f2] 06:20:52 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":2395.65127396,"data":"[settf_d384s7/f2] 06:20:52 fold 2: loaded artifacts/settf_d384s7/pretrained_0.pt\n"}
+,{"stream_name":"stdout","time":2396.043044842,"data":"[settf_d256s10/f1] 06:20:52 fold 1 ep 3.00 loss 0.1675 inner AUC 0.960342 (225s)\n"}
+,{"stream_name":"stdout","time":2413.460066882,"data":"[settf_d256s10/f1] 06:21:10 fold 1: VAL AUC 0.959791 (inner best 0.960354) in 243s\n"}
+,{"stream_name":"stdout","time":2414.983280395,"data":"[kg   40.2m] settf_d256s10/f1 finished rc=0 in 4.4 min\n"}
+,{"stream_name":"stdout","time":2414.983312256,"data":"[kg   40.2m] settf_d384s8/f2 -\u003e gpu 1: python src/train_settf.py --name settf_d384s8 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 8 --sigma 32 --epochs 3 --folds 2\n"}
+,{"stream_name":"stdout","time":2425.526792436,"data":"[settf_d384s7/f2] 06:21:22 fold 2 ep 0.25 loss 0.2501 inner AUC 0.956143 (29s)\n"}
+,{"stream_name":"stdout","time":2432.6187711,"data":"[settf_d384s8/f2] 06:21:29 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":2432.968654838,"data":"[settf_d384s8/f2] 06:21:29 fold 2: loaded artifacts/settf_d384s8/pretrained_1.pt\n"}
+,{"stream_name":"stdout","time":2455.228530334,"data":"[settf_d384s7/f2] 06:21:52 fold 2 ep 0.50 loss 0.2556 inner AUC 0.957349 (59s)\n"}
+,{"stream_name":"stdout","time":2464.793216183,"data":"[settf_d384s8/f2] 06:22:01 fold 2 ep 0.25 loss 0.2623 inner AUC 0.957933 (31s)\n"}
+,{"stream_name":"stdout","time":2485.930194768,"data":"[settf_d384s7/f2] 06:22:22 fold 2 ep 0.75 loss 0.2259 inner AUC 0.958681 (89s)\n"}
+,{"stream_name":"stdout","time":2495.040576013,"data":"[settf_d384s8/f2] 06:22:31 fold 2 ep 0.50 loss 0.1886 inner AUC 0.958684 (61s)\n"}
+,{"stream_name":"stdout","time":2515.124690462,"data":"[settf_d384s7/f2] 06:22:51 fold 2 ep 1.00 loss 0.2509 inner AUC 0.959398 (118s)\n"}
+,{"stream_name":"stdout","time":2524.645920433,"data":"[settf_d384s8/f2] 06:23:01 fold 2 ep 0.75 loss 0.1772 inner AUC 0.959761 (91s)\n"}
+,{"stream_name":"stdout","time":2544.780540528,"data":"[settf_d384s7/f2] 06:23:21 fold 2 ep 1.25 loss 0.1965 inner AUC 0.959777 (148s)\n"}
+,{"stream_name":"stdout","time":2554.888760757,"data":"[settf_d384s8/f2] 06:23:31 fold 2 ep 1.00 loss 0.1929 inner AUC 0.960233 (121s)\n"}
+,{"stream_name":"stdout","time":2574.580955445,"data":"[settf_d384s7/f2] 06:23:51 fold 2 ep 1.50 loss 0.2338 inner AUC 0.960613 (178s)\n"}
+,{"stream_name":"stdout","time":2585.079501082,"data":"[settf_d384s8/f2] 06:24:01 fold 2 ep 1.25 loss 0.2339 inner AUC 0.960885 (151s)\n"}
+,{"stream_name":"stdout","time":2603.990591058,"data":"[settf_d384s7/f2] 06:24:20 fold 2 ep 1.75 loss 0.2168 inner AUC 0.960447 (207s)\n"}
+,{"stream_name":"stdout","time":2615.055034796,"data":"[settf_d384s8/f2] 06:24:31 fold 2 ep 1.50 loss 0.2371 inner AUC 0.961508 (181s)\n"}
+,{"stream_name":"stdout","time":2633.46618573,"data":"[settf_d384s7/f2] 06:24:50 fold 2 ep 2.00 loss 0.1550 inner AUC 0.960665 (237s)\n"}
+,{"stream_name":"stdout","time":2645.180130202,"data":"[settf_d384s8/f2] 06:25:02 fold 2 ep 1.75 loss 0.2044 inner AUC 0.961769 (211s)\n"}
+,{"stream_name":"stdout","time":2663.079198281,"data":"[settf_d384s7/f2] 06:25:19 fold 2 ep 2.25 loss 0.1736 inner AUC 0.961394 (266s)\n"}
+,{"stream_name":"stdout","time":2675.372234371,"data":"[settf_d384s8/f2] 06:25:32 fold 2 ep 2.00 loss 0.2608 inner AUC 0.961730 (241s)\n"}
+,{"stream_name":"stdout","time":2692.699520567,"data":"[settf_d384s7/f2] 06:25:49 fold 2 ep 2.50 loss 0.2264 inner AUC 0.961519 (296s)\n"}
+,{"stream_name":"stdout","time":2705.58675082,"data":"[settf_d384s8/f2] 06:26:02 fold 2 ep 2.25 loss 0.1766 inner AUC 0.961740 (272s)\n"}
+,{"stream_name":"stdout","time":2722.32841206,"data":"[settf_d384s7/f2] 06:26:19 fold 2 ep 2.74 loss 0.2535 inner AUC 0.961470 (326s)\n"}
+,{"stream_name":"stdout","time":2735.76927774,"data":"[settf_d384s8/f2] 06:26:32 fold 2 ep 2.50 loss 0.2045 inner AUC 0.961945 (302s)\n"}
+,{"stream_name":"stdout","time":2751.905427427,"data":"[settf_d384s7/f2] 06:26:48 fold 2 ep 2.99 loss 0.2404 inner AUC 0.961483 (355s)\n"}
+,{"stream_name":"stdout","time":2754.330748895,"data":"[settf_d384s7/f2] 06:26:51 fold 2 ep 3.00 loss 0.2506 inner AUC 0.961483 (358s)\n"}
+,{"stream_name":"stdout","time":2766.013088561,"data":"[settf_d384s8/f2] 06:27:02 fold 2 ep 2.74 loss 0.2790 inner AUC 0.961938 (332s)\n"}
+,{"stream_name":"stdout","time":2782.151960737,"data":"[settf_d384s7/f2] 06:27:18 fold 2: VAL AUC 0.960987 (inner best 0.961519) in 385s\n"}
+,{"stream_name":"stdout","time":2785.009038451,"data":"[kg   46.4m] settf_d384s7/f2 finished rc=0 in 6.8 min\n"}
+,{"stream_name":"stdout","time":2785.009073761,"data":"[kg   46.4m] settf_d256s9/f2 -\u003e gpu 0: python src/train_settf.py --name settf_d256s9 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 9 --sigma 32 --epochs 3 --folds 2\n"}
+,{"stream_name":"stdout","time":2796.360204022,"data":"[settf_d384s8/f2] 06:27:33 fold 2 ep 2.99 loss 0.2402 inner AUC 0.961978 (362s)\n"}
+,{"stream_name":"stdout","time":2798.814421056,"data":"[settf_d384s8/f2] 06:27:35 fold 2 ep 3.00 loss 0.1846 inner AUC 0.961978 (365s)\n"}
+,{"stream_name":"stdout","time":2802.678124101,"data":"[settf_d256s9/f2] 06:27:39 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":2802.990739584,"data":"[settf_d256s9/f2] 06:27:39 fold 2: loaded artifacts/settf_d256s9/pretrained_0.pt\n"}
+,{"stream_name":"stdout","time":2822.452935298,"data":"[settf_d256s9/f2] 06:27:59 fold 2 ep 0.25 loss 0.2007 inner AUC 0.955406 (18s)\n"}
+,{"stream_name":"stdout","time":2827.114296562,"data":"[settf_d384s8/f2] 06:28:03 fold 2: VAL AUC 0.961228 (inner best 0.961978) in 393s\n"}
+,{"stream_name":"stdout","time":2829.013052149,"data":"[kg   47.1m] settf_d384s8/f2 finished rc=0 in 6.9 min\n"}
+,{"stream_name":"stdout","time":2829.013083719,"data":"[kg   47.1m] settf_d256s10/f2 -\u003e gpu 1: python src/train_settf.py --name settf_d256s10 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 10 --sigma 32 --epochs 3 --folds 2\n"}
+,{"stream_name":"stdout","time":2840.373725831,"data":"[settf_d256s9/f2] 06:28:17 fold 2 ep 0.50 loss 0.2184 inner AUC 0.956937 (36s)\n"}
+,{"stream_name":"stdout","time":2847.46306709,"data":"[settf_d256s10/f2] 06:28:24 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":2847.798794126,"data":"[settf_d256s10/f2] 06:28:24 fold 2: loaded artifacts/settf_d256s10/pretrained_1.pt\n"}
+,{"stream_name":"stdout","time":2858.619703628,"data":"[settf_d256s9/f2] 06:28:35 fold 2 ep 0.75 loss 0.1909 inner AUC 0.958050 (55s)\n"}
+,{"stream_name":"stdout","time":2867.939960486,"data":"[settf_d256s10/f2] 06:28:44 fold 2 ep 0.25 loss 0.2610 inner AUC 0.957858 (19s)\n"}
+,{"stream_name":"stdout","time":2877.361320713,"data":"[settf_d256s9/f2] 06:28:54 fold 2 ep 1.00 loss 0.2586 inner AUC 0.958338 (73s)\n"}
+,{"stream_name":"stdout","time":2886.785156213,"data":"[settf_d256s10/f2] 06:29:03 fold 2 ep 0.50 loss 0.2716 inner AUC 0.959712 (38s)\n"}
+,{"stream_name":"stdout","time":2896.079775251,"data":"[settf_d256s9/f2] 06:29:12 fold 2 ep 1.25 loss 0.2493 inner AUC 0.959577 (92s)\n"}
+,{"stream_name":"stdout","time":2905.350318432,"data":"[settf_d256s10/f2] 06:29:22 fold 2 ep 0.75 loss 0.1964 inner AUC 0.959417 (56s)\n"}
+,{"stream_name":"stdout","time":2914.463354547,"data":"[settf_d256s9/f2] 06:29:31 fold 2 ep 1.50 loss 0.1938 inner AUC 0.959631 (110s)\n"}
+,{"stream_name":"stdout","time":2923.782722125,"data":"[settf_d256s10/f2] 06:29:40 fold 2 ep 1.00 loss 0.2146 inner AUC 0.960303 (75s)\n"}
+,{"stream_name":"stdout","time":2932.751078931,"data":"[settf_d256s9/f2] 06:29:49 fold 2 ep 1.75 loss 0.2449 inner AUC 0.959892 (129s)\n"}
+,{"stream_name":"stdout","time":2942.314218815,"data":"[settf_d256s10/f2] 06:29:59 fold 2 ep 1.25 loss 0.2318 inner AUC 0.961454 (93s)\n"}
+,{"stream_name":"stdout","time":2951.191258973,"data":"[settf_d256s9/f2] 06:30:08 fold 2 ep 2.00 loss 0.2466 inner AUC 0.960535 (147s)\n"}
+,{"stream_name":"stdout","time":2960.957061387,"data":"[settf_d256s10/f2] 06:30:17 fold 2 ep 1.50 loss 0.2115 inner AUC 0.961451 (112s)\n"}
+,{"stream_name":"stdout","time":2969.770231099,"data":"[settf_d256s9/f2] 06:30:26 fold 2 ep 2.25 loss 0.2073 inner AUC 0.960531 (166s)\n"}
+,{"stream_name":"stdout","time":2979.633110964,"data":"[settf_d256s10/f2] 06:30:36 fold 2 ep 1.75 loss 0.2070 inner AUC 0.961599 (131s)\n"}
+,{"stream_name":"stdout","time":2988.277125437,"data":"[settf_d256s9/f2] 06:30:45 fold 2 ep 2.50 loss 0.2124 inner AUC 0.960580 (184s)\n"}
+,{"stream_name":"stdout","time":2998.234395812,"data":"[settf_d256s10/f2] 06:30:55 fold 2 ep 2.00 loss 0.2039 inner AUC 0.961684 (149s)\n"}
+,{"stream_name":"stdout","time":3006.639276156,"data":"[settf_d256s9/f2] 06:31:03 fold 2 ep 2.74 loss 0.2211 inner AUC 0.960583 (203s)\n"}
+,{"stream_name":"stdout","time":3016.879102028,"data":"[settf_d256s10/f2] 06:31:13 fold 2 ep 2.25 loss 0.2328 inner AUC 0.961511 (168s)\n"}
+,{"stream_name":"stdout","time":3025.020874257,"data":"[settf_d256s9/f2] 06:31:21 fold 2 ep 2.99 loss 0.2143 inner AUC 0.960614 (221s)\n"}
+,{"stream_name":"stdout","time":3026.501221632,"data":"[settf_d256s9/f2] 06:31:23 fold 2 ep 3.00 loss 0.2271 inner AUC 0.960615 (222s)\n"}
+,{"stream_name":"stdout","time":3035.469577401,"data":"[settf_d256s10/f2] 06:31:32 fold 2 ep 2.50 loss 0.1635 inner AUC 0.961489 (187s)\n"}
+,{"stream_name":"stdout","time":3043.55508645,"data":"[settf_d256s9/f2] 06:31:40 fold 2: VAL AUC 0.961341 (inner best 0.960615) in 240s\n"}
+,{"stream_name":"stdout","time":3045.03457239,"data":"[kg   50.7m] settf_d256s9/f2 finished rc=0 in 4.3 min\n"}
+,{"stream_name":"stdout","time":3045.034606305,"data":"[kg   50.7m] settf_d384s7/f3 -\u003e gpu 0: python src/train_settf.py --name settf_d384s7 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 7 --sigma 32 --epochs 3 --folds 3\n"}
+,{"stream_name":"stdout","time":3054.14897334,"data":"[settf_d256s10/f2] 06:31:50 fold 2 ep 2.74 loss 0.1911 inner AUC 0.961894 (205s)\n"}
+,{"stream_name":"stdout","time":3063.428536085,"data":"[settf_d384s7/f3] 06:32:00 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":3063.779653888,"data":"[settf_d384s7/f3] 06:32:00 fold 3: loaded artifacts/settf_d384s7/pretrained_0.pt\n"}
+,{"stream_name":"stdout","time":3072.784931278,"data":"[settf_d256s10/f2] 06:32:09 fold 2 ep 2.99 loss 0.2112 inner AUC 0.961893 (224s)\n"}
+,{"stream_name":"stdout","time":3074.307225367,"data":"[settf_d256s10/f2] 06:32:11 fold 2 ep 3.00 loss 0.2059 inner AUC 0.961892 (225s)\n"}
+,{"stream_name":"stdout","time":3091.758661208,"data":"[settf_d256s10/f2] 06:32:28 fold 2: VAL AUC 0.961544 (inner best 0.961894) in 243s\n"}
+,{"stream_name":"stdout","time":3093.030841009,"data":"[kg   51.5m] settf_d256s10/f2 finished rc=0 in 4.4 min\n"}
+,{"stream_name":"stdout","time":3093.030874192,"data":"[kg   51.5m] settf_d384s8/f3 -\u003e gpu 1: python src/train_settf.py --name settf_d384s8 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 8 --sigma 32 --epochs 3 --folds 3\n"}
+,{"stream_name":"stdout","time":3093.714667276,"data":"[settf_d384s7/f3] 06:32:30 fold 3 ep 0.25 loss 0.2345 inner AUC 0.956108 (29s)\n"}
+,{"stream_name":"stdout","time":3110.610738421,"data":"[settf_d384s8/f3] 06:32:47 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":3110.962075673,"data":"[settf_d384s8/f3] 06:32:47 fold 3: loaded artifacts/settf_d384s8/pretrained_1.pt\n"}
+,{"stream_name":"stdout","time":3122.832033821,"data":"[settf_d384s7/f3] 06:32:59 fold 3 ep 0.50 loss 0.2196 inner AUC 0.957332 (58s)\n"}
+,{"stream_name":"stdout","time":3142.685601445,"data":"[settf_d384s8/f3] 06:33:19 fold 3 ep 0.25 loss 0.2206 inner AUC 0.955331 (31s)\n"}
+,{"stream_name":"stdout","time":3153.52026686,"data":"[settf_d384s7/f3] 06:33:30 fold 3 ep 0.75 loss 0.2112 inner AUC 0.958818 (89s)\n"}
+,{"stream_name":"stdout","time":3172.680456737,"data":"[settf_d384s8/f3] 06:33:49 fold 3 ep 0.50 loss 0.2082 inner AUC 0.956108 (61s)\n"}
+,{"stream_name":"stdout","time":3183.045230995,"data":"[settf_d384s7/f3] 06:33:59 fold 3 ep 1.00 loss 0.2366 inner AUC 0.958339 (118s)\n"}
+,{"stream_name":"stdout","time":3202.329073816,"data":"[settf_d384s8/f3] 06:34:19 fold 3 ep 0.75 loss 0.2531 inner AUC 0.957303 (90s)\n"}
+,{"stream_name":"stdout","time":3212.520033173,"data":"[settf_d384s7/f3] 06:34:29 fold 3 ep 1.25 loss 0.2253 inner AUC 0.959554 (148s)\n"}
+,{"stream_name":"stdout","time":3232.45821692,"data":"[settf_d384s8/f3] 06:34:49 fold 3 ep 1.00 loss 0.2638 inner AUC 0.958289 (120s)\n"}
+,{"stream_name":"stdout","time":3242.415062026,"data":"[settf_d384s7/f3] 06:34:59 fold 3 ep 1.50 loss 0.2339 inner AUC 0.959748 (177s)\n"}
+,{"stream_name":"stdout","time":3262.671503687,"data":"[settf_d384s8/f3] 06:35:19 fold 3 ep 1.25 loss 0.1908 inner AUC 0.957284 (151s)\n"}
+,{"stream_name":"stdout","time":3271.998411377,"data":"[settf_d384s7/f3] 06:35:28 fold 3 ep 1.75 loss 0.2530 inner AUC 0.960299 (207s)\n"}
+,{"stream_name":"stdout","time":3292.643042127,"data":"[settf_d384s8/f3] 06:35:49 fold 3 ep 1.50 loss 0.2223 inner AUC 0.958715 (181s)\n"}
+,{"stream_name":"stdout","time":3301.552948979,"data":"[settf_d384s7/f3] 06:35:58 fold 3 ep 2.00 loss 0.2490 inner AUC 0.960498 (237s)\n"}
+,{"stream_name":"stdout","time":3322.748317047,"data":"[settf_d384s8/f3] 06:36:19 fold 3 ep 1.75 loss 0.2357 inner AUC 0.959374 (211s)\n"}
+,{"stream_name":"stdout","time":3331.112853302,"data":"[settf_d384s7/f3] 06:36:27 fold 3 ep 2.25 loss 0.2149 inner AUC 0.960662 (266s)\n"}
+,{"stream_name":"stdout","time":3352.840678752,"data":"[settf_d384s8/f3] 06:36:49 fold 3 ep 2.00 loss 0.2238 inner AUC 0.959853 (241s)\n"}
+,{"stream_name":"stdout","time":3360.729282955,"data":"[settf_d384s7/f3] 06:36:57 fold 3 ep 2.50 loss 0.1841 inner AUC 0.960804 (296s)\n"}
+,{"stream_name":"stdout","time":3383.125877799,"data":"[settf_d384s8/f3] 06:37:19 fold 3 ep 2.25 loss 0.2418 inner AUC 0.959490 (271s)\n"}
+,{"stream_name":"stdout","time":3390.485777976,"data":"[settf_d384s7/f3] 06:37:27 fold 3 ep 2.74 loss 0.2112 inner AUC 0.960908 (326s)\n"}
+,{"stream_name":"stdout","time":3413.395859278,"data":"[settf_d384s8/f3] 06:37:50 fold 3 ep 2.50 loss 0.2241 inner AUC 0.959578 (301s)\n"}
+,{"stream_name":"stdout","time":3420.13017755,"data":"[settf_d384s7/f3] 06:37:56 fold 3 ep 2.99 loss 0.2520 inner AUC 0.960912 (355s)\n"}
+,{"stream_name":"stdout","time":3422.554123029,"data":"[settf_d384s7/f3] 06:37:59 fold 3 ep 3.00 loss 0.1936 inner AUC 0.960911 (358s)\n"}
+,{"stream_name":"stdout","time":3443.437903608,"data":"[settf_d384s8/f3] 06:38:20 fold 3 ep 2.74 loss 0.2055 inner AUC 0.959633 (331s)\n"}
+,{"stream_name":"stdout","time":3450.242023767,"data":"[settf_d384s7/f3] 06:38:27 fold 3: VAL AUC 0.960720 (inner best 0.960912) in 385s\n"}
+,{"stream_name":"stdout","time":3453.062719972,"data":"[kg   57.5m] settf_d384s7/f3 finished rc=0 in 6.8 min\n"}
+,{"stream_name":"stdout","time":3453.062751775,"data":"[kg   57.5m] settf_d256s9/f3 -\u003e gpu 0: python src/train_settf.py --name settf_d256s9 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 9 --sigma 32 --epochs 3 --folds 3\n"}
+,{"stream_name":"stdout","time":3470.705192514,"data":"[settf_d256s9/f3] 06:38:47 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":3471.020654716,"data":"[settf_d256s9/f3] 06:38:47 fold 3: loaded artifacts/settf_d256s9/pretrained_0.pt\n"}
+,{"stream_name":"stdout","time":3473.501904667,"data":"[settf_d384s8/f3] 06:38:50 fold 3 ep 2.99 loss 0.2353 inner AUC 0.959670 (361s)\n"}
+,{"stream_name":"stdout","time":3475.937048986,"data":"[settf_d384s8/f3] 06:38:52 fold 3 ep 3.00 loss 0.2261 inner AUC 0.959670 (364s)\n"}
+,{"stream_name":"stdout","time":3490.466206242,"data":"[settf_d256s9/f3] 06:39:07 fold 3 ep 0.25 loss 0.2333 inner AUC 0.956330 (18s)\n"}
+,{"stream_name":"stdout","time":3504.187803851,"data":"[settf_d384s8/f3] 06:39:21 fold 3: VAL AUC 0.960589 (inner best 0.959853) in 392s\n"}
+,{"stream_name":"stdout","time":3507.05957914,"data":"[kg   58.4m] settf_d384s8/f3 finished rc=0 in 6.9 min\n"}
+,{"stream_name":"stdout","time":3507.059613185,"data":"[kg   58.4m] settf_d256s10/f3 -\u003e gpu 1: python src/train_settf.py --name settf_d256s10 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 10 --sigma 32 --epochs 3 --folds 3\n"}
+,{"stream_name":"stdout","time":3508.28687857,"data":"[settf_d256s9/f3] 06:39:25 fold 3 ep 0.50 loss 0.2436 inner AUC 0.956909 (36s)\n"}
+,{"stream_name":"stdout","time":3525.358151804,"data":"[settf_d256s10/f3] 06:39:42 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":3525.67005999,"data":"[settf_d256s10/f3] 06:39:42 fold 3: loaded artifacts/settf_d256s10/pretrained_1.pt\n"}
+,{"stream_name":"stdout","time":3526.366980863,"data":"[settf_d256s9/f3] 06:39:43 fold 3 ep 0.75 loss 0.1997 inner AUC 0.958600 (54s)\n"}
+,{"stream_name":"stdout","time":3544.875979725,"data":"[settf_d256s9/f3] 06:40:01 fold 3 ep 1.00 loss 0.2550 inner AUC 0.958807 (73s)\n"}
+,{"stream_name":"stdout","time":3545.762197218,"data":"[settf_d256s10/f3] 06:40:02 fold 3 ep 0.25 loss 0.2249 inner AUC 0.957776 (19s)\n"}
+,{"stream_name":"stdout","time":3563.636201594,"data":"[settf_d256s9/f3] 06:40:20 fold 3 ep 1.25 loss 0.2236 inner AUC 0.959528 (92s)\n"}
+,{"stream_name":"stdout","time":3564.453430514,"data":"[settf_d256s10/f3] 06:40:21 fold 3 ep 0.50 loss 0.2270 inner AUC 0.958991 (38s)\n"}
+,{"stream_name":"stdout","time":3582.130863972,"data":"[settf_d256s9/f3] 06:40:38 fold 3 ep 1.50 loss 0.1881 inner AUC 0.959647 (110s)\n"}
+,{"stream_name":"stdout","time":3582.984364226,"data":"[settf_d256s10/f3] 06:40:39 fold 3 ep 0.75 loss 0.2729 inner AUC 0.959832 (56s)\n"}
+,{"stream_name":"stdout","time":3600.493569836,"data":"[settf_d256s9/f3] 06:40:57 fold 3 ep 1.75 loss 0.1985 inner AUC 0.960206 (128s)\n"}
+,{"stream_name":"stdout","time":3601.35982281,"data":"[settf_d256s10/f3] 06:40:58 fold 3 ep 1.00 loss 0.2433 inner AUC 0.960207 (75s)\n"}
+,{"stream_name":"stdout","time":3618.819845228,"data":"[settf_d256s9/f3] 06:41:15 fold 3 ep 2.00 loss 0.2552 inner AUC 0.960227 (147s)\n"}
+,{"stream_name":"stdout","time":3619.833614818,"data":"[settf_d256s10/f3] 06:41:16 fold 3 ep 1.25 loss 0.2191 inner AUC 0.960594 (93s)\n"}
+,{"stream_name":"stdout","time":3637.279490437,"data":"[settf_d256s9/f3] 06:41:34 fold 3 ep 2.25 loss 0.2236 inner AUC 0.959846 (165s)\n"}
+,{"stream_name":"stdout","time":3638.425165243,"data":"[settf_d256s10/f3] 06:41:35 fold 3 ep 1.50 loss 0.2353 inner AUC 0.961245 (112s)\n"}
+,{"stream_name":"stdout","time":3655.823375605,"data":"[settf_d256s9/f3] 06:41:52 fold 3 ep 2.50 loss 0.2196 inner AUC 0.960160 (184s)\n"}
+,{"stream_name":"stdout","time":3657.055167033,"data":"[settf_d256s10/f3] 06:41:53 fold 3 ep 1.75 loss 0.2013 inner AUC 0.961907 (130s)\n"}
+,{"stream_name":"stdout","time":3674.302710382,"data":"[settf_d256s9/f3] 06:42:11 fold 3 ep 2.74 loss 0.2538 inner AUC 0.960273 (202s)\n"}
+,{"stream_name":"stdout","time":3675.674920663,"data":"[settf_d256s10/f3] 06:42:12 fold 3 ep 2.00 loss 0.2144 inner AUC 0.961889 (149s)\n"}
+,{"stream_name":"stdout","time":3692.735497292,"data":"[settf_d256s9/f3] 06:42:29 fold 3 ep 2.99 loss 0.1931 inner AUC 0.960300 (221s)\n"}
+,{"stream_name":"stdout","time":3694.235947417,"data":"[settf_d256s9/f3] 06:42:31 fold 3 ep 3.00 loss 0.2169 inner AUC 0.960300 (222s)\n"}
+,{"stream_name":"stdout","time":3694.301067105,"data":"[settf_d256s10/f3] 06:42:31 fold 3 ep 2.25 loss 0.1838 inner AUC 0.961879 (168s)\n"}
+,{"stream_name":"stdout","time":3711.294466094,"data":"[settf_d256s9/f3] 06:42:48 fold 3: VAL AUC 0.960803 (inner best 0.960300) in 239s\n"}
+,{"stream_name":"stdout","time":3712.904728364,"data":"[settf_d256s10/f3] 06:42:49 fold 3 ep 2.50 loss 0.2123 inner AUC 0.962048 (186s)\n"}
+,{"stream_name":"stdout","time":3713.084442738,"data":"[kg   61.9m] settf_d256s9/f3 finished rc=0 in 4.3 min\n"}
+,{"stream_name":"stdout","time":3713.084482685,"data":"[kg   61.9m] settf_d384s7/f4 -\u003e gpu 0: python src/train_settf.py --name settf_d384s7 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 7 --sigma 32 --epochs 3 --folds 4\n"}
+,{"stream_name":"stdout","time":3731.425982016,"data":"[settf_d384s7/f4] 06:43:08 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":3731.56222763,"data":"[settf_d256s10/f3] 06:43:08 fold 3 ep 2.74 loss 0.2342 inner AUC 0.962231 (205s)\n"}
+,{"stream_name":"stdout","time":3731.786678003,"data":"[settf_d384s7/f4] 06:43:08 fold 4: loaded artifacts/settf_d384s7/pretrained_0.pt\n"}
+,{"stream_name":"stdout","time":3750.187301514,"data":"[settf_d256s10/f3] 06:43:27 fold 3 ep 2.99 loss 0.2099 inner AUC 0.962221 (223s)\n"}
+,{"stream_name":"stdout","time":3751.70863225,"data":"[settf_d256s10/f3] 06:43:28 fold 3 ep 3.00 loss 0.1823 inner AUC 0.962220 (225s)\n"}
+,{"stream_name":"stdout","time":3761.688840285,"data":"[settf_d384s7/f4] 06:43:38 fold 4 ep 0.25 loss 0.2149 inner AUC 0.956400 (29s)\n"}
+,{"stream_name":"stdout","time":3769.131381108,"data":"[settf_d256s10/f3] 06:43:45 fold 3: VAL AUC 0.960807 (inner best 0.962231) in 242s\n"}
+,{"stream_name":"stdout","time":3771.082808834,"data":"[kg   62.8m] settf_d256s10/f3 finished rc=0 in 4.4 min\n"}
+,{"stream_name":"stdout","time":3771.082871719,"data":"[kg   62.8m] settf_d384s8/f4 -\u003e gpu 1: python src/train_settf.py --name settf_d384s8 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 8 --sigma 32 --epochs 3 --folds 4\n"}
+,{"stream_name":"stdout","time":3788.976119865,"data":"[settf_d384s8/f4] 06:44:05 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":3789.3182559,"data":"[settf_d384s8/f4] 06:44:06 fold 4: loaded artifacts/settf_d384s8/pretrained_1.pt\n"}
+,{"stream_name":"stdout","time":3790.353292404,"data":"[settf_d384s7/f4] 06:44:07 fold 4 ep 0.50 loss 0.2482 inner AUC 0.958108 (57s)\n"}
+,{"stream_name":"stdout","time":3820.736774284,"data":"[settf_d384s7/f4] 06:44:37 fold 4 ep 0.75 loss 0.2662 inner AUC 0.959397 (88s)\n"}
+,{"stream_name":"stdout","time":3820.816919668,"data":"[settf_d384s8/f4] 06:44:37 fold 4 ep 0.25 loss 0.3234 inner AUC 0.957278 (30s)\n"}
+,{"stream_name":"stdout","time":3850.675909722,"data":"[settf_d384s7/f4] 06:45:07 fold 4 ep 1.00 loss 0.1792 inner AUC 0.959510 (118s)\n"}
+,{"stream_name":"stdout","time":3850.699056465,"data":"[settf_d384s8/f4] 06:45:07 fold 4 ep 0.50 loss 0.2627 inner AUC 0.958428 (60s)\n"}
+,{"stream_name":"stdout","time":3879.887299032,"data":"[settf_d384s7/f4] 06:45:36 fold 4 ep 1.25 loss 0.1935 inner AUC 0.960078 (147s)\n"}
+,{"stream_name":"stdout","time":3880.159162537,"data":"[settf_d384s8/f4] 06:45:36 fold 4 ep 0.75 loss 0.2154 inner AUC 0.959748 (90s)\n"}
+,{"stream_name":"stdout","time":3909.525667614,"data":"[settf_d384s7/f4] 06:46:06 fold 4 ep 1.50 loss 0.2017 inner AUC 0.960884 (177s)\n"}
+,{"stream_name":"stdout","time":3910.131082258,"data":"[settf_d384s8/f4] 06:46:06 fold 4 ep 1.00 loss 0.2210 inner AUC 0.959325 (120s)\n"}
+,{"stream_name":"stdout","time":3939.314035787,"data":"[settf_d384s7/f4] 06:46:36 fold 4 ep 1.74 loss 0.2860 inner AUC 0.961143 (206s)\n"}
+,{"stream_name":"stdout","time":3940.376655595,"data":"[settf_d384s8/f4] 06:46:37 fold 4 ep 1.25 loss 0.2460 inner AUC 0.959724 (150s)\n"}
+,{"stream_name":"stdout","time":3969.010992741,"data":"[settf_d384s7/f4] 06:47:05 fold 4 ep 1.99 loss 0.2265 inner AUC 0.960979 (236s)\n"}
+,{"stream_name":"stdout","time":3970.599003522,"data":"[settf_d384s8/f4] 06:47:07 fold 4 ep 1.50 loss 0.2314 inner AUC 0.960530 (180s)\n"}
+,{"stream_name":"stdout","time":3998.617817125,"data":"[settf_d384s7/f4] 06:47:35 fold 4 ep 2.24 loss 0.2485 inner AUC 0.961173 (266s)\n"}
+,{"stream_name":"stdout","time":4000.705540191,"data":"[settf_d384s8/f4] 06:47:37 fold 4 ep 1.75 loss 0.2228 inner AUC 0.960708 (210s)\n"}
+,{"stream_name":"stdout","time":4028.134562779,"data":"[settf_d384s7/f4] 06:48:04 fold 4 ep 2.49 loss 0.1995 inner AUC 0.961388 (295s)\n"}
+,{"stream_name":"stdout","time":4030.781405646,"data":"[settf_d384s8/f4] 06:48:07 fold 4 ep 2.00 loss 0.2584 inner AUC 0.960952 (240s)\n"}
+,{"stream_name":"stdout","time":4057.75158058,"data":"[settf_d384s7/f4] 06:48:34 fold 4 ep 2.74 loss 0.1934 inner AUC 0.961430 (325s)\n"}
+,{"stream_name":"stdout","time":4060.975059265,"data":"[settf_d384s8/f4] 06:48:37 fold 4 ep 2.25 loss 0.2165 inner AUC 0.960705 (271s)\n"}
+,{"stream_name":"stdout","time":4087.354892458,"data":"[settf_d384s7/f4] 06:49:04 fold 4 ep 2.99 loss 0.2076 inner AUC 0.961452 (354s)\n"}
+,{"stream_name":"stdout","time":4090.071387671,"data":"[settf_d384s7/f4] 06:49:06 fold 4 ep 3.00 loss 0.2407 inner AUC 0.961453 (357s)\n"}
+,{"stream_name":"stdout","time":4091.229515037,"data":"[settf_d384s8/f4] 06:49:08 fold 4 ep 2.50 loss 0.2044 inner AUC 0.960516 (301s)\n"}
+,{"stream_name":"stdout","time":4117.901182079,"data":"[settf_d384s7/f4] 06:49:34 fold 4: VAL AUC 0.960522 (inner best 0.961453) in 385s\n"}
+,{"stream_name":"stdout","time":4119.117245486,"data":"[kg   68.6m] settf_d384s7/f4 finished rc=0 in 6.8 min\n"}
+,{"stream_name":"stdout","time":4119.11728191,"data":"[kg   68.6m] settf_d256s9/f4 -\u003e gpu 0: python src/train_settf.py --name settf_d256s9 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 9 --sigma 32 --epochs 3 --folds 4\n"}
+,{"stream_name":"stdout","time":4121.478209211,"data":"[settf_d384s8/f4] 06:49:38 fold 4 ep 2.74 loss 0.2569 inner AUC 0.960666 (331s)\n"}
+,{"stream_name":"stdout","time":4136.592279098,"data":"[settf_d256s9/f4] 06:49:53 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":4136.903336759,"data":"[settf_d256s9/f4] 06:49:53 fold 4: loaded artifacts/settf_d256s9/pretrained_0.pt\n"}
+,{"stream_name":"stdout","time":4151.732832963,"data":"[settf_d384s8/f4] 06:50:08 fold 4 ep 2.99 loss 0.2186 inner AUC 0.960710 (361s)\n"}
+,{"stream_name":"stdout","time":4154.20707557,"data":"[settf_d384s8/f4] 06:50:11 fold 4 ep 3.00 loss 0.2111 inner AUC 0.960709 (364s)\n"}
+,{"stream_name":"stdout","time":4156.411512106,"data":"[settf_d256s9/f4] 06:50:13 fold 4 ep 0.25 loss 0.2336 inner AUC 0.955981 (18s)\n"}
+,{"stream_name":"stdout","time":4174.334296287,"data":"[settf_d256s9/f4] 06:50:31 fold 4 ep 0.50 loss 0.2335 inner AUC 0.956178 (36s)\n"}
+,{"stream_name":"stdout","time":4182.48806884,"data":"[settf_d384s8/f4] 06:50:39 fold 4: VAL AUC 0.960371 (inner best 0.960952) in 392s\n"}
+,{"stream_name":"stdout","time":4185.119673162,"data":"[kg   69.7m] settf_d384s8/f4 finished rc=0 in 6.9 min\n"}
+,{"stream_name":"stdout","time":4185.119713537,"data":"[kg   69.7m] settf_d256s10/f4 -\u003e gpu 1: python src/train_settf.py --name settf_d256s10 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 10 --sigma 32 --epochs 3 --folds 4\n"}
+,{"stream_name":"stdout","time":4192.396566892,"data":"[settf_d256s9/f4] 06:50:49 fold 4 ep 0.75 loss 0.2318 inner AUC 0.958228 (54s)\n"}
+,{"stream_name":"stdout","time":4203.179649868,"data":"[settf_d256s10/f4] 06:51:00 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":4203.497449572,"data":"[settf_d256s10/f4] 06:51:00 fold 4: loaded artifacts/settf_d256s10/pretrained_1.pt\n"}
+,{"stream_name":"stdout","time":4210.724495094,"data":"[settf_d256s9/f4] 06:51:07 fold 4 ep 1.00 loss 0.2249 inner AUC 0.958560 (73s)\n"}
+,{"stream_name":"stdout","time":4223.686571645,"data":"[settf_d256s10/f4] 06:51:20 fold 4 ep 0.25 loss 0.2124 inner AUC 0.955233 (19s)\n"}
+,{"stream_name":"stdout","time":4229.369175402,"data":"[settf_d256s9/f4] 06:51:26 fold 4 ep 1.25 loss 0.2406 inner AUC 0.959306 (91s)\n"}
+,{"stream_name":"stdout","time":4242.226475286,"data":"[settf_d256s10/f4] 06:51:39 fold 4 ep 0.50 loss 0.2848 inner AUC 0.957260 (38s)\n"}
+,{"stream_name":"stdout","time":4247.905685373,"data":"[settf_d256s9/f4] 06:51:44 fold 4 ep 1.50 loss 0.1832 inner AUC 0.959949 (110s)\n"}
+,{"stream_name":"stdout","time":4260.660264352,"data":"[settf_d256s10/f4] 06:51:57 fold 4 ep 0.75 loss 0.2390 inner AUC 0.957692 (56s)\n"}
+,{"stream_name":"stdout","time":4266.313886836,"data":"[settf_d256s9/f4] 06:52:03 fold 4 ep 1.75 loss 0.2539 inner AUC 0.960063 (128s)\n"}
+,{"stream_name":"stdout","time":4279.105749656,"data":"[settf_d256s10/f4] 06:52:15 fold 4 ep 1.00 loss 0.3130 inner AUC 0.958160 (74s)\n"}
+,{"stream_name":"stdout","time":4284.747568283,"data":"[settf_d256s9/f4] 06:52:21 fold 4 ep 2.00 loss 0.2554 inner AUC 0.960214 (147s)\n"}
+,{"stream_name":"stdout","time":4297.700867155,"data":"[settf_d256s10/f4] 06:52:34 fold 4 ep 1.25 loss 0.2361 inner AUC 0.959121 (93s)\n"}
+,{"stream_name":"stdout","time":4303.204623545,"data":"[settf_d256s9/f4] 06:52:40 fold 4 ep 2.25 loss 0.2187 inner AUC 0.960337 (165s)\n"}
+,{"stream_name":"stdout","time":4316.305852286,"data":"[settf_d256s10/f4] 06:52:53 fold 4 ep 1.50 loss 0.2017 inner AUC 0.958925 (112s)\n"}
+,{"stream_name":"stdout","time":4321.764443053,"data":"[settf_d256s9/f4] 06:52:58 fold 4 ep 2.50 loss 0.2273 inner AUC 0.960372 (184s)\n"}
+,{"stream_name":"stdout","time":4334.921982113,"data":"[settf_d256s10/f4] 06:53:11 fold 4 ep 1.75 loss 0.2623 inner AUC 0.960480 (130s)\n"}
+,{"stream_name":"stdout","time":4340.289820177,"data":"[settf_d256s9/f4] 06:53:17 fold 4 ep 2.74 loss 0.2342 inner AUC 0.960489 (202s)\n"}
+,{"stream_name":"stdout","time":4353.525736592,"data":"[settf_d256s10/f4] 06:53:30 fold 4 ep 2.00 loss 0.2125 inner AUC 0.961159 (149s)\n"}
+,{"stream_name":"stdout","time":4358.751168604,"data":"[settf_d256s9/f4] 06:53:35 fold 4 ep 2.99 loss 0.2247 inner AUC 0.960519 (221s)\n"}
+,{"stream_name":"stdout","time":4360.254723938,"data":"[settf_d256s9/f4] 06:53:37 fold 4 ep 3.00 loss 0.2119 inner AUC 0.960520 (222s)\n"}
+,{"stream_name":"stdout","time":4372.139407544,"data":"[settf_d256s10/f4] 06:53:48 fold 4 ep 2.25 loss 0.1926 inner AUC 0.961013 (167s)\n"}
+,{"stream_name":"stdout","time":4377.38234906,"data":"[settf_d256s9/f4] 06:53:54 fold 4: VAL AUC 0.960330 (inner best 0.960520) in 239s\n"}
+,{"stream_name":"stdout","time":4379.139205937,"data":"[kg   73.0m] settf_d256s9/f4 finished rc=0 in 4.3 min\n"}
+,{"stream_name":"stdout","time":4390.747268739,"data":"[settf_d256s10/f4] 06:54:07 fold 4 ep 2.50 loss 0.2140 inner AUC 0.961284 (186s)\n"}
+,{"stream_name":"stdout","time":4409.340093362,"data":"[settf_d256s10/f4] 06:54:26 fold 4 ep 2.74 loss 0.2233 inner AUC 0.961328 (205s)\n"}
+,{"stream_name":"stdout","time":4427.951640238,"data":"[settf_d256s10/f4] 06:54:44 fold 4 ep 2.99 loss 0.2525 inner AUC 0.961352 (223s)\n"}
+,{"stream_name":"stdout","time":4429.472766287,"data":"[settf_d256s10/f4] 06:54:46 fold 4 ep 3.00 loss 0.2058 inner AUC 0.961352 (225s)\n"}
+,{"stream_name":"stdout","time":4446.913989753,"data":"[settf_d256s10/f4] 06:55:03 fold 4: VAL AUC 0.960648 (inner best 0.961352) in 242s\n"}
+,{"stream_name":"stdout","time":4449.141858028,"data":"[kg   74.1m] settf_d256s10/f4 finished rc=0 in 4.4 min\n"}
+,{"stream_name":"stdout","time":4449.142606947,"data":"[kg   74.1m] settf_d384s7: all folds done: python src/train_settf.py --name settf_d384s7 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 7 --sigma 32 --epochs 3 --assemble\n"}
+,{"stream_name":"stdout","time":4465.809136968,"data":"[asm settf_d384s7] 06:55:22 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":4466.099048956,"data":"[asm settf_d384s7] 06:55:22 folds done 5; OOF AUC 0.960503 on 100% rows\n"}
+,{"stream_name":"stdout","time":4466.272172276,"data":"[asm settf_d384s7] 06:55:23 logged 0001_settf-d384s7 CV 0.960503\n"}
+,{"stream_name":"stdout","time":4467.146477957,"data":"[kg   74.4m] settf_d384s8: all folds done: python src/train_settf.py --name settf_d384s8 --d 384 --layers 6 --heads 8 --lr 2e-4 --seed 8 --sigma 32 --epochs 3 --assemble\n"}
+,{"stream_name":"stdout","time":4484.015103451,"data":"[asm settf_d384s8] 06:55:40 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":4484.311878739,"data":"[asm settf_d384s8] 06:55:41 folds done 5; OOF AUC 0.960475 on 100% rows\n"}
+,{"stream_name":"stdout","time":4484.483662985,"data":"[asm settf_d384s8] 06:55:41 logged 0002_settf-d384s8 CV 0.960475\n"}
+,{"stream_name":"stdout","time":4485.150043628,"data":"[kg   74.7m] settf_d256s9: all folds done: python src/train_settf.py --name settf_d256s9 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 9 --sigma 32 --epochs 3 --assemble\n"}
+,{"stream_name":"stdout","time":4501.956060517,"data":"[asm settf_d256s9] 06:55:58 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":4502.253068284,"data":"[asm settf_d256s9] 06:55:59 folds done 5; OOF AUC 0.960454 on 100% rows\n"}
+,{"stream_name":"stdout","time":4502.396614613,"data":"[asm settf_d256s9] 06:55:59 logged 0003_settf-d256s9 CV 0.960454\n"}
+,{"stream_name":"stdout","time":4503.153213126,"data":"[kg   75.0m] settf_d256s10: all folds done: python src/train_settf.py --name settf_d256s10 --d 256 --layers 6 --heads 8 --lr 2e-4 --seed 10 --sigma 32 --epochs 3 --assemble\n"}
+,{"stream_name":"stdout","time":4519.881442483,"data":"[asm settf_d256s10] 06:56:16 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda\n"}
+,{"stream_name":"stdout","time":4520.173894761,"data":"[asm settf_d256s10] 06:56:17 folds done 5; OOF AUC 0.960662 on 100% rows\n"}
+,{"stream_name":"stdout","time":4520.31139354,"data":"[asm settf_d256s10] 06:56:17 logged 0004_settf-d256s10 CV 0.960662\n"}
+,{"stream_name":"stdout","time":4521.157886476,"data":"[kg   75.3m] KG_RUN_STATUS settf_d384s7: complete | folds done [0, 1, 2, 3, 4] | incomplete []\n"}
+,{"stream_name":"stdout","time":4521.157914766,"data":"[kg   75.3m] KG_RUN_STATUS settf_d384s8: complete | folds done [0, 1, 2, 3, 4] | incomplete []\n"}
+,{"stream_name":"stdout","time":4521.157920139,"data":"[kg   75.3m] KG_RUN_STATUS settf_d256s9: complete | folds done [0, 1, 2, 3, 4] | incomplete []\n"}
+,{"stream_name":"stdout","time":4521.157924661,"data":"[kg   75.3m] KG_RUN_STATUS settf_d256s10: complete | folds done [0, 1, 2, 3, 4] | incomplete []\n"}
+,{"stream_name":"stdout","time":4521.157944247,"data":"[kg   75.3m] session used 1.26 GPU-hours\n"}
+,{"stream_name":"stderr","time":4523.190282305,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":4523.190314559,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":4523.40940288,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":4523.40944238,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":4524.241218342,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":4525.239512567,"data":"[NbConvertApp] Writing 922923 bytes to __results__.html\n"}
+]

@@ -1,0 +1,3 @@
+06:55:40 699635 train + 299844 test rows, 21 tokens + summary, 3556 value ids, device cuda
+06:55:41 folds done 5; OOF AUC 0.960475 on 100% rows
+06:55:41 logged 0002_settf-d384s8 CV 0.960475
