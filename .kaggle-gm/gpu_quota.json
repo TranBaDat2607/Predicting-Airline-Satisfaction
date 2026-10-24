@@ -1,14 +1,14 @@
 {
- "used_h": 4.19,
- "remaining_h": 25.81,
+ "used_h": 4.92,
+ "remaining_h": 25.08,
  "total_h": 30.0,
  "refresh_at": "2026-10-31T00:00:00Z",
- "fetched_at": "2026-10-24T02:31:58Z",
+ "fetched_at": "2026-10-24T02:57:53Z",
  "tpu": {
   "used_h": 0.0,
   "remaining_h": 20.0,
   "total_h": 20.0,
   "refresh_at": "2026-10-31T00:00:00Z",
-  "fetched_at": "2026-10-24T02:31:58Z"
+  "fetched_at": "2026-10-24T02:57:53Z"
  }
 }

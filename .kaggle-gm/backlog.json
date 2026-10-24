@@ -217,5 +217,22 @@
   "screen_gain": null,
   "full_gain": null,
   "created": "2026-10-24T09:48:15"
+ },
+ {
+  "id": 14,
+  "idea": "TabPFN-3.5 fast checkpoint member (raw+catFD+catFD10, full ctx, 2 seeds)",
+  "evidence": "",
+  "source": "notebook",
+  "gain": 2.0,
+  "prob": 0.3,
+  "cost": 1.0,
+  "gpu_hours": 0.0,
+  "status": "done",
+  "first_experiment": "",
+  "exp_ids": [],
+  "result": "\"OOF 0.96029 (0037), stack 0.962248 vs 0.962249: no gain\"",
+  "screen_gain": null,
+  "full_gain": null,
+  "created": "2026-10-24T09:58:07"
  }
 ]
