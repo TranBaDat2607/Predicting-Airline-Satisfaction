@@ -29,11 +29,24 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import sys
 from pathlib import Path
 
+from . import __version__
+
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _plugin_file(rel: str) -> Path | None:
+    """A file of the plugin outside kgkit (a user-facing template such as templates/CLAUDE.competition.md): beside
+    this kgkit, else in the plugin at $KGKIT_HOME (exported by its SessionStart hook), which is where it is when this
+    kgkit is a copy made by `kgkit vendor` (only the package is copied). None when neither has it."""
+    for base in (PLUGIN_ROOT, os.environ.get("KGKIT_HOME")):
+        if base and (Path(base) / rel).is_file():
+            return Path(base) / rel
+    return None
 
 
 def _read(path: str):
@@ -200,9 +213,13 @@ def cmd_init(a):
     if not gi.exists():
         gi.write_text("data/\nartifacts/\nsubs/*.csv\n*.npy\n*.pkl\n*.pt\n*.pth\n*.ckpt\n*.safetensors\nkaggle.json\n"
                       "__pycache__/\n.ipynb_checkpoints/\nwandb/\n", encoding="utf-8")
-    tmpl = PLUGIN_ROOT / "templates" / "CLAUDE.competition.md"
+    tmpl = _plugin_file("templates/CLAUDE.competition.md")
     cm = root / "CLAUDE.md"
-    if tmpl.exists() and not cm.exists():
+    if not cm.exists() and tmpl is None:
+        print(f"note: CLAUDE.md not written: there is no templates/ beside this kgkit ({PLUGIN_ROOT / 'kgkit'}, a copy "
+              "made by `kgkit vendor`?) and KGKIT_HOME is not the plugin's folder. Run this init again with --force "
+              "and the plugin's kgkit: `PYTHONPATH=\"$KGKIT_HOME\" python -m kgkit init ...`")
+    elif not cm.exists():
         text = tmpl.read_text(encoding="utf-8")
         for k, v in {"{{SLUG}}": st.slug, "{{METRIC}}": st.metric or "TBD",
                      "{{DIRECTION}}": "higher" if st.greater_is_better else "lower",
@@ -1169,11 +1186,14 @@ def cmd_validate(a):
 
 
 def cmd_vendor(a):
-    dest = Path(a.dest) / "kgkit"
+    src, dest = PLUGIN_ROOT / "kgkit", Path(a.dest) / "kgkit"
+    if dest.resolve() == src or dest.resolve() in src.parents:  # dest is removed before copying: it holds the source
+        raise SystemExit(f"{dest} is the kgkit running this command ({__version__}): nothing to copy. A copy is "
+                         f"refreshed from the plugin's kgkit: `PYTHONPATH=\"$KGKIT_HOME\" python -m kgkit vendor {a.dest}`")
     if dest.exists():
         shutil.rmtree(dest)
-    shutil.copytree(PLUGIN_ROOT / "kgkit", dest, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
-    print(f"copied kgkit to {dest}")
+    shutil.copytree(src, dest, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+    print(f"copied kgkit {__version__} from {src} to {dest}")
 
 
 def cmd_datasets(a):
@@ -1213,27 +1233,47 @@ def cmd_gpu(a):
             internet=not a.no_internet, pip=a.pip, wheel_sources=a.wheels, assemble_cmd=a.assemble_cmd,
             post_cmds=a.post_cmd, prune_against=a.prune_against, prune_margin=a.prune_margin,
             prune_min_frac=a.prune_min_frac, slug=a.slug, public=a.public,
-            extra_jobs=[tuple(j) for j in a.extra_job or []])
+            extra_jobs=[tuple(j) for j in a.extra_job or []], input_layout=a.input_layout, split_from=a.split_from)
         tm = json.loads((kdir / "kg-train.json").read_text(encoding="utf-8"))
         print(f"wrote {kdir} (kernel {tm['kernel']}, jobs {tm['jobs']}, {tm['accelerator']}, cap {tm['hours']}h, "
-              f"folds {tm['folds']}, code bundle {tm['bundle_kb']} KB)")
+              f"folds {tm['folds']}, code bundle {tm['bundle_kb']} KB, script {tm['script_kb']} KB)")
+        folders = {}
+        for s in tm["inputs"]:
+            folders.setdefault(s["dest"], []).append(s["ref"])
+        if set(folders) != {"data"}:
+            print("inputs: " + "; ".join(f"{d}/ <- {', '.join(refs)}" for d, refs in folders.items()))
         if tm.get("prune"):
             print(f"pruning against {tm['prune']['baseline']} with margin {tm['prune']['margin']:.5f}")
-        print(f"next: smoke-test the command locally, then  python -m kgkit gpu push {kdir.as_posix()}")
+        if G.source_problem(kdir):
+            print("next: make room as the WARNING above says and build again (`gpu push` refuses this script)")
+        else:
+            print(f"next: smoke-test the command locally, then  python -m kgkit gpu push {kdir.as_posix()}")
     elif a.gpu_cmd == "push":
         rec = G.push(None, a.dir, force=a.force, hours=a.hours, check_sources=not a.no_source_check,
                      check_sessions=not a.no_session_check)
         built = rec.get("jobs") != ["notebook"]
-        print(f"pushed {rec['kernel']} v{rec['version']} ({rec['accelerator']}, cap {rec['hours']}h). Next: "
-              f"python -m kgkit gpu wait {rec['kernel']}  (run it in the background)"
-              + (", then gpu collect" if built else "; `kaggle kernels output` for its files"))
+        print(f"pushed {rec['kernel']} v{rec['version']} ({rec['accelerator']}, cap {rec['hours']}h). "
+              + ("It runs without some of its inputs: see the WARNING above." if rec.get("dropped_sources") else
+                 f"Next: python -m kgkit gpu wait {rec['kernel']}  (run it in the background)"
+                 + (", then gpu collect" if built else "; `kaggle kernels output` for its files")))
     elif a.gpu_cmd == "status":
         root = G._root(None)
-        kernels = a.kernel or list(dict.fromkeys(r["kernel"] for r in G.runs(root) if r.get("status") in G.ACTIVE))
+        confirmed = {r["kernel"] for r in G.confirm_pending(root, a.kernel or None)}
+        recs = G.runs(root)
+        pending = {r["kernel"]: r for r in recs if r.get("status") == G.PENDING}
+        kernels = a.kernel or list(dict.fromkeys(r["kernel"] for r in recs if r.get("status") in G.ACTIVE))
         for k in kernels:
+            if k in pending:
+                p = pending[k]
+                held = "its reservation has lapsed" if G._stale(p, G._now()) else "its cap stays reserved"
+                print(f"{k}: pending (pushed from a background command at {p.get('pushed_at')}; no version has run "
+                      f"on Kaggle since, so {held}. If that command ended without 'successfully pushed': "
+                      f"`kgkit gpu release {k}`)")
+                continue
             s, text = G.kernel_status(k)
             G.note_status(root, k, s)
-            print(f"{k}: {s}" + (f"  ({text})" if s == "unknown" else ""))
+            print(f"{k}: {s}" + (f"  ({text})" if s == "unknown" else "")
+                  + ("  (its push from a background command went through)" if k in confirmed else ""))
         if not kernels:
             print("no active remote runs")
     elif a.gpu_cmd == "release":
@@ -1585,7 +1625,8 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--metric", help="kgkit metric name (default: from competition.json)")
     s.set_defaults(fn=cmd_validate)
 
-    s = sub.add_parser("vendor", help="copy kgkit into DEST/kgkit")
+    s = sub.add_parser("vendor", help="copy this kgkit into DEST/kgkit (a snapshot of this version: vendor again "
+                       "to update it)")
     s.add_argument("dest")
     s.set_defaults(fn=cmd_vendor)
 
@@ -1616,13 +1657,24 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--hours", type=float, required=True, help="session cap (~1.3x the estimate, <= 12; TPU <= 9)")
     s.add_argument("--folds", type=int, nargs="+", help="folds to run (default: all in data/folds.csv)")
     s.add_argument("--accelerator", default="NvidiaTeslaT4",
-                   help="NvidiaTeslaT4 (2x T4) | NvidiaTeslaP100 | TpuV5E8 (TPU quota, one process per chip) | none")
+                   help="NvidiaTeslaT4 (2x T4) | NvidiaTeslaP100 | TpuV5E8 (TPU quota, one process per chip) | "
+                        "TpuV6E8 | none")
     s.add_argument("--user", help="Kaggle username (default: KAGGLE_USERNAME / kaggle.json / `kaggle config view`)")
-    s.add_argument("--dataset", nargs="*", default=[], help="owner/slug datasets linked into data/")
-    s.add_argument("--kernel", nargs="*", default=[], help="owner/slug kernel outputs linked into data/")
+    s.add_argument("--dataset", nargs="*", default=[],
+                   help="owner/slug datasets, linked as --input-layout says; owner/slug=data/<folder> puts one "
+                        "in that folder (as `datasets pull` did locally)")
+    s.add_argument("--kernel", nargs="*", default=[],
+                   help="owner/slug kernel outputs, linked as --input-layout says (or owner/slug=data/<folder>)")
+    s.add_argument("--input-layout", choices=["flat", "nested"], default="flat",
+                   help="where datasets and kernel outputs go: flat = into data/ beside the competition data "
+                        "(a name two inputs share is linked from the first only); nested = each in its own "
+                        "folder, data/ext/<slug>/ and data/ext/kout-<slug>/ for kernel outputs")
     s.add_argument("--model", nargs="*", default=[], help="Kaggle model sources")
     s.add_argument("--resume-from", nargs="*", default=[], help="previous training kernel(s) to resume from")
     s.add_argument("--include", nargs="*", default=["src"], help="code paths bundled into the kernel")
+    s.add_argument("--split-from", metavar="OWNER/SLUG",
+                   help="a dataset holding a copy of data/folds.csv, for a split too big to pack into the kernel "
+                        "(default: packed into it); the run links it from there, checked against yours")
     s.add_argument("--no-internet", action="store_true")
     s.add_argument("--pip", nargs="*", default=[], help="extra packages to pip install in the session")
     s.add_argument("--wheels", nargs="*", default=[], help="datasets holding wheels for offline pip installs")
@@ -1639,8 +1691,8 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("dir", help="a `gpu build` folder, or any kernel folder with kernel-metadata.json (needs --hours)")
     s.add_argument("--hours", type=float, help="session cap (-t); required for folders not made by `gpu build`")
     s.add_argument("--force", action="store_true",
-                   help="push even if the cap exceeds the plannable quota, an input kernel is still running, or "
-                        "the session slots look full")
+                   help="push even if the cap exceeds the plannable quota, an input kernel is still running, "
+                        "the session slots look full, or the machine shape is not one Kaggle is known to accept")
     s.add_argument("--no-source-check", action="store_true", help="skip the check that input kernels have finished")
     s.add_argument("--no-session-check", action="store_true", help="skip the busy-session preflight")
     s = gs.add_parser("status", help="status of active remote runs")
@@ -1665,9 +1717,11 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv=None):
+    # Line-buffered: piped stdout is otherwise written at exit, after a SystemExit message on stderr that points
+    # to the output "above".
     for stream in (sys.stdout, sys.stderr):
         try:
-            stream.reconfigure(encoding="utf-8", errors="replace")
+            stream.reconfigure(encoding="utf-8", errors="replace", line_buffering=True)
         except (AttributeError, ValueError):
             pass
     args = build_parser().parse_args(argv)

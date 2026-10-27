@@ -22,8 +22,12 @@ Standard library only: hooks import it to read the cached quota and the run log.
 from __future__ import annotations
 
 import base64
+import csv
 import datetime as dt
+import difflib
+import hashlib
 import io
+import itertools
 import json
 import os
 import re
@@ -33,13 +37,18 @@ import subprocess
 import sys
 import time
 import zipfile
-from pathlib import Path
+import zlib
+from pathlib import Path, PurePosixPath
 
+from . import evalset as E
+from . import kaggle_cli as KC
 from . import safety
 from . import state as S
 
-PLUGIN_ROOT = Path(__file__).resolve().parents[1]
-RUNNER = PLUGIN_ROOT / "templates" / "kaggle_gpu_runner.py"
+# The runner is part of the package, not of the plugin around it: `kgkit vendor` copies only the package, and a copy
+# must fill in the runner its own config format was written for (the plugin's may be another version's).
+KGKIT_DIR = Path(__file__).resolve().parent
+RUNNER = KGKIT_DIR / "kaggle_gpu_runner.py"
 RUNS_FILE = "gpu_runs.jsonl"
 QUOTA_FILE = "gpu_quota.json"
 SESSION_LIMIT_H = 12.0
@@ -58,13 +67,34 @@ ACCELERATORS = {
 TPU_CHIPS = {"TpuV5E8": 8, "TpuV6E8": 8}
 # Kaggle stores these as TpuV5E8 (verified Oct 2026): ask for the shape that will actually run.
 TPU_REWRITTEN = {"TpuV5E1", "TpuV5E4", "TpuV6E1"}
+# What a push may ask for (`--accelerator`, or machine_shape in kernel-metadata.json; verified Oct 2026): the shapes
+# `gpu build` targets, and Tpu1VmV38 (TPU v3-8, its own queue). Kaggle answers any other name with a bare 400, such
+# as one `kaggle kernels pull -m` wrote: the shape of the kernel's last session, which can carry hardware details a
+# push cannot ask for (NvidiaTeslaT4Highmem).
+MACHINE_SHAPES = {"NvidiaTeslaT4": "2x T4", "NvidiaTeslaP100": "1x P100", "TpuV5E8": "TPU v5e-8",
+                  "TpuV6E8": "TPU v6e-8", "Tpu1VmV38": "TPU v3-8"}
 WEIGHT_RE = r"\.(pt|pth|bin|ckpt|safetensors)$"
 BUNDLE_EXCLUDE_DIRS = {"__pycache__", ".git", ".ipynb_checkpoints", "wandb", ".venv", "venv"}
 BUNDLE_EXCLUDE_SUFFIXES = {".pyc", ".pt", ".pth", ".bin", ".ckpt", ".safetensors", ".npy", ".npz", ".pkl",
                            ".parquet", ".feather", ".zip", ".png", ".jpg", ".jpeg", ".dcm"}
-BUNDLE_WARN_MB, BUNDLE_MAX_MB = 2.0, 20.0
-ACTIVE = ("pushed", "queued", "running")
+# Kaggle refuses a kernel source of 1 MB or more with a bare 400 Bad Request from SaveKernel (its editor says it "must
+# be less than 1 megabytes"; Oct 2026: a 2.6 MB `gpu build` script refused, the same kernel at 0.57 MB taken). The code
+# bundle is in the script as base64, 4/3 of its size.
+SOURCE_MAX_BYTES = 1_000_000
+# The fold split goes in the bundle column by column (`pack_split`); the runner writes data/folds.csv back from it.
+SPLIT_FILE, SPLIT_ARC = "data/folds.csv", "_kg/split"
+SPLIT_CODES_MAX = 256  # a column with at most this many distinct values (the folds) takes one byte per row
+SPLIT_REF_KB = 64  # a column bigger than this as (compressed) text is read from a training file in the session instead
+# Where `gpu build` links attached datasets and kernel outputs in the run (competition data is always in data/).
+INPUT_LAYOUTS = {"flat": "into data/, beside the competition data",
+                 "nested": "each in its own folder: data/ext/<slug>/, kernel outputs data/ext/kout-<slug>/"}
+# A push in a command that went on in the background: Kaggle's reply (and the version) came after the hook ran,
+# so the run may not have started. It reserves its whole cap and takes no status from Kaggle, which still reports
+# an earlier version, until Kaggle lists a version of the kernel run after it (`confirm_pending`).
+PENDING = "pending"
+ACTIVE = (PENDING, "pushed", "queued", "running")
 FINISHED = ("complete", "error", "cancelled")
+CLOCK_SKEW_S = 60  # this machine's clock vs Kaggle's, when a pending push is matched to the kernel's last run
 
 
 def _now() -> dt.datetime:
@@ -113,7 +143,35 @@ def session_limit(resource: str) -> float:
     return SESSION_LIMITS.get(resource, SESSION_LIMIT_H)
 
 
+def machine_shape_problem(shape: str | None) -> str | None:
+    """Why a push must not ask Kaggle for ``shape`` (a machine_shape or --accelerator), with the shape to ask for
+    instead; None when Kaggle takes it, or when it asks for no accelerator."""
+    s = str(shape or "").strip()
+    if not s or s in MACHINE_SHAPES or s.lower() in ("none", "cpu", "no"):
+        return None
+    if s in TPU_REWRITTEN:
+        return f"machine_shape {s} is stored by Kaggle as TpuV5E8: ask for TpuV5E8"
+    low = s.lower()
+    # an accepted name with hardware details after it (a recorded shape), the one accepted name holding it (T4), else
+    # the closest name (a typo)
+    near = max((k for k in MACHINE_SHAPES if low.startswith(k.lower())), key=len, default=None)
+    holding = [k for k in MACHINE_SHAPES if low in k.lower()]
+    near = near or (holding[0] if len(holding) == 1 else None)
+    if near is None:
+        score = {k: difflib.SequenceMatcher(None, low, k.lower()).ratio() for k in MACHINE_SHAPES}
+        near = max(score, key=score.get)
+        near = near if score[near] >= 0.6 else None
+    return (f"machine_shape {s!r} is not one Kaggle's kernel push is known to take (Kaggle answers an unknown shape "
+            "with a bare 400 Bad Request)" + (f": ask for {near}" if near else "") + ". Shapes a push can ask for: "
+            + ", ".join(f"{k} ({v})" for k, v in MACHINE_SHAPES.items()))
+
+
 # ----------------------------------------------------------------------------- kaggle CLI
+PY_NAME_RE = re.compile(r"(?:python|pypy)[\d.]*(?:\.exe)?", re.IGNORECASE)
+PIP_SH_RE = re.compile(r"""'''exec' (["']?)(.+?)\1 "\$0" "\$@"\s*$""")  # pip's #!/bin/sh line 2, for long paths
+_PLAIN: set[str] = set()  # interpreters the Kaggle CLI cannot be imported from: the plain CLI runs instead
+
+
 def kaggle_cmd() -> list[str]:
     if os.environ.get("KGKIT_KAGGLE"):
         return shlex.split(os.environ["KGKIT_KAGGLE"], posix=os.name != "nt")
@@ -121,9 +179,46 @@ def kaggle_cmd() -> list[str]:
     return [exe] if exe else [sys.executable, "-m", "kaggle"]
 
 
+def kaggle_python() -> str | None:
+    """The Python the Kaggle CLI on PATH runs on, from its script's #! line (`#!/usr/bin/env python3` and pip's
+    `#!/bin/sh` form included), or this Python when the CLI is not on PATH (it then runs as `python -m kaggle`).
+    None when that cannot be told: a Windows .exe launcher, or a #! line naming no Python (a .py file must never be
+    handed to a shell)."""
+    exe = shutil.which("kaggle")
+    if exe is None:
+        return sys.executable
+    try:
+        lines = Path(exe).read_bytes()[:1024].decode("utf-8", "replace").splitlines()
+    except OSError:
+        return None
+    words = lines[0][2:].split() if lines and lines[0].startswith("#!") else []
+    if len(words) > 1 and Path(words[0]).name == "env":
+        words = [shutil.which(words[1]) or ""]
+    elif words and Path(words[0]).name == "sh":
+        m = PIP_SH_RE.match(lines[1]) if len(lines) > 1 else None
+        words = [m.group(2)] if m else []
+    py = words[0] if words else ""
+    return py if PY_NAME_RE.fullmatch(Path(py).name) and Path(py).is_file() else None
+
+
+def _run_cli(cmd: list[str], timeout: float) -> subprocess.CompletedProcess:
+    return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="replace",
+                          env=safety.kaggle_env())
+
+
 def run_kaggle(args: list[str], timeout: float = 600) -> subprocess.CompletedProcess:
-    return subprocess.run([*kaggle_cmd(), *args], capture_output=True, text=True, timeout=timeout,
-                          encoding="utf-8", errors="replace", env=safety.kaggle_env())
+    """Run the Kaggle CLI: through `kaggle_cli.py` under the CLI's own Python when `kaggle_python` can tell it, so a
+    refused request shows Kaggle's reason; otherwise as `KGKIT_KAGGLE` (used as given), or plain."""
+    py = None if os.environ.get("KGKIT_KAGGLE") else kaggle_python()
+    if py and py not in _PLAIN:
+        try:
+            r = _run_cli([py, str(Path(KC.__file__).resolve()), *args], timeout)
+        except OSError:
+            r = None
+        if r is not None and r.returncode != KC.NO_CLI:
+            return r
+        _PLAIN.add(py)
+    return _run_cli([*kaggle_cmd(), *args], timeout)
 
 
 _USERNAME: dict[str, str | None] = {}
@@ -253,11 +348,12 @@ def run_label(r: dict) -> str:
 
 def reserved_hours(r: dict, fetched: dt.datetime | None = None) -> float:
     """Quota an active run may still spend after the quota snapshot taken at ``fetched``. A queued run
-    (TPU jobs wait for hours) reserves its whole cap; a running one its cap minus the time it has run."""
+    (TPU jobs wait for hours) or a pending push reserves its whole cap; a running one its cap minus the time it
+    has run."""
     res = run_resource(r)
     cap = float(r.get("hours") or session_limit(res))
     start = _parse_time(r.get("started_at"))
-    if start is None and res != "TPU" and r.get("status") != "queued":
+    if start is None and res != "TPU" and r.get("status") not in ("queued", PENDING):
         start = _parse_time(r.get("pushed_at"))  # GPU batch sessions usually start within minutes
     if start is None:
         return cap
@@ -401,8 +497,13 @@ def log_run(root: str | Path, rec: dict) -> dict:
 
 def record_push(root: str | Path, rec: dict) -> dict:
     """Log a new push. Older still-active entries of the same kernel are marked superseded: Kaggle reports
-    only a kernel's latest version, and a re-push must not hold a second reservation."""
+    only a kernel's latest version, and a re-push must not hold a second reservation. A version already in
+    the log is the same run, logged once: its entry is returned and nothing is written."""
     recs = runs(root)
+    if rec.get("version") is not None:
+        for r in recs:
+            if r.get("kernel") == rec.get("kernel") and r.get("version") == rec.get("version"):
+                return r
     for r in recs:
         if r.get("kernel") == rec.get("kernel") and r.get("status") in ACTIVE:
             r.update(status="superseded", finished_at=r.get("finished_at") or _iso(_now()))
@@ -412,10 +513,11 @@ def record_push(root: str | Path, rec: dict) -> dict:
 
 
 def update_run(root: str | Path, kernel: str, version: int | None = None, **fields) -> dict | None:
-    """Update the latest run of ``kernel`` (optionally a given version)."""
+    """Update the latest run of ``kernel`` (optionally a given version); a pending push is not a run yet."""
     recs = runs(root)
     for r in reversed(recs):
-        if r.get("kernel") == kernel and (version is None or r.get("version") in (None, version)):
+        if (r.get("kernel") == kernel and r.get("status") != PENDING
+                and (version is None or r.get("version") in (None, version))):
             r.update(fields)
             _write_runs(root, recs)
             return r
@@ -425,9 +527,10 @@ def update_run(root: str | Path, kernel: str, version: int | None = None, **fiel
 def note_status(root: str | Path, kernel: str, status: str) -> None:
     """Record a status read from Kaggle. A finished status closes every active entry of the kernel (Kaggle
     reports only the latest version, and earlier versions ended before it); a running one stamps
-    ``started_at`` the first time it is seen, so a queued TPU job is not charged for its queue time."""
+    ``started_at`` the first time it is seen, so a queued TPU job is not charged for its queue time. A pending
+    push takes neither: the status is still an earlier version's."""
     recs = runs(root)
-    mine = [r for r in recs if r.get("kernel") == kernel]
+    mine = [r for r in recs if r.get("kernel") == kernel and r.get("status") != PENDING]
     if not mine or status not in (*FINISHED, "queued", "running"):
         return
     now = _iso(_now())
@@ -457,11 +560,38 @@ def release(root: str | Path, kernel: str, status: str = "released") -> int:
     return n
 
 
+def confirm_pending(root: str | Path, kernels: list[str] | None = None) -> list[dict]:
+    """Pending pushes (of ``kernels``, default all) whose kernel Kaggle lists as run after the background command
+    started: the push went through, so each becomes an ordinary entry timed from that run, and Kaggle's status is
+    its own from then on. One listing call, made only when the log has a pending entry. Returns those confirmed."""
+    recs = runs(root)
+    pend = [r for r in recs if r.get("status") == PENDING and (kernels is None or r.get("kernel") in kernels)]
+    if not pend:
+        return []
+    ran = {ref.lower(): t for ref, t in recent_kernels(20) or [] if t is not None}
+    done = []
+    for r in pend:
+        t, since = ran.get(str(r.get("kernel")).lower()), _parse_time(r.get("pushed_at"))
+        if t is not None and since is not None and t >= since - dt.timedelta(seconds=CLOCK_SKEW_S):
+            r.update(status="pushed", pushed_at=_iso(t))
+            done.append(r)
+    if done:
+        _write_runs(root, recs)
+    return done
+
+
 def refresh_runs(root: str | Path) -> dict[str, str]:
-    """Ask Kaggle for the status of every kernel the log still has as active (one call per kernel)."""
-    kernels = list(dict.fromkeys(r["kernel"] for r in runs(root) if r.get("status") in ACTIVE and r.get("kernel")))
+    """Ask Kaggle for the status of every kernel the log still has as active (one call per kernel). Pending
+    pushes are looked up first (`confirm_pending`); one Kaggle has not run yet is reported as pending."""
+    confirm_pending(root)
+    recs = runs(root)
+    kernels = list(dict.fromkeys(r["kernel"] for r in recs if r.get("status") in ACTIVE and r.get("kernel")))
+    pending = {r.get("kernel") for r in recs if r.get("status") == PENDING}
     out = {}
     for k in kernels:
+        if k in pending:
+            out[k] = PENDING
+            continue
         try:
             s, _ = kernel_status(k)
         except (OSError, subprocess.SubprocessError):
@@ -512,15 +642,175 @@ def _add_tree(z: zipfile.ZipFile, src: Path, arc: str, base: Path | None = None)
     return n
 
 
-def build_bundle(root: Path, include: list[str], baseline_dir: Path | None = None) -> bytes:
-    """Zip of the code a remote run needs. Data never goes in here: attach it as a dataset/competition."""
+def _split_rows(data: bytes):
+    """The rows of a split file's bytes, blank lines skipped (kgkit's fingerprint and pandas skip them too). UTF-8 is
+    decoded strictly (UnicodeDecodeError), so no cell is changed on the way."""
+    return filter(None, csv.reader(io.TextIOWrapper(io.BytesIO(data), encoding="utf-8-sig", newline="")))
+
+
+def _batches(rows, size: int = 1 << 16):
+    while True:
+        batch = list(itertools.islice(rows, size))
+        if not batch:
+            return
+        yield batch
+
+
+def _cells(rows) -> bytes:
+    """Rows as the split's digest takes them: cells joined by \\x1f, each row ended by \\x1e. The runner takes the same
+    digest of the file it writes."""
+    return "".join("\x1f".join(r) + "\x1e" for r in rows).encode("utf-8")
+
+
+def _as_range(state, cells: tuple, n: int):
+    """(start, step) while a column, of which ``cells`` are rows n, n+1, ..., is the integers start, start + step, ...
+    written as Python writes them; False once it is not."""
+    if state is None:
+        try:
+            a, b = int(cells[0]), int(cells[1])
+        except (ValueError, IndexError):
+            return False
+        state = (a, b - a) if a != b else False
+    if state is False:
+        return False
+    lo = state[0] + state[1] * n
+    return state if cells == tuple(map(str, range(lo, lo + state[1] * len(cells), state[1]))) else False
+
+
+def _as_codes(values: dict | None, codes: bytearray, cells: tuple) -> dict | None:
+    """Add ``cells`` to a column's codes, one byte per row (``values``: cell -> code, in order of first appearance);
+    None once the column has more than SPLIT_CODES_MAX distinct values."""
+    if values is None:
+        return None
+    for v in dict.fromkeys(cells):
+        values.setdefault(v, len(values))
+    if len(values) > SPLIT_CODES_MAX:
+        codes.clear()
+        return None
+    codes.extend(map(values.__getitem__, cells))
+    return values
+
+
+def _training_files(root: Path) -> list[str]:
+    """CSV files under data/ that a split's columns can be read from in the session, where the competition data and
+    the inputs are linked into data/ too: the file `kgkit folds` read (.kaggle-gm/folds_spec.json), then
+    data/train.csv. Paths relative to the project root."""
+    names = []
+    try:
+        names.append(str(json.loads((root / S.STATE_DIR / "folds_spec.json").read_text(encoding="utf-8"))["train"]))
+    except (OSError, ValueError, KeyError, TypeError):
+        pass
+    out = []
+    for name in [*names, "data/train.csv"]:
+        p = Path(name)
+        if p.is_absolute():
+            try:
+                p = p.relative_to(root.absolute())
+            except ValueError:
+                continue
+        rel = PurePosixPath(os.path.normpath(p).replace("\\", "/"))
+        if (rel.parts[:1] == ("data",) and ".." not in rel.parts and rel.suffix.lower() == ".csv"
+                and rel.as_posix() not in (SPLIT_FILE, *out) and (root / rel).is_file()):
+            out.append(rel.as_posix())
+    return out
+
+
+def _same_columns(path: Path, data: bytes, want: dict[int, str]) -> set[int]:
+    """The split's columns ``want`` (index -> name) that the CSV at ``path`` has under the same name, cell for cell and
+    row for row (blank lines skipped in both)."""
+    try:
+        with path.open(encoding="utf-8-sig", newline="") as f:
+            theirs = filter(None, csv.reader(f))
+            head = next(theirs, [])
+            at = {j: head.index(name) for j, name in want.items() if name in head}
+            if not at:
+                return set()
+            mine = _split_rows(data)
+            next(mine)
+            for a, b in itertools.zip_longest(mine, theirs):
+                if a is None or b is None:
+                    return set()
+                at = {j: i for j, i in at.items() if i < len(b) and a[j] == b[i]}
+                if not at:
+                    return set()
+    except (OSError, UnicodeDecodeError, csv.Error):
+        return set()
+    return set(at)
+
+
+def pack_split(root: Path, data: bytes) -> tuple[dict, dict[str, bytes]] | None:
+    """The fold split file's bytes as the runner writes data/folds.csv back from them: a manifest (header, rows, a
+    digest of the cells, the form of each column) and the bundle members holding the columns. A column is an integer
+    range (nothing to store), one byte per row (at most SPLIT_CODES_MAX distinct values: the folds), or its cells as
+    text; a text column bigger than SPLIT_REF_KB is read in the session from a training file that has it, row for row
+    (`_training_files`), and the runner checks it there. Every cell comes back as it was; the file is written with LF
+    line endings and the quotes its cells need. None when the file is not such a table (not UTF-8, or rows of other
+    widths): it then goes in as it is."""
+    try:
+        rows = _split_rows(data)
+        header = next(rows)
+        digest = hashlib.sha1(_cells([header]))
+        ranges, values, codes, n = [None] * len(header), [{} for _ in header], [bytearray() for _ in header], 0
+        for batch in _batches(rows):
+            if any(len(r) != len(header) for r in batch):
+                return None
+            digest.update(_cells(batch))
+            for j, cells in enumerate(zip(*batch)):
+                ranges[j] = _as_range(ranges[j], cells, n)
+                values[j] = _as_codes(values[j], codes[j], cells)
+            n += len(batch)
+    except (StopIteration, UnicodeDecodeError, csv.Error):
+        return None
+    text = {j: [] for j in range(len(header)) if not ranges[j] and values[j] is None}
+    if text:
+        rows = _split_rows(data)
+        next(rows)
+        for batch in _batches(rows):
+            for j, parts in text.items():
+                parts.append(json.dumps([r[j] for r in batch]))
+        text = {j: "\n".join(parts).encode("ascii") for j, parts in text.items()}
+    big = {j: header[j] for j, t in text.items() if len(zlib.compress(t, 6)) > SPLIT_REF_KB * 1024}
+    refs = {}
+    for rel in _training_files(root) if big else []:
+        refs.update(dict.fromkeys(_same_columns(root / rel, data, {j: c for j, c in big.items() if j not in refs}), rel))
+    members, columns = {}, []
+    for j in range(len(header)):
+        member = f"{SPLIT_ARC}/{j}"
+        if ranges[j]:
+            columns.append({"range": list(ranges[j])})
+        elif values[j] is not None:
+            members[member] = bytes(codes[j])
+            columns.append({"codes": member, "values": list(values[j])})
+        elif j in refs:
+            columns.append({"ref": refs[j]})
+        else:
+            members[member] = text[j]
+            columns.append({"text": member})
+    return ({"file": SPLIT_FILE, "rows": n, "header": header, "columns": columns, "digest": digest.hexdigest()},
+            members)
+
+
+def split_summary(split: dict) -> str:
+    """How a fold split reaches the session: '700000 rows; id: a range, fold: 5 values' (`pack_split`), or the
+    dataset it is linked from (`--split-from`)."""
+    if split.get("from"):
+        return f"linked from the dataset {split['from']}"
+    how = [f"{name}: " + ("a range" if "range" in c else f"{len(c['values'])} values" if "codes" in c
+                          else f"read from {c['ref']}" if "ref" in c else "text")
+           for name, c in zip(split["header"], split["columns"])]
+    return f"{split['rows']} rows; " + ", ".join(how)
+
+
+def build_bundle(root: Path, include: list[str], baseline_dir: Path | None = None,
+                 extra: dict[str, bytes] | None = None) -> bytes:
+    """Zip of the code a remote run needs, and ``extra`` members (the fold split, `pack_split`). Data never goes in
+    here: attach it as a dataset/competition."""
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as z:
-        _add_tree(z, PLUGIN_ROOT / "kgkit", "kgkit")
+        _add_tree(z, KGKIT_DIR, "kgkit")
         z.write(root / S.STATE_DIR / S.STATE_FILE, f"{S.STATE_DIR}/{S.STATE_FILE}")
-        folds = root / "data" / "folds.csv"
-        if folds.is_file():  # the frozen split must be identical remotely (folds_hash matches the local ledger)
-            z.write(folds, "data/folds.csv")
+        for arc, blob in (extra or {}).items():
+            z.writestr(arc, blob)
         for inc in include:
             p = (root / inc)
             if not p.exists():
@@ -530,6 +820,98 @@ def build_bundle(root: Path, include: list[str], baseline_dir: Path | None = Non
             for c in sorted(baseline_dir.glob("curve_fold*.json")):
                 z.write(c, f"_kg/baseline/{c.name}")
     return buf.getvalue()
+
+
+def bundle_parts(payload: bytes) -> list[tuple[str, int]]:
+    """(part, bytes it takes in the kernel script) of a code bundle, biggest first: each top-level folder or file, with
+    the fold split and the baseline's learning curves as parts of their own."""
+    parts: dict[str, int] = {}
+    for i in zipfile.ZipFile(io.BytesIO(payload)).infolist():
+        name = i.filename
+        part = ("the fold split" if name.startswith(f"{SPLIT_ARC}/") or name == SPLIT_FILE
+                else "the baseline's learning curves" if name.startswith("_kg/baseline/")
+                else name.split("/")[0] + ("/" if "/" in name else ""))
+        parts[part] = parts.get(part, 0) + i.compress_size
+    return sorted(((p, b * 4 // 3) for p, b in parts.items()), key=lambda pb: -pb[1])
+
+
+def _size(b: float) -> str:
+    return f"{b / 1e6:.2f} MB" if b >= 1e6 else f"{b / 1e3:.0f} KB"
+
+
+def _csv_header(path: Path) -> list[str]:
+    try:
+        with path.open(encoding="utf-8-sig", newline="") as f:
+            return next(filter(None, csv.reader(f)), [])
+    except (OSError, UnicodeDecodeError, csv.Error):
+        return []
+
+
+def script_size_warning(root: Path, size: int, payload: bytes, split: dict | None) -> str:
+    """'' for a kernel script Kaggle takes; else what takes the space and how to make room. ``split``: the config's
+    (`pack_split`'s manifest, the dataset of --split-from, or None for data/folds.csv as it is)."""
+    if size < SOURCE_MAX_BYTES:
+        return ""
+    parts = bundle_parts(payload)
+    biggest = ", ".join(f"{p} {_size(b)}" for p, b in parts[:3] if b >= 1000)
+    dataset = ("put data/folds.csv in a private dataset (`kaggle datasets create`) and build with --split-from "
+               "<owner>/<slug>; the run links it from there, checked against yours")
+    packed = split is not None and "columns" in split
+    text = [name for name, c in zip(split["header"], split["columns"]) if "text" in c] if packed else []
+    if not parts or parts[0][0] != "the fold split" or (split is not None and not packed):
+        how = "Keep data out of --include and attach it as a dataset (--dataset)."
+    elif split is None:
+        how = (f"data/folds.csv goes in as it is (it is not UTF-8, or its rows differ in width): save it as a plain "
+               f"UTF-8 CSV to have it packed, or {dataset}.")
+    elif text:
+        held = {}  # text column -> the first training file with a column of that name
+        for rel in _training_files(root):
+            for name in _csv_header(root / rel):
+                if name in text:
+                    held.setdefault(name, rel)
+        order = "; ".join(f"{name!r} is not the column of {rel} row for row: written in {rel}'s row order with its "
+                          "values, it would be read from there in the session instead" for name, rel in held.items())
+        how = (f"Its column(s) {', '.join(map(repr, text))} go in as text" + (f" ({order})" if order else "")
+               + f". Or {dataset}.")
+    else:
+        how = f"It is too big even packed: {dataset}."
+    return (f"WARNING: the kernel script is {_size(size)}, and Kaggle refuses a kernel source of 1 MB or more with a "
+            f"bare 400 Bad Request (`gpu push` stops before sending it). Its biggest parts: {biggest}. {how}")
+
+
+def input_sources(datasets: list[str], kernels: list[str], layout: str = "flat") -> list[dict]:
+    """``--dataset`` / ``--kernel`` arguments as the runner's sources: {ref, kind, dest}, ``dest`` being the
+    folder (relative to the project root, so the same locally) that the input's files appear in. An argument is
+    ``owner/slug``, placed by ``layout``, or ``owner/slug=<folder>`` with the folder ``data`` or one under it."""
+    if layout not in INPUT_LAYOUTS:
+        raise SystemExit(f"--input-layout {layout}: one of {', '.join(INPUT_LAYOUTS)}")
+    out = []
+    for kind, args in (("dataset", datasets), ("kernel", kernels)):
+        for arg in dict.fromkeys(args):
+            ref, given, dest = (x.strip() for x in arg.partition("="))
+            if not re.fullmatch(r"[^/\s=]+/[^/\s=]+", ref):
+                raise SystemExit(f"--{kind} {arg}: expected <owner>/<slug>, or <owner>/<slug>=<folder under data/>")
+            if given:
+                p = PurePosixPath(dest.replace("\\", "/"))
+                if p.is_absolute() or ".." in p.parts or p.parts[:1] != ("data",):
+                    raise SystemExit(f"--{kind} {arg}: the folder must be data or one under it, relative to the "
+                                     f"project root (e.g. {ref}=data/ext/{ref.split('/')[1]})")
+                dest = p.as_posix()
+            elif layout == "nested":
+                dest = f"data/ext/{'kout-' if kind == 'kernel' else ''}{ref.split('/')[1]}"
+            else:
+                dest = "data"
+            out.append({"ref": ref, "kind": kind, "dest": dest, "auto": not given})
+    for i, s in enumerate(out):  # two inputs share a folder only when both were given it
+        for o in out[i + 1:]:
+            same_input = (o["kind"], o["ref"]) == (s["kind"], s["ref"])
+            if o["dest"] == s["dest"] != "data" and not same_input and (s["auto"] or o["auto"]):
+                m = o if o["auto"] else s
+                raise SystemExit(f"{s['ref']} and {o['ref']} would share the folder {s['dest']}/: give {m['ref']} "
+                                 f"its own, e.g. --{m['kind']} {m['ref']}={s['dest']}-{m['ref'].split('/')[0]}")
+    for s in out:
+        del s["auto"]
+    return out
 
 
 def _accepted_or_best(cands: list[dict], gib: bool) -> dict | None:
@@ -576,19 +958,30 @@ def build_kernel(root: str | Path | None, name: str, cmd: str, hours: float, fol
                  wheel_sources: list[str] = (), assemble_cmd: str | None = None, post_cmds: list[str] = (),
                  prune_against: str | None = None, prune_margin: float | None = None,
                  prune_min_frac: float = 0.3, slug: str | None = None, out_dir: str | Path | None = None,
-                 public: bool = False, extra_jobs: list[tuple[str, str]] = ()) -> Path:
+                 public: bool = False, extra_jobs: list[tuple[str, str]] = (), input_layout: str = "flat",
+                 split_from: str | None = None) -> Path:
     """Write ``kernels/<slug>/`` (kernel-metadata.json + generated runner script + kg-train.json).
 
     ``extra_jobs`` ((name, cmd) pairs) share the session: e.g. two 1-fold screens of different ideas
-    run side by side on the two T4s instead of leaving one GPU idle."""
+    run side by side on the two T4s instead of leaving one GPU idle. ``datasets`` / ``kernels`` are linked
+    into the run as :func:`input_sources` places them. data/folds.csv goes in the code bundle as :func:`pack_split`
+    packs it, or, with ``split_from`` (a dataset holding a copy of it, for a split too big for a kernel script), is
+    linked from that dataset; either way the runner checks it against yours before anything runs."""
     root = _root(root)
     st = S.load(root)
     if st is None:
         raise SystemExit("not inside a competition workspace (no .kaggle-gm/competition.json)")
-    if accelerator in TPU_REWRITTEN:
-        raise SystemExit(f"--accelerator {accelerator}: Kaggle stores it as TpuV5E8; ask for TpuV5E8")
+    try:  # before any work, not after the bundle is built
+        runner = RUNNER.read_text(encoding="utf-8")
+    except OSError as e:
+        raise SystemExit(f"this kgkit ({KGKIT_DIR}) has no kernel runner ({e}): copy it again from the plugin's, "
+                         "`PYTHONPATH=\"$KGKIT_HOME\" python -m kgkit vendor <dest>`")
+    sources = input_sources(list(datasets), list(kernels), input_layout)
     if accelerator not in ACCELERATORS and accelerator != "none":
-        raise SystemExit(f"--accelerator must be one of {sorted(ACCELERATORS)} or none")
+        problem = machine_shape_problem(accelerator)
+        raise SystemExit(f"--accelerator: {problem}" if problem else
+                         f"--accelerator {accelerator}: `gpu build` targets {', '.join(ACCELERATORS)} or none (a "
+                         "kernel of your own can ask for other shapes: `gpu push <dir> --hours H`)")
     res = resource_of(accelerator)
     if not 0 < hours <= session_limit(res):
         raise SystemExit(f"--hours must be in (0, {session_limit(res):g}] (Kaggle {res} session limit)")
@@ -596,12 +989,17 @@ def build_kernel(root: str | Path | None, name: str, cmd: str, hours: float, fol
     if not user:
         raise SystemExit("cannot determine your Kaggle username (KAGGLE_USERNAME, kaggle.json and "
                          "`kaggle config view` gave none): pass --user")
-    fp = root / "data" / "folds.csv"
-    all_folds = None
-    if fp.is_file():
-        rows = fp.read_text(encoding="utf-8").splitlines()
-        idx = rows[0].split(",").index("fold")
-        all_folds = sorted({int(l.split(",")[idx]) for l in rows[1:] if l.strip()})
+    fp = root / SPLIT_FILE
+    all_folds, split_data = None, fp.read_bytes() if fp.is_file() else None
+    if split_data is not None:
+        try:
+            all_folds = E.fold_ids(split_data)
+        except ValueError as e:
+            raise SystemExit(f"data/folds.csv: {e}")
+    if split_from is not None and not re.fullmatch(r"[^/\s=]+/[^/\s=]+", split_from):
+        raise SystemExit(f"--split-from {split_from}: expected <owner>/<slug> of a dataset holding data/folds.csv")
+    if split_from is not None and split_data is None:
+        raise SystemExit("--split-from: there is no data/folds.csv here to check the dataset's copy against")
     if folds is None:
         if "{fold}" in cmd and all_folds is None:
             raise SystemExit("--folds not given and data/folds.csv missing")
@@ -634,22 +1032,25 @@ def build_kernel(root: str | Path | None, name: str, cmd: str, hours: float, fol
     resume_src = list(resume_from)
     commit, dirty = _git(root)
     built = _iso(_now())
+    split, split_members = None, {}
+    if split_from:
+        split = {"file": SPLIT_FILE, "from": split_from, "bytes": len(split_data),
+                 "sha1": hashlib.sha1(split_data).hexdigest()}
+    elif split_data is not None:  # the frozen split must be identical remotely (folds_hash matches the local ledger)
+        split, split_members = pack_split(root, split_data) or (None, {SPLIT_FILE: split_data})
     config = {
         "jobs": jobs, "post_cmds": list(post_cmds),
         "hours": hours, "accelerator": accelerator, "pip": list(pip), "wheel_sources": list(wheel_sources),
-        "sources": [st.slug, *datasets, *kernels], "resume_sources": resume_src, "prune": prune,
+        "sources": [{"ref": st.slug, "kind": "competition", "dest": "data"}, *sources], "input_layout": input_layout,
+        "resume_sources": resume_src, "prune": prune,
         "git_commit": commit, "git_dirty": dirty, "build_id": f"{kslug}@{built}",
         "allow_cpu": accelerator == "none", "resource": res, "tpu_chips": TPU_CHIPS.get(accelerator, 0),
+        "split": split,
     }
-    payload = build_bundle(root, list(include), baseline_dir)
-    mb = len(payload) / 1e6
-    if mb > BUNDLE_MAX_MB:
-        raise SystemExit(f"code bundle is {mb:.1f} MB: keep data out of --include (upload it as a dataset)")
-    if mb > BUNDLE_WARN_MB:
-        print(f"note: code bundle is {mb:.1f} MB; anything big belongs in a Kaggle dataset")
-    script = RUNNER.read_text(encoding="utf-8")
-    script = script.replace("__KG_CONFIG_B64__", base64.b64encode(json.dumps(config).encode()).decode(), 1)
+    payload = build_bundle(root, list(include), baseline_dir, split_members)
+    script = runner.replace("__KG_CONFIG_B64__", base64.b64encode(json.dumps(config).encode()).decode(), 1)
     script = script.replace("__KG_PAYLOAD_B64__", base64.b64encode(payload).decode(), 1)
+    size = len(script.encode("utf-8"))
 
     kdir = Path(out_dir) if out_dir else root / "kernels" / kslug
     kdir.mkdir(parents=True, exist_ok=True)
@@ -659,16 +1060,36 @@ def build_kernel(root: str | Path | None, name: str, cmd: str, hours: float, fol
         "id": f"{user}/{kslug}", "title": kslug.replace("-", " "), "code_file": code_file, "language": "python",
         "kernel_type": "script", "is_private": not public, "enable_gpu": res == "GPU",
         "enable_tpu": res == "TPU", "enable_internet": internet,
-        "dataset_sources": [*datasets, *wheel_sources], "competition_sources": [st.slug],
-        "kernel_sources": [*kernels, *resume_src], "model_sources": list(models),
+        "dataset_sources": [*dict.fromkeys([*(s["ref"] for s in sources if s["kind"] == "dataset"), *wheel_sources,
+                                            *([split_from] if split_from else [])])],
+        "competition_sources": [st.slug],
+        "kernel_sources": [*dict.fromkeys([*(s["ref"] for s in sources if s["kind"] == "kernel"), *resume_src])],
+        "model_sources": list(models),
     }
     if accelerator != "none":
         meta["machine_shape"] = accelerator
     (kdir / "kernel-metadata.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     train_meta = {"kernel": meta["id"], "name": name, "jobs": [j["name"] for j in jobs], "hours": hours,
                   "accelerator": accelerator, "resource": res, "folds": folds, "cmd": cmd, "build_id": config["build_id"], "prune": prune,
-                  "resume_from": resume_src, "bundle_kb": round(len(payload) / 1024, 1)}
+                  "resume_from": resume_src, "bundle_kb": round(len(payload) / 1024, 1),
+                  "script_kb": round(size / 1024, 1),
+                  "split": split_summary(split) if split else None if split_data is None else "in the bundle as it is",
+                  "input_layout": input_layout, "inputs": config["sources"]}
     (kdir / "kg-train.json").write_text(json.dumps(train_meta, indent=2), encoding="utf-8")
+    warning = script_size_warning(root, size, payload, split)
+    if warning:
+        print(warning)
+    packed = split is not None and "columns" in split
+    refs = [f"{n!r} from {c['ref']}" for n, c in zip(split["header"], split["columns"]) if "ref" in c] if packed else []
+    if refs:
+        print(f"note: the run reads data/folds.csv's column(s) {', '.join(refs)} in the session (too big to pack "
+              "as text), and stops before training if they differ there from yours")
+    flat = [s["ref"] for s in sources if s["dest"] == "data"]
+    if len(flat) > 1:
+        names = ", ".join(flat[:4]) + (f" and {len(flat) - 4} more" if len(flat) > 4 else "")
+        print(f"note: {len(flat)} inputs are linked side by side into data/ ({names}): a name two of them share is "
+              "linked from the first only (the run log lists each). --input-layout nested gives each its own folder "
+              "(data/ext/<slug>/, kernel outputs data/ext/kout-<slug>/)")
     return kdir
 
 
@@ -692,11 +1113,15 @@ def _truthy(v) -> bool:
 
 
 def kernel_meta_accelerator(meta: dict) -> str:
-    """The accelerator a kernel-metadata.json asks for: its machine_shape, or 'none' without GPU/TPU."""
-    shape = str(meta.get("machine_shape") or "")
+    """The accelerator a kernel-metadata.json asks for: its machine_shape (Kaggle's API marks enable_gpu and
+    enable_tpu deprecated in its favour), also without either flag; else the default shape of enable_tpu or
+    enable_gpu; else 'none'. Under enable_tpu, a shape that is not a TPU's gives the TPU default."""
+    shape = str(meta.get("machine_shape") or "").strip()
+    if shape.lower() in ("none", "cpu", "no"):
+        shape = ""
     if _truthy(meta.get("enable_tpu")):
         return shape if shape.lower().startswith("tpu") else "TpuV5E8"
-    if _truthy(meta.get("enable_gpu")) or shape.startswith("Nvidia"):
+    if shape or _truthy(meta.get("enable_gpu")):
         return shape or "NvidiaTeslaT4"
     return "none"
 
@@ -744,9 +1169,9 @@ def pending_sources(kdir: Path) -> list[tuple[str, str]]:
     return out
 
 
-def busy_sessions(max_kernels: int = 8, within_h: float = 48.0) -> list[tuple[str, str]] | None:
-    """(kernel, status) of the account's own kernels queued or running now, in any competition: the
-    most recently run ``max_kernels`` are checked. None when the listing fails."""
+def recent_kernels(max_kernels: int = 8) -> list[tuple[str, dt.datetime | None]] | None:
+    """(ref, lastRunTime) of the account's own ``max_kernels`` most recently run kernels, latest first;
+    lastRunTime is when Kaggle ran a kernel's latest version (UTC). None when the listing fails."""
     try:
         r = run_kaggle(["kernels", "list", "-m", "--sort-by", "dateRun", "--page-size", str(max_kernels),
                         "--format", "json"], timeout=120)
@@ -759,10 +1184,19 @@ def busy_sessions(max_kernels: int = 8, within_h: float = 48.0) -> list[tuple[st
         rows = None
     if not isinstance(rows, list):
         return None
+    return [(row["ref"], _parse_time(row.get("lastRunTime"))) for row in rows
+            if isinstance(row, dict) and row.get("ref")]
+
+
+def busy_sessions(max_kernels: int = 8, within_h: float = 48.0) -> list[tuple[str, str]] | None:
+    """(kernel, status) of the account's own kernels queued or running now, in any competition: the
+    most recently run ``max_kernels`` are checked. None when the listing fails."""
+    recent = recent_kernels(max_kernels)
+    if recent is None:
+        return None
     out = []
-    for row in rows:
-        ref, t = row.get("ref"), _parse_time(row.get("lastRunTime"))
-        if not ref or t is None or (_now() - t).total_seconds() / 3600 > within_h:
+    for ref, t in recent:
+        if t is None or (_now() - t).total_seconds() / 3600 > within_h:
             continue
         try:
             s, _ = kernel_status(ref)
@@ -790,6 +1224,84 @@ def _session_preflight(root: Path, resource: str, force: bool) -> None:
               f"{resource}s the push fails with 'Maximum batch {resource} session count'")
 
 
+# Kaggle's answer to a push. Refused: the Kaggle CLI prints requests' error for the SaveKernel call. Accepted without
+# some inputs: Kaggle CLI 2.2.4 prints "The following are not valid dataset sources and could not be added to the
+# kernel: [...]" before that push's "Kernel version N successfully pushed", and the run starts without them.
+REFUSED_RE = re.compile(r"\b4\d\d client error\b[^\n]*savekernel", re.IGNORECASE)
+DROPPED_RE = re.compile(r"the following are not valid (\w+) sources and could not be added to the kernel: *([^\n]*)",
+                        re.IGNORECASE)
+PUSHED_URL_RE = re.compile(r"successfully pushed[^\n]*?/code/([\w.-]+/[\w.-]+)", re.IGNORECASE)
+
+
+def kernel_source(kdir: str | Path) -> tuple[str, int] | None:
+    """(name, bytes) of the source file of the kernel in ``kdir`` (kernel-metadata.json's code_file); None when it
+    cannot be told."""
+    try:
+        name = str(json.loads((Path(kdir) / "kernel-metadata.json").read_text(encoding="utf-8"))["code_file"])
+        return name, (Path(kdir) / name).stat().st_size
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+
+
+def source_problem(kdir: str | Path | None) -> str | None:
+    """Why Kaggle would refuse the source of the kernel in ``kdir``: 1 MB or more. None when it would not, or when the
+    size cannot be told."""
+    src = kernel_source(kdir) if kdir is not None else None
+    if src is None or src[1] < SOURCE_MAX_BYTES:
+        return None
+    return (f"its source {src[0]} is {_size(src[1])}, and Kaggle refuses a kernel source of 1 MB or more with a bare "
+            "400 Bad Request")
+
+
+def refusal_causes(kdir: str | Path | None, shape: str | None) -> list[str]:
+    """What Kaggle is known to answer with a bare 400 in a push of the kernel in ``kdir`` asking for machine_shape
+    ``shape``: a source of 1 MB or more, a shape it does not take."""
+    return [p for p in (source_problem(kdir), machine_shape_problem(shape)) if p]
+
+
+def push_failure_hint(output: str, shape: str | None = None, kdir: str | Path | None = None) -> str:
+    """What the output of a failed kernel push means and what to change; '' when kgkit has nothing to add.
+    ``shape``: the machine_shape the push asked for; ``kdir``: the kernel folder pushed."""
+    if "session count" in output.lower():
+        return ("Kaggle allows 2 batch GPU sessions and 1 batch TPU session at a time: wait for a running kernel to "
+                "finish (`kgkit gpu status`), or free a queued one (`kgkit gpu cancel <kernel>`).")
+    if not REFUSED_RE.search(output):
+        return ""
+    causes = refusal_causes(kdir, shape)
+    if causes:
+        return f"Kaggle refused the push: {'; '.join(causes)}."
+    if KC.REASON in output:
+        return "Kaggle refused the push; its reason is above."
+    src = kernel_source(kdir) if kdir is not None else None
+    fine = ([f"the source {src[0]} is {_size(src[1])}, under 1 MB"] if src else []) + [
+        f"machine_shape {shape or 'none'} is one Kaggle accepts"]
+    return ("Kaggle refused the push, and the Kaggle CLI does not print why. The causes kgkit can check are ruled out ("
+            + "; ".join(fine) + "). Check each source in kernel-metadata.json next: a competition, dataset, kernel or "
+            "model that does not exist, or that this account cannot read. Kaggle's reason is in the response body "
+            "(skill kaggle-cli, 'A refused request').")
+
+
+def dropped_sources(output: str) -> dict[str, list[str]]:
+    """Inputs Kaggle left out of the pushes it accepted, by the kernel each push reports ('' when none is named)."""
+    out: dict[str, list[str]] = {}
+    for m in DROPPED_RE.finditer(output):
+        nxt = PUSHED_URL_RE.search(output, m.end())
+        out.setdefault(nxt.group(1) if nxt else "", []).append(f"{m.group(1).lower()} {m.group(2).strip()}")
+    return out
+
+
+def dropped_sources_warning(output: str) -> str:
+    """'' unless Kaggle accepted a push but left inputs out of it: then what that means and what to do."""
+    found = dropped_sources(output)
+    if not found:
+        return ""
+    what = "; ".join((f"{k}: " if k else "") + ", ".join(v) for k, v in found.items())
+    kernel = next((k for k in found if k), "<kernel>")
+    return (f"Kaggle accepted the push but left out inputs it could not attach ({what}), so the run starts without "
+            "them. Check each slug in kernel-metadata.json and that this account can read it, push again, and stop "
+            f"this version (`python -m kgkit gpu cancel {kernel}` says how).")
+
+
 def push(root: str | Path | None, kdir: str | Path, force: bool = False, hours: float | None = None,
          check_sources: bool = True, check_sessions: bool = True) -> dict:
     root = _root(root)
@@ -797,8 +1309,24 @@ def push(root: str | Path | None, kdir: str | Path, force: bool = False, hours: 
     tm = push_spec(kdir, hours)
     hours, acc = float(tm["hours"]), tm["accelerator"]
     res = resource_of(acc)
-    if res == "TPU" and acc in TPU_REWRITTEN:
-        raise SystemExit(f"machine_shape {acc} is stored by Kaggle as TpuV5E8: ask for TpuV5E8")
+    problem = machine_shape_problem(acc)  # before any Kaggle call: Kaggle would answer a bare 400
+    if problem and (acc in TPU_REWRITTEN or not force):
+        spec = "kg-train.json" if (kdir / "kg-train.json").is_file() else "kernel-metadata.json"
+        raise SystemExit(f"refusing to push {kdir} ({spec}): {problem}"
+                         + ("" if acc in TPU_REWRITTEN else ". If Kaggle has added that shape, --force pushes it."))
+    if problem:
+        print(f"warning: {problem}; pushing it anyway (--force)")
+    big = source_problem(kdir)  # before any Kaggle call too
+    if big and not force:
+        built = (kdir / "kg-train.json").is_file()
+        raise SystemExit(f"refusing to push {kdir}: {big}. "
+                         + ("Rebuild it: `gpu build` prints its biggest parts. Data belongs in a dataset (--dataset), "
+                            "not in --include; a fold split too big to pack, in --split-from. " if built else
+                            "Move data, weights and images out of the source into a dataset, and read them from "
+                            "/kaggle/input. ")
+                         + "If Kaggle takes bigger sources now, --force pushes it.")
+    if big:
+        print(f"warning: {big}; pushing it anyway (--force)")
     limit = session_limit(res)
     if not 0 < hours <= limit:
         raise SystemExit(f"--hours must be in (0, {limit:g}] (Kaggle {res} session limit)")
@@ -834,15 +1362,16 @@ def push(root: str | Path | None, kdir: str | Path, force: bool = False, hours: 
     m = re.search(r"version\s+(\d+)\s+successfully pushed", out, re.IGNORECASE)
     ok = r.returncode == 0 and m is not None
     if not ok:
-        hint = ""
-        if "session count" in out.lower():
-            hint = (" Kaggle allows 2 batch GPU sessions and 1 batch TPU session at a time: wait for a running "
-                    "kernel to finish (`kgkit gpu status`), or free a queued one (`kgkit gpu cancel <kernel>`).")
-        raise SystemExit("kernel push failed (see output above); nothing was started." + hint)
+        hint = push_failure_hint(out, acc, kdir)
+        raise SystemExit("kernel push failed (see output above); nothing was started." + (f" {hint}" if hint else ""))
     rec = {"kernel": tm["kernel"], "version": int(m.group(1)), "name": tm["name"],
            "jobs": tm.get("jobs") or [tm["name"]], "accelerator": acc, "resource": res, "hours": hours,
            "folds": tm.get("folds"), "cmd": tm.get("cmd"), "build_id": tm.get("build_id"), "prune": tm.get("prune"),
            "resume_from": tm.get("resume_from"), "pushed_at": _iso(_now()), "status": "pushed"}
+    dropped = [s for v in dropped_sources(out).values() for s in v]
+    if dropped:
+        rec["dropped_sources"] = dropped
+        print(f"WARNING: {dropped_sources_warning(out)}")
     record_push(root, rec)
     return rec
 
@@ -869,18 +1398,32 @@ def cancel_advice(kernel: str, status: str) -> str:
 
 
 def wait(root: str | Path | None, kernel: str, interval: float = 60, max_hours: float = SESSION_LIMIT_H + 1) -> str:
+    """Poll ``kernel`` until its run ends. A pending push is waited for first: until Kaggle runs it, the status
+    Kaggle reports is an earlier version's."""
     root = _root(root)
     t_end = time.time() + max_hours * 3600
     last = None
     while True:
-        try:
-            s, text = kernel_status(kernel)
-        except (OSError, subprocess.SubprocessError) as e:
-            s, text = "unknown", str(e)
+        pend = next((r for r in runs(root) if r.get("kernel") == kernel and r.get("status") == PENDING), None)
+        if pend is not None and confirm_pending(root, [kernel]):
+            pend = None
+        if pend is not None:
+            s, text = PENDING, ""
+        else:
+            try:
+                s, text = kernel_status(kernel)
+            except (OSError, subprocess.SubprocessError) as e:
+                s, text = "unknown", str(e)
         if s != last:
-            print(f"{_iso(_now())} {kernel}: {s}", flush=True)
+            print(f"{_iso(_now())} {kernel}: {s}" + (" (waiting for its push from a background command to reach "
+                                                     "Kaggle)" if pend is not None else ""), flush=True)
             note_status(root, kernel, s)
             last = s
+        if pend is not None and _stale(pend, _now()):
+            print(f"no version of {kernel} has run on Kaggle since its push from a background command at "
+                  f"{pend.get('pushed_at')}: that push most likely failed (read that command's output). "
+                  f"`kgkit gpu release {kernel}` drops its reservation.")
+            return s
         if s in FINISHED:
             if s != "complete":
                 print(text)
@@ -997,8 +1540,20 @@ MIN_DIAG_S, MIN_DIAG_SAMPLES = 1200, 20
 
 
 def diagnose(report: dict) -> list[str]:
-    """Quota-efficiency findings for a finished remote run."""
+    """Findings for a finished remote run: inputs it did not have, then quota efficiency."""
     out = []
+    rows = report.get("inputs") or []
+    lost = [f"{r['source']} ({r['error']})" for r in rows if r.get("error")]
+    if lost:
+        out.append("inputs the run did not have: " + "; ".join(lost) + " - `gpu push` prints the inputs Kaggle "
+                   "could not attach, and a kernel's output is bound when the kernel reading it is pushed")
+    skipped = [f"{e} from {r['source']} (already {why})" for r in rows for e, why in (r.get("skipped") or {}).items()]
+    if skipped:
+        more = f"; {len(skipped) - 8} more in kg_run.json" if len(skipped) > 8 else ""
+        out.append(f"{len(skipped)} input entries were not linked, as the name was already taken: "
+                   + "; ".join(skipped[:8]) + more + ". Give each input its own folder: `gpu build --input-layout "
+                   "nested` (data/ext/<slug>/, kernel outputs data/ext/kout-<slug>/) or `--dataset "
+                   "<owner>/<slug>=data/<folder>`")
     util = report.get("gpu_util") or {}
     gpus = report.get("gpus") or []
     elapsed = report.get("elapsed_s")
@@ -1043,6 +1598,7 @@ def diagnose(report: dict) -> list[str]:
 def collect(root: str | Path | None, kernel: str, from_dir: str | Path | None = None, weights: bool = False,
             version: int | None = None) -> dict:
     root = _root(root)
+    confirm_pending(root, [kernel])  # a push from a background command that Kaggle ran is the run collected here
     kslug = kernel.split("/")[-1]
     if from_dir is None:
         out = root / S.STATE_DIR / "remote" / kslug
@@ -1070,7 +1626,8 @@ def collect(root: str | Path | None, kernel: str, from_dir: str | Path | None = 
         if (out / "artifacts" / j["name"]).is_dir():
             _merge_tree(out / "artifacts" / j["name"], root / "artifacts" / j["name"])
     note_status(root, kernel, "complete")  # older still-open entries of this kernel ended before this output
-    run = next((r for r in reversed(runs(root)) if r.get("kernel") == kernel), {})
+    # a push still pending is not on Kaggle yet: this output is an earlier version's
+    run = next((r for r in reversed(runs(root)) if r.get("kernel") == kernel and r.get("status") != PENDING), {})
     version = version or run.get("version")
     imported = import_ledger(root, out, report, kernel, version)
     gpu_h = round(report.get("elapsed_s", 0) / 3600, 3)
