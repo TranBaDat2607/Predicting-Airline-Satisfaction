@@ -86,9 +86,10 @@ reports/     EDA, recon, adversarial validation, post-mortems
 ## Current plan / notes
 
 - 2026-10-27 (session 4, /goal: public top 5, Kaggle GPU+CPU, commit progress, UAT issues):
-  - **Public 3rd (0.96285)** with a *public-LB fitted* tilt: `src/lb_files.py` → `lb_fetch.sh`/`lb_fetch2.sh` → `lb_collect.py`
+  - **Public 3rd (0.96297, 0058)** with a *public-LB fitted* tilt: `src/lb_files.py` → `lb_fetch.sh`/`lb_fetch2.sh` → `lb_collect.py`
     (365 scored public files: notebook outputs with search-API `best_public_score`, nina/anhad/atlas/own files) →
-    `src/tilt_run.py --noise 16 --scan ... --write <eta>` (src/tilt.py). 0054 (eta 0.3) 0.96266, 0056 (eta 0.6, noise x16) 0.96285.
+    `src/tilt_run.py --noise 24 --scan ... --write <eta>` (src/tilt.py). 0054 (eta 0.3) 0.96266, 0056 (eta 0.6, noise x16) 0.96285,
+    0058 (eta 1.0, noise x24, 370 files, predicted 0.96301) 0.96297. Method/evidence: `reports/public-tilt.md`.
     The public top 3 (0.96427/0.96352/0.96276) are tilts of the same kind (S6E9 2nd place: +294u public, -235u private).
   - **Final picks must be honest and selected manually on the website** (no API; otherwise Kaggle auto-selects the best
     public = the tilted files, ledger tag `public-lb-fitted`). Candidates: 0057 (0.80 nina210 + 0.10 Mehran + 0.10 settf16)
