@@ -50,23 +50,40 @@ class Tilt:
         return w, u
 
     def fit(self, files, scores, base_score):
+        self.base_score = base_score
+        self.g = np.empty((0, self.n), dtype=np.float32)
+        self.h = np.empty((0, self.n), dtype=np.float32)
+        self.yraw, self.cs, self.dist = np.empty(0), np.empty(0), np.empty(0)
+        self.m = np.empty((0, 0))
+        return self.add(files, scores)
+
+    def add(self, files, scores):
+        """Append scored files (incremental: only the new rows and columns of the K x K system are computed)."""
         k = len(files)
         g = np.empty((k, self.n), dtype=np.float32)
         h = np.empty((k, self.n), dtype=np.float32)
-        yv = np.empty(k)
-        cs = np.empty(k)
-        dist = np.empty(k)
+        yv, cs, dist = np.empty(k), np.empty(k), np.empty(k)
         for i, s in enumerate(files):
             w, u = self._wu(s)
             g[i] = self.f * (w - self.wb)
             h[i] = self.f * (u - self.ub)
             cs[i] = self.f ** 2 * (float(self.p @ w) - self.sb)
             dist[i] = float(np.square(w - self.wb).mean())
-            yv[i] = self.n1 * self.n0 * (scores[i] - base_score) - cs[i]
+            yv[i] = self.n1 * self.n0 * (scores[i] - self.base_score) - cs[i]
         va, vb, cab = (x.astype(np.float32) for x in (self.va, self.vb, self.cab))
-        m = (g * va) @ g.T + (h * vb) @ h.T + (g * cab) @ h.T + (h * cab) @ g.T
+        gv, hv, gc, hc = g * va, h * vb, g * cab, h * cab
+        new = (gv @ g.T + hv @ h.T + gc @ h.T + hc @ g.T).astype(np.float64)
+        cross = (gv @ self.g.T + hv @ self.h.T + gc @ self.h.T + hc @ self.g.T).astype(np.float64)
+        self.m = np.block([[self.m, cross.T], [cross, new]])
+        self.g, self.h = np.concatenate([self.g, g]), np.concatenate([self.h, h])
+        self.yraw, self.cs, self.dist = (np.concatenate(x) for x in ((self.yraw, yv), (self.cs, cs), (self.dist, dist)))
+        return self.solve()
+
+    def solve(self):
+        g, h, yv, cs, dist, m = self.g, self.h, self.yraw.copy(), self.cs, self.dist, self.m
+        k = len(yv)
         e = self.sd ** 2 * (np.eye(k) + np.ones((k, k)))
-        q = np.linalg.inv(m.astype(np.float64) + e)
+        q = np.linalg.inv(m + e)
         if self.nuisance:
             # calibration errors of the prior scale the expected loss c_k and grow with the distance to the
             # base: remove both directions (flat-prior GLS) so only consistent row-level evidence drives the tilt
@@ -82,7 +99,7 @@ class Tilt:
         hl = h.T.astype(np.float64) @ self.lam
         self.da = self.va * gl + self.cab * hl
         self.db = self.cab * gl + self.vb * hl
-        self.y, self.m = yv, m
+        self.y = yv
         return self
 
     def score(self, eta: float = 1.0):

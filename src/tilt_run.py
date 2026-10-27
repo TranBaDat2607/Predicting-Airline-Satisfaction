@@ -25,8 +25,9 @@ ap.add_argument("--min-corr", type=float, default=0.90)
 ap.add_argument("--noise", type=float, default=1.0)
 ap.add_argument("--no-nuisance", action="store_true")
 ap.add_argument("--exclude", nargs="*", default=[], help="substrings of file names to leave out")
+ap.add_argument("--drop-z", type=float, default=4.0, help="refit without files whose LOO residual exceeds z sd")
 ap.add_argument("--write", type=float, nargs="*", default=[])
-ap.add_argument("--prefix", default="")
+ap.add_argument("--name", default="tilt", help="ledger name stem of the written candidates")
 a = ap.parse_args()
 
 ids = pd.read_csv("data/test.csv", usecols=["id"])["id"].to_numpy()
@@ -51,8 +52,19 @@ sel = np.flatnonzero(keep)
 print(f"files {len(files)}, used {len(sel)} (score >= {a.min_score}, rank corr >= {a.min_corr})")
 print(files.iloc[sel].groupby("source").score.agg(["count", "min", "max"]))
 
-t = Tilt(p, f=0.2, noise_units=a.noise, nuisance=not a.no_nuisance)
-t.fit([np.asarray(R[i], dtype=np.float64) for i in sel], files.score.to_numpy()[sel], a.base_score)
+def fit(sel):
+    return Tilt(p, f=0.2, noise_units=a.noise, nuisance=not a.no_nuisance).fit(
+        [np.asarray(R[i], dtype=np.float64) for i in sel], files.score.to_numpy()[sel], a.base_score)
+
+
+t = fit(sel)
+for _ in range(3):  # a notebook's best version need not be the output we downloaded: drop gross outliers
+    z = np.abs(t.loo) / t.loo.std()
+    if a.drop_z <= 0 or (z <= a.drop_z).all():
+        break
+    print("dropping LOO outliers:", list(files.name.to_numpy()[sel][z > a.drop_z]))
+    sel = sel[z <= a.drop_z]
+    t = fit(sel)
 scale = 1e5 / (t.n1 * t.n0)
 print(f"LOO R2 {t.loo_r2:.3f}; surprise sd {t.y.std() * scale:.2f}u; LOO residual sd {t.loo.std() * scale:.2f}u")
 out = files.iloc[sel][["name", "source", "score"]].copy()
@@ -62,10 +74,20 @@ out["loo_resid_u"] = t.loo * scale
 out.to_csv("data/tilt/fit_report.csv", index=False)
 print(out.reindex(out.surprise_u.abs().sort_values(ascending=False).index).head(12).to_string())
 
+import sys
+sys.path.insert(0, "src")
+from kgkit.experiment import Ledger  # noqa: E402
+
 for eta in a.write:
     s = t.score(eta)
     rs = (rankdata(s) - 0.5) / len(s)
-    print(f"eta {eta}: rank corr with base {np.corrcoef(rs, rb)[0, 1]:.6f}")
-    path = f"subs/{a.prefix}tilt-eta{eta:g}.csv"
-    pd.DataFrame({"id": ids, "satisfaction": s}).to_csv(path, index=False, float_format="%.8f")
-    print("wrote", path)
+    rc = np.corrcoef(rs, rb)[0, 1]
+    notes = (f"[public-LB fitted] tilt of {a.base} toward the public-label estimate from {len(sel)} scored files, "
+             f"eta {eta:g} (rank corr {rc:.5f} with base); never a final pick")
+    rec = Ledger().log(f"{a.name}-eta{eta:g}", None, model="tilt", notes=notes, tags=["tilt", "public-lb-fitted"],
+                       params={"base": a.base, "eta": eta, "n_files": int(len(sel)), "min_corr": a.min_corr,
+                               "min_score": a.min_score, "nuisance": not a.no_nuisance}, pool=False)
+    path = f"subs/{rec['id']}.csv"
+    pd.DataFrame({"id": ids, "satisfaction": s}).to_csv(path, index=False, float_format="%.9f")
+    Ledger().update(rec["id"], submission=path)
+    print(f"eta {eta}: rank corr with base {rc:.6f} -> {path}")
