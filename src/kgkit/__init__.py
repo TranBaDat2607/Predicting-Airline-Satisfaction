@@ -21,6 +21,7 @@ parts of a competition that are easy to get subtly wrong:
 - ``kgkit.backlog``     the ranked idea backlog and screen-vs-full fidelity
 - ``kgkit.kernels``     study and reproduce public notebooks; their public score on record and title claims
 - ``kgkit.kaggle_search`` notebooks' best public scores from Kaggle's search API (run in a child process)
+- ``kgkit.kaggle_cli``  the Kaggle CLI with Kaggle's reason for a refused request (kgkit's CLI calls run through it)
 - ``kgkit.discussions`` competition forums (topics, search, write-ups, threads), live or from Meta Kaggle
 - ``kgkit.datasets``    dataset download with a per-file fallback when the whole-dataset archive 404s
 - ``kgkit.pages``       a competition's own pages (evaluation, rules, data description) as text
@@ -29,9 +30,11 @@ parts of a competition that are easy to get subtly wrong:
 - ``kgkit.submission``  submission validation against sample_submission
 - ``kgkit.state``       competition state (``.kaggle-gm/competition.json``)
 - ``kgkit.gpu``         training on Kaggle GPUs/TPUs: quota, remote kernels, accelerator-hour accounting
+- ``kgkit.kaggle_gpu_runner`` the script of a remote training kernel, which ``gpu build`` fills in (runs inside
+                        Kaggle; kept in the package so that a copy made by ``kgkit vendor`` has its own version's)
 - ``kgkit.budget``      training-loop guard: session deadline, resume checkpoints, learning-curve pruning
 
 Run ``python -m kgkit --help`` for the command line interface.
 """
 
-__version__ = "1.6.2"
+__version__ = "1.8.0"

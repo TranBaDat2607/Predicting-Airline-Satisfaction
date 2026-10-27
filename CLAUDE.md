@@ -48,8 +48,8 @@ reports/     EDA, recon, adversarial validation, post-mortems
 ## Compute (from 2026-10-24: Linux machine, no local GPU — user rule: use Kaggle GPU **and** CPU)
 
 - Local: Linux, 12 CPU threads, 15 GB RAM, **no GPU**. Python env: `/home/nammovuivui/anaconda3/envs/airline-satisfaction/bin/python`
-  (3.12: pandas, sklearn, lightgbm, xgboost, catboost, torch-cpu). `kaggle` CLI on PATH. kgkit 1.6.2 is vendored in
-  `src/kgkit` (scripts need no PYTHONPATH); the plugin copy is `~/.claude/plugins/cache/claude-code-kaggle-grandmaster/kaggle-grandmaster/1.6.2`.
+  (3.12: pandas, sklearn, lightgbm, xgboost, catboost, torch-cpu). `kaggle` CLI on PATH. kgkit 1.8.0 is vendored in
+  `src/kgkit` (scripts need no PYTHONPATH); the plugin copy is `~/.claude/plugins/cache/claude-code-kaggle-grandmaster/kaggle-grandmaster/1.8.0`.
   The plugin is installed for another project, so its skills are not auto-loaded here: read them from that path.
 - **Kaggle GPU (2x T4)** for every model that trains: `python -m kgkit gpu build --name <exp> --cmd "python src/<x>.py --name <exp> --folds {fold}" ...`
   then `python -m kgkit gpu push kernels/<slug>`; hand-written kernels (TabPFN: `kernels/tabpfn-*`) go through
