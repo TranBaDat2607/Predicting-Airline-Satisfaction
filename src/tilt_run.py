@@ -26,6 +26,7 @@ ap.add_argument("--noise", type=float, default=1.0)
 ap.add_argument("--no-nuisance", action="store_true")
 ap.add_argument("--exclude", nargs="*", default=[], help="substrings of file names to leave out")
 ap.add_argument("--drop-z", type=float, default=4.0, help="refit without files whose LOO residual exceeds z sd")
+ap.add_argument("--scan", type=float, nargs="*", default=[], help="print the posterior-predicted public score at these etas")
 ap.add_argument("--write", type=float, nargs="*", default=[])
 ap.add_argument("--name", default="tilt", help="ledger name stem of the written candidates")
 a = ap.parse_args()
@@ -60,6 +61,7 @@ def fit(sel):
 t = fit(sel)
 for _ in range(3):  # a notebook's best version need not be the output we downloaded: drop gross outliers
     z = np.abs(t.loo) / t.loo.std()
+    z[(files.source.to_numpy()[sel] == "own")] = 0  # our own scores are exact: never drop them
     if a.drop_z <= 0 or (z <= a.drop_z).all():
         break
     print("dropping LOO outliers:", list(files.name.to_numpy()[sel][z > a.drop_z]))
@@ -74,6 +76,9 @@ out["loo_resid_u"] = t.loo * scale
 out.to_csv("data/tilt/fit_report.csv", index=False)
 print(out.reindex(out.surprise_u.abs().sort_values(ascending=False).index).head(12).to_string())
 
+for eta in a.scan:
+    print(f"eta {eta:5.2f}: predicted public {t.predict(t.score(eta)):.5f}", flush=True)
+
 import sys
 sys.path.insert(0, "src")
 from kgkit.experiment import Ledger  # noqa: E402
@@ -83,10 +88,11 @@ for eta in a.write:
     rs = (rankdata(s) - 0.5) / len(s)
     rc = np.corrcoef(rs, rb)[0, 1]
     notes = (f"[public-LB fitted] tilt of {a.base} toward the public-label estimate from {len(sel)} scored files, "
-             f"eta {eta:g} (rank corr {rc:.5f} with base); never a final pick")
+             f"eta {eta:g}, noise x{a.noise:g} (rank corr {rc:.5f} with base, predicted public {t.predict(s):.5f}); "
+             f"never a final pick")
     rec = Ledger().log(f"{a.name}-eta{eta:g}", None, model="tilt", notes=notes, tags=["tilt", "public-lb-fitted"],
                        params={"base": a.base, "eta": eta, "n_files": int(len(sel)), "min_corr": a.min_corr,
-                               "min_score": a.min_score, "nuisance": not a.no_nuisance}, pool=False)
+                               "min_score": a.min_score, "nuisance": not a.no_nuisance, "noise": a.noise}, pool=False)
     path = f"subs/{rec['id']}.csv"
     pd.DataFrame({"id": ids, "satisfaction": s}).to_csv(path, index=False, float_format="%.9f")
     Ledger().update(rec["id"], submission=path)

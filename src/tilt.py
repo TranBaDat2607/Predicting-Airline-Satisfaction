@@ -102,6 +102,18 @@ class Tilt:
         self.y = yv
         return self
 
+    def predict(self, s):
+        """Posterior-mean public score of a candidate ranking s (plus the nuisance part of the fit)."""
+        w, u = self._wu(s)
+        g = self.f * (w - self.wb)
+        h = self.f * (u - self.ub)
+        c = self.f ** 2 * (float(self.p @ w) - self.sb)
+        y = float(self.da @ g + self.db @ h)
+        if self.nuisance:
+            d = float(np.square(w - self.wb).mean())
+            y += self.beta[0] * c / np.abs(self.cs).max() + self.beta[1] * d / max(self.dist.max(), 1e-12)
+        return self.base_score + (y + c) / (self.n1 * self.n0)
+
     def score(self, eta: float = 1.0):
         a = np.clip(self.abar + eta * self.da, 1e-9, None)
         b = np.clip(self.bbar + eta * self.db, 1e-9, None)
