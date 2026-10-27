@@ -28,13 +28,14 @@ KERNELS = [
     "thisray/s6e10-xgb-realmlp-catboost-lb-0-96123", "kratosyan/s6e10-xgboost-realmlp-route-id-teacher",
     "yekenot/ps-s6-e10-realmlp-pytabkit", "wangxintong111/s6e10-catboost-rating-crosses-cv-0-96080",
     "wangxintong111/s6e10-lightgbm-context-stats-cv-0-96065", "hemingweb/s6e10-exp01-tabpfn35-full-context",
-    "samanyu1808/s6e10-tabpfn-route-og", "samanyu1808/s6e10-tabpfn-seeds",
+    # samanyu1808/s6e10-tabpfn-route-og, samanyu1808/s6e10-tabpfn-seeds and kiza123123/s6e10-winning-multi-model-pipeline
+    # are no longer public (2026-10-27): their 6 members come from tranbadat/s6e10-own-members (--dataset-extra)
     # new since the 246-member pool
     "hermengardo/single-catboost-eda-ps6e10", "goodpjw2008/s6e10-more-aux-carriers-lb-0-96163",
     "goodpjw2008/s6e10-auxiliary-task-features-lb-0-96161",
     # used by yeashusemwal/trust-the-cv (nested CV 0.962260), missing from our v1 pool
     "mojjeed/s6e10-cv-96180-stacking", "ewtherka/s6e10-factorization-machine-w-more-variants",
-    "kiza123123/s6e10-winning-multi-model-pipeline", "koumeimaki/s6e10-feature-ladder-what-helps-lightgbm",
+    "koumeimaki/s6e10-feature-ladder-what-helps-lightgbm",
     "thethiago28/notebook4ec6a89dc3",
 ]
 
