@@ -53,6 +53,19 @@ for p in sorted(glob.glob("data/ext/*/0.96*") + glob.glob("data/ext/*/0.95*")):
 for p in glob.glob("data/ext/goodpjw-pub/*_0962*.csv"):
     m = re.search(r"_(0962\d\d)_", Path(p).name)
     items.append((p, "dataset", float("0." + m.group(1)[1:]) if m else None, Path(p)))
+# rehosted public files whose name carries the PUBLIC score (a "cv-0-9xxxx" number is a CV score and is ignored)
+LB_NAME = [r"lb-0-(9\d{4})", r"0-(9\d{4})-public-score", r"_0(9[56]\d{3})(?:_|\.)"]
+for lib in ("s6e10-top18-artifacts", "ps6e10-best-public-submissions"):
+    for p in sorted(glob.glob(f"data/ext/{lib}/*")):
+        for pat in LB_NAME:
+            m = re.search(pat, Path(p).name)
+            if m:
+                items.append((p, "dataset", float("0." + m.group(1)), Path(p)))
+                break
+KNOWN = {"data/ext/dataset-submission-for-lb-score-0-96192/submission_alpha_1p40.csv": 0.96192}  # dataset title
+for p, s in KNOWN.items():
+    if Path(p).exists():
+        items.append((p, "dataset", s, Path(p)))
 
 atlas = Path("data/ext/s6e10-lb-surface-atlas")
 for npz, csv, key, col in [("own_scored_ranks.npz", "own_scores.csv", "key", "public_lb"),

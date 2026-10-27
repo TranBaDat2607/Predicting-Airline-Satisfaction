@@ -20,6 +20,7 @@ drops** (S6E9 measured about -0.9u private per +1u public for such files).
 |---|---|---|
 | `0054_tilt-v1-eta0-3.csv` | 0.96266 | public-label tilt of 0044, eta 0.3 |
 | `0056_tilt-v2-eta0-6.csv` | 0.96285 | public-label tilt of 0044, eta 0.6, EB noise x16 |
+| `0058_tilt-v3-eta1.csv` | 0.96297 | public-label tilt of 0044, eta 1.0, EB noise x24, 370 files (predicted 0.96301) |
 
 These exist only to hold the public-LB position the goal asked for. They are fitted to the 20 % public rows using
 365 publicly shared scored files (`src/tilt.py`), so on the 80 % private rows they are noise on top of 0044.
