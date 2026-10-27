@@ -95,10 +95,11 @@ reports/     EDA, recon, adversarial validation, post-mortems
     public = the tilted files, ledger tag `public-lb-fitted`). Candidates: 0057 (0.80 nina210 + 0.10 Mehran + 0.10 settf16)
     and the best honest stack (0020 or its successor). Deadline 2026-10-31 23:59 UTC.
   - Honest track (all +0, the 319-member stack is saturated at 0.962249): settf v5 (16 models, mean OOF 0.96125);
-    LLR surrogate on Kaggle GPU (distilgpt2 GReaT-style on the original, label-free AUC 0.9511, stack +0, 0059; the 4 h
-    `-t` cap cut its test scoring, train scores were enough); GPT-2 token residual keys +0u (`src/token_diag.py`);
+    LLR surrogate on Kaggle GPU (distilgpt2 GReaT-style on the original, label-free AUC 0.9511/0.9517 for 2 recipes,
+    stack +0 alone and mixed, 0059; v1's test scoring was cut by the 4 h `-t` cap, v2 complete in data/ext/kout-s6e10-llr-v2); GPT-2 token residual keys +0u (`src/token_diag.py`);
     honest stack v3 on Kaggle CPU (321 members, 0060 = 0020: nested 0.962248, public 0.96185).
-  - UAT issues filed: #53 (stale quota fallback), #54 (no guard for LB-fitted files vs auto-selection), #55 (hard -t cap).
+  - UAT issues filed: #53 (stale quota fallback), #54 (no guard for LB-fitted files vs auto-selection), #55 (hard -t cap),
+    #56 (gpu collect marks completed hand-written kernels as error, 0 GPU-h accounted).
 
 - 2026-10-24 (session 3, /goal: public top 10 with Kaggle GPU+CPU, commit progress, file plugin UAT issues):
   - LB moved: 10th = 0.96214, crowd at 0.96213 = 0.85 nina 0.96210 + 0.10 Mehran full-train TabPFN + 0.05 trust-the-cv.
