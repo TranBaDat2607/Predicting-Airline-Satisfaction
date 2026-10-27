@@ -1,0 +1,20 @@
+{
+  "id": "tranbadat/s6e10-llr-v2",
+  "title": "s6e10-llr-v2",
+  "code_file": "s6e10_llr_v2.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "teejmahal20/airline-passenger-satisfaction"
+  ],
+  "competition_sources": [
+    "playground-series-s6e10"
+  ],
+  "kernel_sources": [],
+  "model_sources": []
+}

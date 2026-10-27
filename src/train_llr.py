@@ -34,6 +34,7 @@ ap.add_argument("--bs", type=int, default=64)
 ap.add_argument("--lr", type=float, default=5e-5)
 ap.add_argument("--score-bs", type=int, default=512)
 ap.add_argument("--seed", type=int, default=0)
+ap.add_argument("--order-seed", type=int, default=1234, help="seed of the fixed column orders used for scoring")
 ap.add_argument("--max-orig", type=int, default=0)
 ap.add_argument("--max-comp", type=int, default=0)
 ap.add_argument("--tiny", action="store_true", help="random tiny GPT-2 (smoke test, no download)")
@@ -177,7 +178,7 @@ def score(df, tag):
     v = df[FEATS].to_numpy()
     if a.max_comp:
         v = v[:a.max_comp]
-    srng = np.random.default_rng(1234)
+    srng = np.random.default_rng(a.order_seed)
     o_last = srng.permutation(len(FEATS))
     o_first = srng.permutation(len(FEATS))
     feat_last = [", ".join(f"{FEATS[j]} is {r[j]}" for j in o_last) for r in v]
