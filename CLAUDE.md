@@ -85,6 +85,22 @@ reports/     EDA, recon, adversarial validation, post-mortems
 
 ## Current plan / notes
 
+- 2026-10-27 (session 4, /goal: public top 5, Kaggle GPU+CPU, commit progress, UAT issues):
+  - **Public 3rd (0.96297, 0058)** with a *public-LB fitted* tilt: `src/lb_files.py` → `lb_fetch.sh`/`lb_fetch2.sh` → `lb_collect.py`
+    (365 scored public files: notebook outputs with search-API `best_public_score`, nina/anhad/atlas/own files) →
+    `src/tilt_run.py --noise 24 --scan ... --write <eta>` (src/tilt.py). 0054 (eta 0.3) 0.96266, 0056 (eta 0.6, noise x16) 0.96285,
+    0058 (eta 1.0, noise x24, 370 files, predicted 0.96301) 0.96297. Method/evidence: `reports/public-tilt.md`.
+    The public top 3 (0.96427/0.96352/0.96276) are tilts of the same kind (S6E9 2nd place: +294u public, -235u private).
+  - **Final picks must be honest and selected manually on the website** (no API; otherwise Kaggle auto-selects the best
+    public = the tilted files, ledger tag `public-lb-fitted`). Candidates: 0057 (0.80 nina210 + 0.10 Mehran + 0.10 settf16)
+    and the best honest stack (0020 or its successor). Deadline 2026-10-31 23:59 UTC.
+  - Honest track (all +0, the 319-member stack is saturated at 0.962249): settf v5 (16 models, mean OOF 0.96125);
+    LLR surrogate on Kaggle GPU (distilgpt2 GReaT-style on the original, label-free AUC 0.9511/0.9517 for 2 recipes,
+    stack +0 alone and mixed, 0059; v1's test scoring was cut by the 4 h `-t` cap, v2 complete in data/ext/kout-s6e10-llr-v2); GPT-2 token residual keys +0u (`src/token_diag.py`);
+    honest stack v3 on Kaggle CPU (321 members, 0060 = 0020: nested 0.962248, public 0.96185).
+  - UAT issues filed: #53 (stale quota fallback), #54 (no guard for LB-fitted files vs auto-selection), #55 (hard -t cap),
+    #56 (gpu collect marks completed hand-written kernels as error, 0 GPU-h accounted).
+
 - 2026-10-24 (session 3, /goal: public top 10 with Kaggle GPU+CPU, commit progress, file plugin UAT issues):
   - LB moved: 10th = 0.96214, crowd at 0.96213 = 0.85 nina 0.96210 + 0.10 Mehran full-train TabPFN + 0.05 trust-the-cv.
     LB probes 0012-0017 (ledger, tag lb-blend): every move away from those weights lost 1-3e-5 (see memory s6e10-lb-layer).

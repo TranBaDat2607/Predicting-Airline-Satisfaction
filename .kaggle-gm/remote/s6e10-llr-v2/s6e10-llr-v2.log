@@ -1,0 +1,171 @@
+[{"stream_name":"stdout","time":1.164210644,"data":"Tue Oct 27 07:31:48 2026       \n"}
+,{"stream_name":"stdout","time":1.164269465,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":1.164274141,"data":"| NVIDIA-SMI 580.178.04             Driver Version: 580.178.04     CUDA Version: 13.0     |\n"}
+,{"stream_name":"stdout","time":1.164276897,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":1.164279661,"data":"| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n"}
+,{"stream_name":"stdout","time":1.164282308,"data":"| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n"}
+,{"stream_name":"stdout","time":1.164285027,"data":"|                                         |                        |               MIG M. |\n"}
+,{"stream_name":"stdout","time":1.164287709,"data":"|=========================================+========================+======================|\n"}
+,{"stream_name":"stdout","time":1.164290445,"data":"|   0  Tesla T4                       Off |   00000000:00:04.0 Off |                    0 |\n"}
+,{"stream_name":"stdout","time":1.164293073,"data":"| N/A   60C    P8             11W /   70W |       0MiB /  15360MiB |      0%      Default |\n"}
+,{"stream_name":"stdout","time":1.164295711,"data":"|                                         |                        |                  N/A |\n"}
+,{"stream_name":"stdout","time":1.164298377,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":1.16430115,"data":"|   1  Tesla T4                       Off |   00000000:00:05.0 Off |                    0 |\n"}
+,{"stream_name":"stdout","time":1.164303862,"data":"| N/A   58C    P8             10W /   70W |       0MiB /  15360MiB |      0%      Default |\n"}
+,{"stream_name":"stdout","time":1.164306517,"data":"|                                         |                        |                  N/A |\n"}
+,{"stream_name":"stdout","time":1.164309175,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":1.164311939,"data":"\n"}
+,{"stream_name":"stdout","time":1.164314472,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":1.164317162,"data":"| Processes:                                                                              |\n"}
+,{"stream_name":"stdout","time":1.164319823,"data":"|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n"}
+,{"stream_name":"stdout","time":1.164322473,"data":"|        ID   ID                                                               Usage      |\n"}
+,{"stream_name":"stdout","time":1.164325128,"data":"|=========================================================================================|\n"}
+,{"stream_name":"stdout","time":1.164327785,"data":"|  No running processes found                                                             |\n"}
+,{"stream_name":"stdout","time":1.164331282,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":1.1643340389999999,"data":"4\n"}
+,{"stream_name":"stdout","time":1.164336579,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":1.164339229,"data":"Mem:              31           1          26           0           4          30\n"}
+,{"stream_name":"stdout","time":1.164346199,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":1.164349005,"data":"\n"}
+,{"stream_name":"stdout","time":9.372390484,"data":"inputs: ['/kaggle/input/competitions/playground-series-s6e10/train.csv', '/kaggle/input/datasets/teejmahal20/airline-passenger-satisfaction/train.csv']\n"}
+,{"stream_name":"stdout","time":36.318726747,"data":"[   0.4 min] original rows 129880 features 21 | label counts {'neutral or dissatisfied': 73452, 'satisfied': 56428}\n"}
+,{"stream_name":"stderr","time":36.899311987,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":46.266691328,"data":"\rLoading weights:   0%|          | 0/76 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 76/76 [00:00\u003c00:00, 2907.42it/s]\n"}
+,{"stream_name":"stdout","time":47.908231318,"data":"[   0.6 min] model distilgpt2 params 81912576 gpus 2\n"}
+,{"stream_name":"stderr","time":49.822258431,"data":"[transformers] `loss_type=None` was set in the config but it is unrecognized. Using the default loss: `ForCausalLMLoss`.\n"}
+,{"stream_name":"stderr","time":49.87797756,"data":"/usr/local/lib/python3.13/dist-packages/torch/autograd/function.py:596: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.\n"}
+,{"stream_name":"stderr","time":49.878049163,"data":"  return super().apply(*args, **kwargs)  # type: ignore[misc]\n"}
+,{"stream_name":"stderr","time":50.224863537,"data":"/kaggle/src/script.py:146: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate\n"}
+,{"stream_name":"stderr","time":50.22489628,"data":"  sched.step()\n"}
+,{"stream_name":"stdout","time":50.224964564,"data":"[   0.7 min] step 1/16236 loss 4.2458  2.230 s/step  ETA 603.3 min\n"}
+,{"stream_name":"stdout","time":101.798928406,"data":"[   1.5 min] step 200/16236 loss 0.7251  0.269 s/step  ETA 71.9 min\n"}
+,{"stream_name":"stdout","time":153.878683371,"data":"[   2.4 min] step 400/16236 loss 0.6669  0.265 s/step  ETA 69.8 min\n"}
+,{"stream_name":"stdout","time":205.81314886,"data":"[   3.3 min] step 600/16236 loss 0.6870  0.263 s/step  ETA 68.5 min\n"}
+,{"stream_name":"stdout","time":257.690706233,"data":"[   4.1 min] step 800/16236 loss 0.6180  0.262 s/step  ETA 67.4 min\n"}
+,{"stream_name":"stdout","time":309.610497621,"data":"[   5.0 min] step 1000/16236 loss 0.6078  0.262 s/step  ETA 66.4 min\n"}
+,{"stream_name":"stdout","time":361.484521511,"data":"[   5.9 min] step 1200/16236 loss 0.6071  0.261 s/step  ETA 65.5 min\n"}
+,{"stream_name":"stdout","time":413.381373348,"data":"[   6.7 min] step 1400/16236 loss 0.6057  0.261 s/step  ETA 64.5 min\n"}
+,{"stream_name":"stdout","time":465.260568952,"data":"[   7.6 min] step 1600/16236 loss 0.6041  0.261 s/step  ETA 63.6 min\n"}
+,{"stream_name":"stdout","time":517.168424355,"data":"[   8.5 min] step 1800/16236 loss 0.5918  0.261 s/step  ETA 62.7 min\n"}
+,{"stream_name":"stdout","time":569.051954113,"data":"[   9.3 min] step 2000/16236 loss 0.6010  0.261 s/step  ETA 61.8 min\n"}
+,{"stream_name":"stdout","time":621.06958074,"data":"[  10.2 min] step 2200/16236 loss 0.5921  0.260 s/step  ETA 60.9 min\n"}
+,{"stream_name":"stdout","time":673.083909879,"data":"[  11.1 min] step 2400/16236 loss 0.5869  0.260 s/step  ETA 60.1 min\n"}
+,{"stream_name":"stdout","time":725.016562802,"data":"[  11.9 min] step 2600/16236 loss 0.5849  0.260 s/step  ETA 59.2 min\n"}
+,{"stream_name":"stdout","time":776.980620963,"data":"[  12.8 min] step 2800/16236 loss 0.5824  0.260 s/step  ETA 58.3 min\n"}
+,{"stream_name":"stdout","time":828.865899137,"data":"[  13.7 min] step 3000/16236 loss 0.5899  0.260 s/step  ETA 57.4 min\n"}
+,{"stream_name":"stdout","time":880.75788465,"data":"[  14.5 min] step 3200/16236 loss 0.5914  0.260 s/step  ETA 56.5 min\n"}
+,{"stream_name":"stdout","time":932.824021397,"data":"[  15.4 min] step 3400/16236 loss 0.5775  0.260 s/step  ETA 55.7 min\n"}
+,{"stream_name":"stdout","time":984.841583722,"data":"[  16.3 min] step 3600/16236 loss 0.5863  0.260 s/step  ETA 54.8 min\n"}
+,{"stream_name":"stdout","time":1036.911417469,"data":"[  17.1 min] step 3800/16236 loss 0.5905  0.260 s/step  ETA 53.9 min\n"}
+,{"stream_name":"stdout","time":1088.982908935,"data":"[  18.0 min] step 4000/16236 loss 0.5993  0.260 s/step  ETA 53.1 min\n"}
+,{"stream_name":"stdout","time":1141.074069781,"data":"[  18.9 min] step 4200/16236 loss 0.5912  0.260 s/step  ETA 52.2 min\n"}
+,{"stream_name":"stdout","time":1193.0669473,"data":"[  19.7 min] step 4400/16236 loss 0.5881  0.260 s/step  ETA 51.3 min\n"}
+,{"stream_name":"stdout","time":1245.079621844,"data":"[  20.6 min] step 4600/16236 loss 0.5847  0.260 s/step  ETA 50.5 min\n"}
+,{"stream_name":"stdout","time":1297.088868671,"data":"[  21.5 min] step 4800/16236 loss 0.5778  0.260 s/step  ETA 49.6 min\n"}
+,{"stream_name":"stdout","time":1349.257896428,"data":"[  22.3 min] step 5000/16236 loss 0.5845  0.260 s/step  ETA 48.7 min\n"}
+,{"stream_name":"stdout","time":1401.427246158,"data":"[  23.2 min] step 5200/16236 loss 0.5904  0.260 s/step  ETA 47.9 min\n"}
+,{"stream_name":"stdout","time":1453.591813171,"data":"[  24.1 min] step 5400/16236 loss 0.5725  0.260 s/step  ETA 47.0 min\n"}
+,{"stream_name":"stdout","time":1505.725466482,"data":"[  24.9 min] step 5600/16236 loss 0.5867  0.260 s/step  ETA 46.1 min\n"}
+,{"stream_name":"stdout","time":1557.869965536,"data":"[  25.8 min] step 5800/16236 loss 0.5838  0.260 s/step  ETA 45.3 min\n"}
+,{"stream_name":"stdout","time":1610.030828103,"data":"[  26.7 min] step 6000/16236 loss 0.5615  0.260 s/step  ETA 44.4 min\n"}
+,{"stream_name":"stdout","time":1662.173610568,"data":"[  27.5 min] step 6200/16236 loss 0.5723  0.260 s/step  ETA 43.5 min\n"}
+,{"stream_name":"stdout","time":1714.312265339,"data":"[  28.4 min] step 6400/16236 loss 0.5937  0.260 s/step  ETA 42.7 min\n"}
+,{"stream_name":"stdout","time":1766.474028091,"data":"[  29.3 min] step 6600/16236 loss 0.5737  0.260 s/step  ETA 41.8 min\n"}
+,{"stream_name":"stdout","time":1818.635935789,"data":"[  30.2 min] step 6800/16236 loss 0.5771  0.260 s/step  ETA 40.9 min\n"}
+,{"stream_name":"stdout","time":1870.813928759,"data":"[  31.0 min] step 7000/16236 loss 0.5823  0.260 s/step  ETA 40.1 min\n"}
+,{"stream_name":"stdout","time":1922.958350024,"data":"[  31.9 min] step 7200/16236 loss 0.5734  0.260 s/step  ETA 39.2 min\n"}
+,{"stream_name":"stdout","time":1975.144365395,"data":"[  32.8 min] step 7400/16236 loss 0.5886  0.260 s/step  ETA 38.4 min\n"}
+,{"stream_name":"stdout","time":2027.311884925,"data":"[  33.6 min] step 7600/16236 loss 0.5736  0.260 s/step  ETA 37.5 min\n"}
+,{"stream_name":"stdout","time":2079.489918661,"data":"[  34.5 min] step 7800/16236 loss 0.5849  0.260 s/step  ETA 36.6 min\n"}
+,{"stream_name":"stdout","time":2131.651985376,"data":"[  35.4 min] step 8000/16236 loss 0.5839  0.260 s/step  ETA 35.8 min\n"}
+,{"stream_name":"stdout","time":2183.735289975,"data":"[  36.2 min] step 8200/16236 loss 0.5813  0.260 s/step  ETA 34.9 min\n"}
+,{"stream_name":"stdout","time":2235.895613665,"data":"[  37.1 min] step 8400/16236 loss 0.5757  0.260 s/step  ETA 34.0 min\n"}
+,{"stream_name":"stdout","time":2288.038152579,"data":"[  38.0 min] step 8600/16236 loss 0.5823  0.260 s/step  ETA 33.1 min\n"}
+,{"stream_name":"stdout","time":2340.187685796,"data":"[  38.8 min] step 8800/16236 loss 0.5790  0.260 s/step  ETA 32.3 min\n"}
+,{"stream_name":"stdout","time":2392.341311652,"data":"[  39.7 min] step 9000/16236 loss 0.5900  0.260 s/step  ETA 31.4 min\n"}
+,{"stream_name":"stdout","time":2444.475454134,"data":"[  40.6 min] step 9200/16236 loss 0.5779  0.260 s/step  ETA 30.5 min\n"}
+,{"stream_name":"stdout","time":2496.633146589,"data":"[  41.5 min] step 9400/16236 loss 0.5720  0.260 s/step  ETA 29.7 min\n"}
+,{"stream_name":"stdout","time":2548.788799638,"data":"[  42.3 min] step 9600/16236 loss 0.5641  0.260 s/step  ETA 28.8 min\n"}
+,{"stream_name":"stdout","time":2600.945135778,"data":"[  43.2 min] step 9800/16236 loss 0.5713  0.261 s/step  ETA 27.9 min\n"}
+,{"stream_name":"stdout","time":2653.098197339,"data":"[  44.1 min] step 10000/16236 loss 0.5821  0.261 s/step  ETA 27.1 min\n"}
+,{"stream_name":"stdout","time":2705.253105367,"data":"[  44.9 min] step 10200/16236 loss 0.5727  0.261 s/step  ETA 26.2 min\n"}
+,{"stream_name":"stdout","time":2757.396599836,"data":"[  45.8 min] step 10400/16236 loss 0.5684  0.261 s/step  ETA 25.3 min\n"}
+,{"stream_name":"stdout","time":2809.554746101,"data":"[  46.7 min] step 10600/16236 loss 0.5797  0.261 s/step  ETA 24.5 min\n"}
+,{"stream_name":"stdout","time":2861.708230345,"data":"[  47.5 min] step 10800/16236 loss 0.5677  0.261 s/step  ETA 23.6 min\n"}
+,{"stream_name":"stdout","time":2913.843873545,"data":"[  48.4 min] step 11000/16236 loss 0.5776  0.261 s/step  ETA 22.7 min\n"}
+,{"stream_name":"stdout","time":2965.995821311,"data":"[  49.3 min] step 11200/16236 loss 0.5661  0.261 s/step  ETA 21.9 min\n"}
+,{"stream_name":"stdout","time":3018.148941258,"data":"[  50.1 min] step 11400/16236 loss 0.5857  0.261 s/step  ETA 21.0 min\n"}
+,{"stream_name":"stdout","time":3070.28536952,"data":"[  51.0 min] step 11600/16236 loss 0.5757  0.261 s/step  ETA 20.1 min\n"}
+,{"stream_name":"stdout","time":3122.412821911,"data":"[  51.9 min] step 11800/16236 loss 0.5825  0.261 s/step  ETA 19.3 min\n"}
+,{"stream_name":"stdout","time":3174.569925329,"data":"[  52.8 min] step 12000/16236 loss 0.5642  0.261 s/step  ETA 18.4 min\n"}
+,{"stream_name":"stdout","time":3226.668462843,"data":"[  53.6 min] step 12200/16236 loss 0.5776  0.261 s/step  ETA 17.5 min\n"}
+,{"stream_name":"stdout","time":3278.809213727,"data":"[  54.5 min] step 12400/16236 loss 0.5802  0.261 s/step  ETA 16.7 min\n"}
+,{"stream_name":"stdout","time":3330.931148149,"data":"[  55.4 min] step 12600/16236 loss 0.5640  0.261 s/step  ETA 15.8 min\n"}
+,{"stream_name":"stdout","time":3383.060315244,"data":"[  56.2 min] step 12800/16236 loss 0.5915  0.261 s/step  ETA 14.9 min\n"}
+,{"stream_name":"stdout","time":3435.174169292,"data":"[  57.1 min] step 13000/16236 loss 0.5770  0.261 s/step  ETA 14.1 min\n"}
+,{"stream_name":"stdout","time":3487.29182605,"data":"[  58.0 min] step 13200/16236 loss 0.5671  0.261 s/step  ETA 13.2 min\n"}
+,{"stream_name":"stdout","time":3539.392519053,"data":"[  58.8 min] step 13400/16236 loss 0.5714  0.261 s/step  ETA 12.3 min\n"}
+,{"stream_name":"stdout","time":3591.536475203,"data":"[  59.7 min] step 13600/16236 loss 0.5670  0.261 s/step  ETA 11.4 min\n"}
+,{"stream_name":"stdout","time":3643.611487917,"data":"[  60.6 min] step 13800/16236 loss 0.5718  0.261 s/step  ETA 10.6 min\n"}
+,{"stream_name":"stdout","time":3695.559169855,"data":"[  61.4 min] step 14000/16236 loss 0.5817  0.261 s/step  ETA 9.7 min\n"}
+,{"stream_name":"stdout","time":3747.504851523,"data":"[  62.3 min] step 14200/16236 loss 0.5750  0.261 s/step  ETA 8.8 min\n"}
+,{"stream_name":"stdout","time":3799.454546332,"data":"[  63.2 min] step 14400/16236 loss 0.5656  0.261 s/step  ETA 8.0 min\n"}
+,{"stream_name":"stdout","time":3851.452363805,"data":"[  64.0 min] step 14600/16236 loss 0.5642  0.261 s/step  ETA 7.1 min\n"}
+,{"stream_name":"stdout","time":3903.377504127,"data":"[  64.9 min] step 14800/16236 loss 0.5847  0.260 s/step  ETA 6.2 min\n"}
+,{"stream_name":"stdout","time":3955.235867856,"data":"[  65.8 min] step 15000/16236 loss 0.5584  0.260 s/step  ETA 5.4 min\n"}
+,{"stream_name":"stdout","time":4007.278658369,"data":"[  66.6 min] step 15200/16236 loss 0.5884  0.260 s/step  ETA 4.5 min\n"}
+,{"stream_name":"stdout","time":4059.272210815,"data":"[  67.5 min] step 15400/16236 loss 0.5810  0.260 s/step  ETA 3.6 min\n"}
+,{"stream_name":"stdout","time":4111.346299859,"data":"[  68.4 min] step 15600/16236 loss 0.5611  0.260 s/step  ETA 2.8 min\n"}
+,{"stream_name":"stdout","time":4163.308382338,"data":"[  69.2 min] step 15800/16236 loss 0.5569  0.260 s/step  ETA 1.9 min\n"}
+,{"stream_name":"stdout","time":4215.156268374,"data":"[  70.1 min] step 16000/16236 loss 0.5739  0.260 s/step  ETA 1.0 min\n"}
+,{"stream_name":"stdout","time":4267.014206661,"data":"[  71.0 min] step 16200/16236 loss 0.5853  0.260 s/step  ETA 0.2 min\n"}
+,{"stream_name":"stdout","time":4276.296537098,"data":"[  71.1 min] training done, steps 16236\n"}
+,{"stream_name":"stdout","time":4290.006934854,"data":"[  71.3 min] train: 256/699635 rows  ETA 121.3 min\n"}
+,{"stream_name":"stdout","time":4537.766067914,"data":"[  75.5 min] train: 25856/699635 rows  ETA 108.8 min\n"}
+,{"stream_name":"stdout","time":4785.999681013,"data":"[  79.6 min] train: 51456/699635 rows  ETA 104.7 min\n"}
+,{"stream_name":"stdout","time":5032.871341592,"data":"[  83.7 min] train: 77056/699635 rows  ETA 100.4 min\n"}
+,{"stream_name":"stdout","time":5279.698079851,"data":"[  87.8 min] train: 102656/699635 rows  ETA 96.2 min\n"}
+,{"stream_name":"stdout","time":5526.725796413,"data":"[  92.0 min] train: 128256/699635 rows  ETA 92.0 min\n"}
+,{"stream_name":"stdout","time":5774.670953653,"data":"[  96.1 min] train: 153856/699635 rows  ETA 87.9 min\n"}
+,{"stream_name":"stdout","time":6022.652451144,"data":"[ 100.2 min] train: 179456/699635 rows  ETA 83.8 min\n"}
+,{"stream_name":"stdout","time":6270.548961313,"data":"[ 104.4 min] train: 205056/699635 rows  ETA 79.7 min\n"}
+,{"stream_name":"stdout","time":6519.148521882,"data":"[ 108.5 min] train: 230656/699635 rows  ETA 75.6 min\n"}
+,{"stream_name":"stdout","time":6768.79283194,"data":"[ 112.7 min] train: 256256/699635 rows  ETA 71.6 min\n"}
+,{"stream_name":"stdout","time":7017.558262073,"data":"[ 116.8 min] train: 281856/699635 rows  ETA 67.4 min\n"}
+,{"stream_name":"stdout","time":7267.995438965,"data":"[ 121.0 min] train: 307456/699635 rows  ETA 63.4 min\n"}
+,{"stream_name":"stdout","time":7517.236677331,"data":"[ 125.1 min] train: 333056/699635 rows  ETA 59.2 min\n"}
+,{"stream_name":"stdout","time":7768.89566278,"data":"[ 129.3 min] train: 358656/699635 rows  ETA 55.2 min\n"}
+,{"stream_name":"stdout","time":8018.356067392,"data":"[ 133.5 min] train: 384256/699635 rows  ETA 51.0 min\n"}
+,{"stream_name":"stdout","time":8266.809507073,"data":"[ 137.6 min] train: 409856/699635 rows  ETA 46.9 min\n"}
+,{"stream_name":"stdout","time":8515.387662916,"data":"[ 141.8 min] train: 435456/699635 rows  ETA 42.8 min\n"}
+,{"stream_name":"stdout","time":8764.274966186,"data":"[ 145.9 min] train: 461056/699635 rows  ETA 38.6 min\n"}
+,{"stream_name":"stdout","time":9012.873186493,"data":"[ 150.1 min] train: 486656/699635 rows  ETA 34.5 min\n"}
+,{"stream_name":"stdout","time":9261.436179041,"data":"[ 154.2 min] train: 512256/699635 rows  ETA 30.3 min\n"}
+,{"stream_name":"stdout","time":9510.468609881,"data":"[ 158.4 min] train: 537856/699635 rows  ETA 26.2 min\n"}
+,{"stream_name":"stdout","time":9759.61814102,"data":"[ 162.5 min] train: 563456/699635 rows  ETA 22.0 min\n"}
+,{"stream_name":"stdout","time":10008.224842812,"data":"[ 166.6 min] train: 589056/699635 rows  ETA 17.9 min\n"}
+,{"stream_name":"stdout","time":10256.972638601,"data":"[ 170.8 min] train: 614656/699635 rows  ETA 13.8 min\n"}
+,{"stream_name":"stdout","time":10505.448574791,"data":"[ 174.9 min] train: 640256/699635 rows  ETA 9.6 min\n"}
+,{"stream_name":"stdout","time":10754.564673235,"data":"[ 179.1 min] train: 665856/699635 rows  ETA 5.5 min\n"}
+,{"stream_name":"stdout","time":11005.771291151,"data":"[ 183.3 min] train: 691456/699635 rows  ETA 1.3 min\n"}
+,{"stream_name":"stdout","time":11093.079796364,"data":"[ 184.7 min] test: 256/299844 rows  ETA 48.8 min\n"}
+,{"stream_name":"stdout","time":11340.702171357,"data":"[ 188.9 min] test: 25856/299844 rows  ETA 44.2 min\n"}
+,{"stream_name":"stdout","time":11589.160824882,"data":"[ 193.0 min] test: 51456/299844 rows  ETA 40.1 min\n"}
+,{"stream_name":"stdout","time":11837.932048506,"data":"[ 197.1 min] test: 77056/299844 rows  ETA 36.0 min\n"}
+,{"stream_name":"stdout","time":12087.307717527,"data":"[ 201.3 min] test: 102656/299844 rows  ETA 31.9 min\n"}
+,{"stream_name":"stdout","time":12337.176913563,"data":"[ 205.5 min] test: 128256/299844 rows  ETA 27.8 min\n"}
+,{"stream_name":"stdout","time":12587.253487864,"data":"[ 209.6 min] test: 153856/299844 rows  ETA 23.7 min\n"}
+,{"stream_name":"stdout","time":12837.447989411,"data":"[ 213.8 min] test: 179456/299844 rows  ETA 19.5 min\n"}
+,{"stream_name":"stdout","time":13087.587835488,"data":"[ 218.0 min] test: 205056/299844 rows  ETA 15.4 min\n"}
+,{"stream_name":"stdout","time":13337.710606632,"data":"[ 222.1 min] test: 230656/299844 rows  ETA 11.2 min\n"}
+,{"stream_name":"stdout","time":13588.405437445,"data":"[ 226.3 min] test: 256256/299844 rows  ETA 7.1 min\n"}
+,{"stream_name":"stdout","time":13838.931447669,"data":"[ 230.5 min] test: 281856/299844 rows  ETA 2.9 min\n"}
+,{"stream_name":"stdout","time":14016.400794376,"data":"[ 233.5 min] label-free AUC on competition train: llr_last 0.951695  llr_first 0.946566\n"}
+,{"stream_name":"stdout","time":14016.400861072,"data":"[ 233.5 min] done\n"}
+,{"stream_name":"stderr","time":14022.376055951,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":14022.376085167,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":14022.602885695,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":14022.602916176,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":14023.471908293,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":14024.467406014,"data":"[NbConvertApp] Writing 337857 bytes to __results__.html\n"}
+]
