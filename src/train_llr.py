@@ -93,7 +93,21 @@ if a.tiny:
 else:
     model = GPT2LMHeadModel.from_pretrained(a.model)
 model.to(dev)
-net = torch.nn.DataParallel(model) if ngpu > 1 else model
+
+
+class LossOnly(torch.nn.Module):
+    """Return only the per-replica loss: DataParallel would otherwise gather the full vocabulary logits of every
+    replica onto GPU 0 at each step (~1 GB at batch 64), which dominated the step time."""
+
+    def __init__(self, m):
+        super().__init__()
+        self.m = m
+
+    def forward(self, input_ids, attention_mask, labels):
+        return self.m(input_ids=input_ids, attention_mask=attention_mask, labels=labels).loss[None]
+
+
+net = torch.nn.DataParallel(LossOnly(model)) if ngpu > 1 else LossOnly(model)
 log("model", "tiny" if a.tiny else a.model, "params", sum(p.numel() for p in model.parameters()), "gpus", ngpu)
 
 COLS = FEATS + [TARGET]
@@ -128,8 +142,7 @@ while step < total:
         first_pad = att.sum(1)
         labels[torch.arange(len(ids)), (first_pad - 1).clamp(max=ids.shape[1] - 1)] = EOS
         with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=dev == "cuda"):
-            out = net(input_ids=ids, attention_mask=att, labels=labels)
-            loss = out.loss.mean()
+            loss = net(input_ids=ids, attention_mask=att, labels=labels).mean()
         opt.zero_grad(set_to_none=True)
         scaler.scale(loss).backward()
         scaler.unscale_(opt)
