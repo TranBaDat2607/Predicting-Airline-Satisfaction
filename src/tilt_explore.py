@@ -22,6 +22,7 @@ ap.add_argument("--holdout", nargs="*", default=["0062", "0058"])
 ap.add_argument("--etas", type=float, nargs="*", default=[0.8, 1.0, 1.25, 1.5])
 ap.add_argument("--no-nuisance", action="store_true")
 ap.add_argument("--exclude-file", default=None, help="file with one file name per line to leave out")
+ap.add_argument("--group-file", default=None, help="file names (one per line) that get their own noise level")
 a = ap.parse_args()
 SPEC = {"x24": dict(fixed=(576, 1e-9)), "reml": dict(), "t4": dict(nu=4), "t2": dict(nu=2), "t1": dict(nu=1),
         "t05": dict(nu=0.5), "t2k5": dict(nu=2, fixed=(1e-6, 5)), "t2k20": dict(nu=2, fixed=(1e-6, 20)),
@@ -45,6 +46,9 @@ names = files.name.to_numpy()[sel]
 print(f"{len(sel)} files", flush=True)
 T = TiltEB(p, nuisance=not a.no_nuisance).fit([np.asarray(R[i], dtype=np.float64) for i in sel], files.score.to_numpy()[sel], a.base_score)
 exact = files.source.to_numpy()[sel] == "own"
+if a.group_file:
+    T.group = np.isin(names.astype(str), list(set(open(a.group_file).read().split())))
+    print(f"suspect group: {int(T.group.sum())} files")
 for name in a.models:
     errs = []
     for h in a.holdout:

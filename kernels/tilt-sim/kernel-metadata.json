@@ -1,7 +1,7 @@
 {
- "id": "tranbadat/s6e10-tilt-sim",
- "title": "s6e10-tilt-sim",
- "code_file": "s6e10-tilt-sim.py",
+ "id": "tranbadat/s6e10-tilt-bagsim",
+ "title": "s6e10-tilt-bagsim",
+ "code_file": "s6e10-tilt-bagsim.py",
  "language": "python",
  "kernel_type": "script",
  "is_private": true,

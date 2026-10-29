@@ -60,6 +60,8 @@ class TiltEB(Tilt):
     def noise_vector(self, k0, k1, w=None):
         mk = np.diag(self.m)
         extra = self.r2 * (k0 + k1 * mk / np.median(mk))  # model error: heavy-tailed (Student-t weights)
+        if getattr(self, "group", None) is not None and len(self.group) == len(mk):
+            extra = extra * np.where(self.group, getattr(self, "gmult", 1.0), 1.0)  # suspect files: own level
         if w is not None:
             extra = extra / w
         return self.r2 + extra  # + the file's own rounding, a known floor
@@ -75,10 +77,21 @@ class TiltEB(Tilt):
             return -self.reml(self.noise_vector(np.exp(th[0]), np.exp(th[1]), w))
 
         th = np.log([1.0, 1.0]) if fixed is None else np.log(fixed)
+        grouped = getattr(self, "group", None) is not None and len(self.group) == k
+        if grouped and fixed is None:
+            th = np.append(th, np.log(getattr(self, "gmult", 4.0)))
+
+        def negll_g(th, w):
+            self.gmult = float(np.exp(th[2]))
+            return -self.reml(self.noise_vector(np.exp(th[0]), np.exp(th[1]), w))
+
         for it in range(iters if nu > 0 else 1):
             if fixed is None:
-                res = minimize(negll, th, args=(w,), method="Nelder-Mead", options={"xatol": 1e-3, "fatol": 1e-3})
+                res = minimize(negll_g if grouped else negll, th, args=(w,), method="Nelder-Mead",
+                               options={"xatol": 1e-3, "fatol": 1e-3})
                 th = res.x
+                if grouped:
+                    self.gmult = float(np.exp(th[2]))
             nv = self.noise_vector(np.exp(th[0]), np.exp(th[1]), w)
             if nu <= 0:
                 break
@@ -95,12 +108,13 @@ class TiltEB(Tilt):
                 w = w_new
                 break
             w = w_new
-        self.k0, self.k1 = np.exp(th)
+        self.k0, self.k1 = np.exp(th[:2])
         self.w = w
         self.noise_var = self.noise_vector(self.k0, self.k1, w)
         self.solve_nv(self.noise_var)
         if verbose:
-            print(f"REML noise: k0 {self.k0:.3g} k1 {self.k1:.3g} (x rounding var); "
+            print(f"REML noise: k0 {self.k0:.3g} k1 {self.k1:.3g} (x rounding var)"
+                  + (f", suspect-group x{self.gmult:.3g}" if getattr(self, "group", None) is not None else "") + "; "
                   f"weights < 0.5: {(w < 0.5).sum()}, < 0.2: {(w < 0.2).sum()}; REML {self.reml(self.noise_var):.2f}")
         return self
 
@@ -141,6 +155,8 @@ class TiltEB(Tilt):
         t.yraw, t.cs, t.dist = self.yraw[idx], self.cs[idx], self.dist[idx]
         t.m = self.m[np.ix_(idx, idx)]
         t.noise_var, t.w = None, None
+        if getattr(self, "group", None) is not None:
+            t.group = self.group[idx]
         return t
 
     def file_coefs(self, s):

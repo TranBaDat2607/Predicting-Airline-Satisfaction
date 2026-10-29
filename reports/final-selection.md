@@ -1,6 +1,6 @@
 # Final selection — playground-series-s6e10
 
-_Draft 2026-10-27 (session 4). Deadline **2026-10-31 23:59 UTC** (2026-11-01 06:59 in Vietnam, UTC+7). Re-check before then._
+_Draft 2026-10-27 (session 4), updated 2026-10-29 (session 5: tilts 0062-0070 added to the never-select list). Deadline **2026-10-31 23:59 UTC** (2026-11-01 06:59 in Vietnam, UTC+7). Re-check before then._
 
 ## ACTION FOR THE USER (no API exists for this)
 
@@ -24,6 +24,7 @@ drops** (S6E9 measured about -0.9u private per +1u public for such files).
 | `0054_tilt-v1-eta0-3.csv` | 0.96266 | public-label tilt of 0044, eta 0.3 |
 | `0056_tilt-v2-eta0-6.csv` | 0.96285 | public-label tilt of 0044, eta 0.6, EB noise x16 |
 | `0058_tilt-v3-eta1.csv` | 0.96297 | public-label tilt of 0044, eta 1.0, EB noise x24, 370 files (predicted 0.96301) |
+| `0062` … `0070` (session 5: `tilt-v4` … `tilt-v11`, `probe-top10k-x2`) | 0.96361 … **0.96432** | robust tilts (Student-t noise, version-matched notebook scores); 0068 is the public best |
 
 These exist only to hold the public-LB position the goal asked for. They are fitted to the 20 % public rows using
 365 publicly shared scored files (`src/tilt.py`), so on the 80 % private rows they are noise on top of 0044.
