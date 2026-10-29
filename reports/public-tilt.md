@@ -33,6 +33,11 @@ raise the public score and lower the private one, so they are never final picks 
 | 0068 | 476 (+ nina2025/ps-s6e10-04, score-named notebook outputs, 101 matched) | REML k1 8.3 | 1.0 | 0.96442 | **0.96432** (2nd, 11u behind 1st) |
 | 0069 | 310 "clean" (170 unmatched multi-version notebooks left out) | REML k1 3.7 | 1.0 | 0.96487 | 0.96391 ✗ |
 | 0070 | 480 incl. 0069 | nu 1, REML k1 6.3 | 1.0 | 0.96439 | 0.96428 |
+| 0071 | 480, bagged (8 bags x 75 % of the public files) | nu 2 REML | 1.0 | 0.96437 | 0.96423 |
+
+Calibration over all own tilts (0056-0071 without 0069): realised = predicted − 12u ± 9u. With every own tilt in the
+fit, held-out own tilts are predicted within ±3u (0067/0068/0070/0071), yet each new posterior tilt still realises
+~12u under its prediction, so with the 29 Oct data a new tilt is expected at ~0.9642-0.9643 (best 0.96432).
 
 - 0069 lesson: a smaller, more self-consistent file set gets a lower model error, trusts every file more, tilts
   further (rank corr 0.954) and is 96u optimistic. The full-data model had predicted 0069 within 9u. Keep all files.

@@ -26,7 +26,7 @@ ap.add_argument("--group-file", default=None, help="file names (one per line) th
 a = ap.parse_args()
 SPEC = {"x24": dict(fixed=(576, 1e-9)), "reml": dict(), "t4": dict(nu=4), "t2": dict(nu=2), "t1": dict(nu=1),
         "t05": dict(nu=0.5), "t2k5": dict(nu=2, fixed=(1e-6, 5)), "t2k20": dict(nu=2, fixed=(1e-6, 20)),
-        "t2k40": dict(nu=2, fixed=(1e-6, 40)), "t2k80": dict(nu=2, fixed=(1e-6, 80)), "t2k160": dict(nu=2, fixed=(1e-6, 160)), "t2k320": dict(nu=2, fixed=(1e-6, 320))}
+        "t2k40": dict(nu=2, fixed=(1e-6, 40)), "t2k80": dict(nu=2, fixed=(1e-6, 80)), "t2k160": dict(nu=2, fixed=(1e-6, 160)), "t2k320": dict(nu=2, fixed=(1e-6, 320)), "t2f3": dict(nu=2, fixed=(3, 10.8)), "t2f8": dict(nu=2, fixed=(8, 10.8)), "t2f20": dict(nu=2, fixed=(20, 10.8))}
 
 ids = pd.read_csv("data/test.csv", usecols=["id"])["id"].to_numpy()
 oof = np.load("artifacts/0020_stack-lr-pool319-kaggle/oof.npy").astype(float)
