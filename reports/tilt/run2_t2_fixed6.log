@@ -1,0 +1,32 @@
+files 398, used 390, held out 0
+REML noise: k0 2.91e-23 k1 14.7 (x rounding var); weights < 0.5: 15, < 0.2: 12; REML -4130.45
+LOO R2 0.691; surprise sd 32.36u; LOO resid sd 19.94u
+            n    w_mean  w_lt05  noise_med_u   resid_sd
+source                                                 
+atlas      40  1.203134       0     0.474992   0.436792
+dataset    52  1.080671       4     0.908652   8.722539
+lb          4  1.184443       0     0.472998   0.329741
+notebook  269  0.995340      11     1.385729  23.736361
+own        25  1.083512       0     0.294511   1.717646
+lowest weights:
+                                                                name    source    score      corr  surprise_u  loo_resid_u  noise_sd_u         w
+243                  arunklenin/ps6e10-airline-satisfaction-baseline  notebook  0.96157  0.939414  312.598428   359.661193  205.156191  0.000103
+276                              data/ext/ps-s6e10-02/0.96122_FE.csv   dataset  0.96122  0.974192   45.833962    60.904305   32.244603  0.001575
+186                      sarunpm/airline-satisfaction-for-0-96168-lb  notebook  0.96171  0.988427    5.494439    22.457784   10.937355  0.005861
+155                               amanatar/s6e10-the-consensus-forge  notebook  0.96167  0.991065   -3.420939    17.721190    9.021056  0.007238
+230                            keyadobriyal/eda-5foldcv-xgb-cat-lgbm  notebook  0.95880  0.946735   -7.101041    36.620745   20.007616  0.009318
+316  data/ext/s6e10-top18-artifacts/pillar3_taisei_newton_096182.csv   dataset  0.96182  0.992549    3.877937    13.587121    7.152961  0.009451
+235                           anhadmahajan06/s6e10-are-you-satisfied  notebook  0.96110  0.978909   13.489730    24.171758   10.125287  0.013903
+197                     anthonytherrien/airline-satisfaction-xgboost  notebook  0.95912  0.950966   -5.860244    32.212520   14.754405  0.015598
+165                        keyadobriyal/lgbm-xgb-lgbm-realmlp-tabpfn  notebook  0.95842  0.943417  -22.419889    30.780011   14.763196  0.018287
+218    anujsaha0123456789/airline-satisfaction-0-95806-gbdt-ensemble  notebook  0.95832  0.940205  -21.989977    24.203872    8.759220  0.056919
+own files (surprise vs LOO residual):
+                                         name source    score      corr  surprise_u  loo_resid_u  noise_sd_u         w
+389                 subs/0035_lbb-settf20.csv    own  0.96212  0.999979   -0.827354    -0.153196    0.293429  1.165438
+391              subs/0045_lbb-settf8-125.csv    own  0.96214  0.999999    0.045370     0.281252    0.288864  1.089436
+392              subs/0054_tilt-v1-eta0-3.csv    own  0.96266  0.987485  100.513479     3.590313    0.955802  1.006037
+393              subs/0056_tilt-v2-eta0-6.csv    own  0.96285  0.989571  111.546479    -3.293664    0.874362  1.000000
+394              subs/0057_lbb-settf16-10.csv    own  0.96214  1.000000    0.031800     0.270821    0.288777  1.099911
+395                subs/0058_tilt-v3-eta1.csv    own  0.96297  0.981633  156.347852     1.379091    1.111318  1.064073
+396  subs/0060_stack-lr-pool321-kaggle-v3.csv    own  0.96185  0.995996   -8.917029     0.616586    0.568777  1.079468
+397             subs/0062_tilt-v4-t2-eta1.csv    own  0.96361  0.966249  296.619710    -6.406755    1.566232  1.006713

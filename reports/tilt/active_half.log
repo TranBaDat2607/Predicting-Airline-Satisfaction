@@ -1,0 +1,5 @@
+[half] base 0.96296; tilt before probes: eta 1.0 public 0.96453 (pred 0.96432) private 0.96098
+round  1: probe eta 1.0 public 0.96453 | best 0.96453 | next greedy public 0.96454 (pred 0.96452)
+round  2: probe eta 1.0 public 0.96370 | best 0.96453 | next greedy public 0.96454 (pred 0.96452)
+round  3: probe eta 1.0 public 0.96454 | best 0.96454 | next greedy public 0.96454 (pred 0.96453)
+round  4: probe eta 1.0 public 0.96381 | best 0.96454 | next greedy public 0.96455 (pred 0.96453)

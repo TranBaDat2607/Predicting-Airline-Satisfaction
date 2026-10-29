@@ -43,6 +43,8 @@ items = []  # (name, source, score, values)
 kern = pd.read_csv(OUT / "kernels.csv")
 for r in kern.itertuples():
     p = OUT / "k" / r.ref.replace("/", "__") / "submission.csv"
+    fixed = OUT / "k_fixed" / r.ref.replace("/", "__") / "submission.csv"  # version matched by src/lb_match.py
+    p = fixed if fixed.exists() else p
     if p.exists() and r.best_public_score and r.best_public_score > 0:
         items.append((r.ref, "notebook", float(r.best_public_score), p))
 
@@ -50,8 +52,8 @@ for p in sorted(glob.glob("data/ext/*/0.96*") + glob.glob("data/ext/*/0.95*")):
     m = re.match(r"(0\.9\d{4})", Path(p).name)
     if m:
         items.append((p, "dataset", float(m.group(1)), Path(p)))
-for p in glob.glob("data/ext/goodpjw-pub/*_0962*.csv"):
-    m = re.search(r"_(0962\d\d)_", Path(p).name)
+for p in glob.glob("data/ext/goodpjw-pub/*_096*.csv"):
+    m = re.search(r"_(096\d\d\d)(?:_|\.csv)", Path(p).name)
     items.append((p, "dataset", float("0." + m.group(1)[1:]) if m else None, Path(p)))
 # rehosted public files whose name carries the PUBLIC score (a "cv-0-9xxxx" number is a CV score and is ignored)
 LB_NAME = [r"lb-0-(9\d{4})", r"0-(9\d{4})-public-score", r"_0(9[56]\d{3})(?:_|\.)"]
@@ -62,7 +64,8 @@ for lib in ("s6e10-top18-artifacts", "ps6e10-best-public-submissions"):
             if m:
                 items.append((p, "dataset", float("0." + m.group(1)), Path(p)))
                 break
-KNOWN = {"data/ext/dataset-submission-for-lb-score-0-96192/submission_alpha_1p40.csv": 0.96192}  # dataset title
+KNOWN = {"data/ext/dataset-submission-for-lb-score-0-96192/submission_alpha_1p40.csv": 0.96192,  # dataset title
+         "data/ext/dennis-best/s6e10-best.csv": 0.96213}  # provenance.json official_public_score
 for p, s in KNOWN.items():
     if Path(p).exists():
         items.append((p, "dataset", s, Path(p)))

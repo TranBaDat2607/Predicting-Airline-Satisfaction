@@ -39,9 +39,14 @@ def get(ref):
     return {"ref": ref, "version": None, "last_run": None}
 
 
-with ThreadPoolExecutor(4) as ex:
-    rows = list(ex.map(get, todo))
+rows = []
+with ThreadPoolExecutor(2) as ex:
+    for i, r in enumerate(ex.map(get, todo)):
+        rows.append(r)
+        if i % 20 == 19 or i == len(todo) - 1:  # save as we go: the API rate-limits and runs get cut
+            out = pd.concat([done, pd.DataFrame(rows)], ignore_index=True)
+            out.to_csv("data/tilt/versions.csv", index=False)
+            print(f"{len(out)} saved", flush=True)
 out = pd.concat([done, pd.DataFrame(rows)], ignore_index=True)
-out.to_csv("data/tilt/versions.csv", index=False)
 print(f"{len(out)} notebooks, version known for {out.version.notna().sum()}")
 print(out.version.describe())

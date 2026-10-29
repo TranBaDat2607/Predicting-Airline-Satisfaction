@@ -5,9 +5,9 @@ tilt.py gives every scored file the same noise sd (one rounding step x noise_uni
 linearisation error that grows with their distance to the base, and some notebook scores belong to another
 version of the notebook than the output we downloaded (gross errors). Here the per-file noise variance is
 
-    var_k = r2 * (k0 + k1 * M_kk / median(M_kk)) / w_k
+    var_k = r2 + r2 * (k0 + k1 * M_kk / median(M_kk)) / w_k
 
-r2 = variance of one 5-decimal rounding, M_kk = prior variance of file k's public-score surprise (its size),
+r2 = variance of one 5-decimal rounding (the file's own, a floor), M_kk = prior variance of file k's public-score surprise (its size),
 w_k = Student-t weight (EM; nu degrees of freedom) that down-weights files the others cannot explain.
 (k0, k1) maximise the REML marginal likelihood of the surprises; the base's rounding is shared by all files.
 
@@ -59,10 +59,10 @@ class TiltEB(Tilt):
 
     def noise_vector(self, k0, k1, w=None):
         mk = np.diag(self.m)
-        nv = self.r2 * (k0 + k1 * mk / np.median(mk))
+        extra = self.r2 * (k0 + k1 * mk / np.median(mk))  # model error: heavy-tailed (Student-t weights)
         if w is not None:
-            nv = nv / w
-        return nv
+            extra = extra / w
+        return self.r2 + extra  # + the file's own rounding, a known floor
 
     def fit_noise(self, nu: float = 0.0, iters: int = 30, fixed=None, exact=None, verbose=True):
         """REML over (log k0, log k1); with nu > 0, Student-t EM weights on top (re-optimising k0, k1 each pass).
@@ -131,3 +131,34 @@ class TiltEB(Tilt):
         if self.noise_var is None or len(self.noise_var) != len(self.yraw):
             return super().solve()
         return self.solve_nv(self.noise_var)
+
+    def subset(self, idx):
+        """A copy restricted to the files idx (no rebuild: rows/columns of the K x K system are reused)."""
+        idx = np.asarray(idx)
+        t = object.__new__(type(self))
+        t.__dict__.update(self.__dict__)
+        t.g, t.h = self.g[idx], self.h[idx]
+        t.yraw, t.cs, t.dist = self.yraw[idx], self.cs[idx], self.dist[idx]
+        t.m = self.m[np.ix_(idx, idx)]
+        t.noise_var, t.w = None, None
+        return t
+
+    def file_coefs(self, s):
+        w, u = self._wu(s)
+        return (self.f * (w - self.wb)).astype(np.float32), (self.f * (u - self.ub)).astype(np.float32), \
+            self.f ** 2 * (float(self.p @ w) - self.sb), float(np.square(w - self.wb).mean())
+
+    def predict_dist(self, s, q=None):
+        """Posterior predictive mean (public AUC) and sd (AUC units) of a NEW file's score, including its noise
+        (rounding + model error at the fitted k0, k1 and weight 1). q = inverse covariance (cached by caller)."""
+        g, h, c, d = self.file_coefs(s)
+        va, vb, cab = (x.astype(np.float32) for x in (self.va, self.vb, self.cab))
+        prior = float((g * va) @ g + (h * vb) @ h + 2 * (g * cab) @ h)
+        kv = (self.g @ (va * g) + self.h @ (vb * h) + self.g @ (cab * h) + self.h @ (cab * g)).astype(np.float64)
+        if q is None:
+            q = np.linalg.inv(self._cov(self.noise_var))
+        post = max(prior - kv @ q @ kv, 0.0)
+        mk = np.median(np.diag(self.m))
+        noise = self.r2 + self.r2 * (self.k0 + self.k1 * prior / mk)
+        mean = self.predict(s)
+        return mean, np.sqrt(post + noise) / (self.n1 * self.n0)

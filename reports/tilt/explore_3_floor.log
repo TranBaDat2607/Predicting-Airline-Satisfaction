@@ -1,0 +1,4 @@
+390 files
+t2    k0 1.55e-42 k1      21 w<.2  16 | 0062_tilt-v4-t2-eta1 pred 0.96365 obs 0.96361 | 0058_tilt-v3-eta1.cs pred 0.96296 obs 0.96297 | 0056_tilt-v2-eta0-6. pred 0.96289 obs 0.96285 || eta0.8 0.96362  eta1 0.96364  eta1.25 0.96355  eta1.5 0.96338
+t1    k0 1.32e-32 k1    12.4 w<.2  21 | 0062_tilt-v4-t2-eta1 pred 0.96370 obs 0.96361 | 0058_tilt-v3-eta1.cs pred 0.96295 obs 0.96297 | 0056_tilt-v2-eta0-6. pred 0.96288 obs 0.96285 || eta0.8 0.96365  eta1 0.96367  eta1.25 0.96358  eta1.5 0.96341
+t4    k0 5.67e-26 k1    40.2 w<.2  14 | 0062_tilt-v4-t2-eta1 pred 0.96339 obs 0.96361 | 0058_tilt-v3-eta1.cs pred 0.96298 obs 0.96297 | 0056_tilt-v2-eta0-6. pred 0.96290 obs 0.96285 || eta0.8 0.96366  eta1 0.96368  eta1.25 0.96361  eta1.5 0.96345

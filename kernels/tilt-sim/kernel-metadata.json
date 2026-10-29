@@ -1,0 +1,19 @@
+{
+ "id": "tranbadat/s6e10-tilt-sim",
+ "title": "s6e10-tilt-sim",
+ "code_file": "s6e10-tilt-sim.py",
+ "language": "python",
+ "kernel_type": "script",
+ "is_private": true,
+ "enable_gpu": false,
+ "enable_tpu": false,
+ "enable_internet": false,
+ "dataset_sources": [],
+ "competition_sources": [
+  "playground-series-s6e10"
+ ],
+ "kernel_sources": [
+  "tranbadat/s6e10-honest-stack-v3"
+ ],
+ "model_sources": []
+}
