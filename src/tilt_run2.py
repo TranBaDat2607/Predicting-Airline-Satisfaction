@@ -24,6 +24,7 @@ ap.add_argument("--min-corr", type=float, default=0.90)
 ap.add_argument("--nu", type=float, default=4.0, help="Student-t dof for the per-file weights (0 = Gaussian)")
 ap.add_argument("--fixed", type=float, nargs=2, default=None, help="fixed (n0, n1) instead of REML")
 ap.add_argument("--exclude", nargs="*", default=[], help="substrings of file names to leave out")
+ap.add_argument("--exclude-file", default=None, help="file with one file name per line to leave out")
 ap.add_argument("--holdout", nargs="*", default=[], help="substrings: fit without these files, then predict them")
 ap.add_argument("--scan", type=float, nargs="*", default=[])
 ap.add_argument("--write", type=float, nargs="*", default=[])
@@ -43,6 +44,8 @@ files = pd.read_csv("data/tilt/files.csv")
 keep = (files.score >= a.min_score).to_numpy().copy()
 for s in a.exclude:
     keep &= ~files.name.str.contains(s, regex=False).to_numpy()
+if a.exclude_file:
+    keep &= ~files.name.isin(set(open(a.exclude_file).read().split())).to_numpy()
 corr = np.array([np.corrcoef(R[i], rb)[0, 1] if keep[i] else 0 for i in range(len(files))])
 keep &= corr >= a.min_corr
 keep &= np.abs(corr - 1) > 1e-7

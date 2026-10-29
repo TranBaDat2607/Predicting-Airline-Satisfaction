@@ -86,7 +86,7 @@ reports/     EDA, recon, adversarial validation, post-mortems
 ## Current plan / notes
 
 - 2026-10-29 (session 5, /goal: public top 1, Kaggle GPU+CPU, commit progress, UAT issues):
-  - **Public 2nd: 0.96378 (0064)**; 1st Kawamata 0.96443 (wrote in the forum that it is LB probing over ~200 entries and
+  - **Public 2nd: 0.96432 (0068)**; 1st Kawamata 0.96443 (wrote in the forum that it is LB probing over ~200 entries and
     will not carry over to private). Method/evidence: `reports/public-tilt.md` (session 5 section).
   - Root cause of the weak real-data tilt: wrong (file, score) pairs - a notebook's search-API score belongs to one of
     its versions, the downloaded output is the latest. Fix: `src/tilt_eb.py` (Student-t nu 2 per-file weights, noise =

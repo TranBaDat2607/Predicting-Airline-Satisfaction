@@ -163,3 +163,95 @@ class TiltEB(Tilt):
         mean = self.predict(s)
         self.last_parts = (np.sqrt(post) / (self.n1 * self.n0), np.sqrt(noise) / (self.n1 * self.n0))
         return mean, np.sqrt(post + noise) / (self.n1 * self.n0)
+
+    def lookahead(self, s, ys, eta=1.0, q=None):
+        """One-step lookahead: if file s scored y (for each y in ys; AUC units, exact own score), the posterior-
+        predicted public score of the re-fitted tilt at eta. The system is extended by one row/column analytically
+        (noise model k0, k1, weights kept; the new file gets weight 1). Returns a list of predicted scores."""
+        g, h, c, d = self.file_coefs(s)
+        va, vb, cab = (x.astype(np.float32) for x in (self.va, self.vb, self.cab))
+        prior = float((g * va) @ g + (h * vb) @ h + 2 * (g * cab) @ h)
+        kv = (self.g @ (va * g) + self.h @ (vb * h) + self.g @ (cab * h) + self.h @ (cab * g)).astype(np.float64)
+        k = len(self.yraw)
+        m2 = np.block([[self.m, kv[:, None]], [kv[None, :], np.array([[prior]])]])
+        mk = np.median(np.diag(self.m))
+        nv2 = np.append(self.noise_var, self.r2 + self.r2 * (self.k0 + self.k1 * prior / mk))
+        c2 = m2 + np.diag(nv2) + self.r2 * np.ones((k + 1, k + 1))
+        q2 = np.linalg.inv(c2)
+        cs2, dist2 = np.append(self.cs, c), np.append(self.dist, d)
+        x2 = np.stack([cs2 / np.abs(cs2).max(), dist2 / max(dist2.max(), 1e-12)], 1) if self.nuisance else None
+        out = []
+        saved = (self.da, self.db, self.beta, self.cs, self.dist)
+        for y in ys:
+            yraw2 = np.append(self.yraw, self.n1 * self.n0 * (y - self.base_score) - c)
+            if self.nuisance:
+                beta = np.linalg.solve(x2.T @ q2 @ x2, x2.T @ q2 @ yraw2)
+                r = yraw2 - x2 @ beta
+            else:
+                beta, r = np.zeros(2), yraw2
+            lam = q2 @ r
+            gl = self.g.T.astype(np.float64) @ lam[:k] + g.astype(np.float64) * lam[k]
+            hl = self.h.T.astype(np.float64) @ lam[:k] + h.astype(np.float64) * lam[k]
+            self.da = self.va * gl + self.cab * hl
+            self.db = self.cab * gl + self.vb * hl
+            self.beta, self.cs, self.dist = beta, cs2, dist2
+            out.append(self.predict(self.score(eta)))
+            self.da, self.db, self.beta, self.cs, self.dist = saved
+        return out
+
+
+class TiltGN(TiltEB):
+    """One Gauss-Newton step for the bilinear AUC model: the files' coefficients are recomputed around the posterior
+    mean (a_hat, b_hat) of a first fit instead of the prior (W = expected public NEGATIVES below a row uses b_hat,
+    U = expected public POSITIVES above uses a_hat), the expected AUC change of each file becomes
+    sum_i a_hat_i g'_i, and the prior stays N(a_bar, b_bar; V). With d0 = (da0, db0) the first fit's shift,
+    y'_k = n1 n0 (A_k - A_b) - c'_k + G'_k d0 = G'_k delta + noise, delta ~ N(0, V)."""
+
+    def __init__(self, p, ah, bh, da0, db0, f=0.2, nuisance=True):
+        self.qw = np.clip(np.asarray(bh, np.float64), 0, None) / f
+        self.pw = np.clip(np.asarray(ah, np.float64), 0, None) / f
+        super().__init__(p, f=f, nuisance=nuisance)
+        self.da0, self.db0 = np.asarray(da0, np.float64), np.asarray(db0, np.float64)
+        self.sb = float(self.pw @ self.wb)
+
+    def _wu(self, s):
+        order = np.argsort(np.asarray(s, dtype=np.float64), kind="stable")
+        q = self.qw[order]
+        pp = self.pw[order]
+        w = np.empty(self.n)
+        u = np.empty(self.n)
+        w[order] = np.cumsum(q) - q
+        u[order] = pp.sum() - np.cumsum(pp)
+        return w, u
+
+    def add(self, files, scores):
+        k = len(files)
+        g = np.empty((k, self.n), dtype=np.float32)
+        h = np.empty((k, self.n), dtype=np.float32)
+        yv, cs, dist = np.empty(k), np.empty(k), np.empty(k)
+        for i, s in enumerate(files):
+            w, u = self._wu(s)
+            gi, hi = self.f * (w - self.wb), self.f * (u - self.ub)
+            g[i], h[i] = gi, hi
+            cs[i] = self.f ** 2 * (float(self.pw @ w) - self.sb)
+            dist[i] = float(np.square(w - self.wb).mean())
+            yv[i] = self.n1 * self.n0 * (scores[i] - self.base_score) - cs[i] + float(self.da0 @ gi + self.db0 @ hi)
+        va, vb, cab = (x.astype(np.float32) for x in (self.va, self.vb, self.cab))
+        gv, hv, gc, hc = g * va, h * vb, g * cab, h * cab
+        new = (gv @ g.T + hv @ h.T + gc @ h.T + hc @ g.T).astype(np.float64)
+        cross = (gv @ self.g.T + hv @ self.h.T + gc @ self.h.T + hc @ self.g.T).astype(np.float64)
+        self.m = np.block([[self.m, cross.T], [cross, new]])
+        self.g, self.h = np.concatenate([self.g, g]), np.concatenate([self.h, h])
+        self.yraw, self.cs, self.dist = (np.concatenate(x) for x in ((self.yraw, yv), (self.cs, cs), (self.dist, dist)))
+        return self.solve()
+
+    def predict(self, s):
+        w, u = self._wu(s)
+        g = self.f * (w - self.wb)
+        h = self.f * (u - self.ub)
+        c = self.f ** 2 * (float(self.pw @ w) - self.sb)
+        y = float((self.da - self.da0) @ g + (self.db - self.db0) @ h)
+        if self.nuisance:
+            d = float(np.square(w - self.wb).mean())
+            y += self.beta[0] * c / np.abs(self.cs).max() + self.beta[1] * d / max(self.dist.max(), 1e-12)
+        return self.base_score + (y + c) / (self.n1 * self.n0)

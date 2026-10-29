@@ -21,6 +21,7 @@ ap.add_argument("--models", nargs="+", default=["t2", "t1", "t4", "reml"])
 ap.add_argument("--holdout", nargs="*", default=["0062", "0058"])
 ap.add_argument("--etas", type=float, nargs="*", default=[0.8, 1.0, 1.25, 1.5])
 ap.add_argument("--no-nuisance", action="store_true")
+ap.add_argument("--exclude-file", default=None, help="file with one file name per line to leave out")
 a = ap.parse_args()
 SPEC = {"x24": dict(fixed=(576, 1e-9)), "reml": dict(), "t4": dict(nu=4), "t2": dict(nu=2), "t1": dict(nu=1),
         "t05": dict(nu=0.5), "t2k5": dict(nu=2, fixed=(1e-6, 5)), "t2k20": dict(nu=2, fixed=(1e-6, 20)),
@@ -35,7 +36,11 @@ p = np.interp(rb, (np.arange(len(qs)) + 0.5) / len(qs), qs)
 R = np.load("data/tilt/ranks.npy", mmap_mode="r")
 files = pd.read_csv("data/tilt/files.csv")
 corr = np.array([np.corrcoef(R[i], rb)[0, 1] for i in range(len(files))])
-sel = np.flatnonzero((files.score >= 0.955).to_numpy() & (corr >= 0.90) & (np.abs(corr - 1) > 1e-7))
+keep0 = (files.score >= 0.955).to_numpy() & (corr >= 0.90) & (np.abs(corr - 1) > 1e-7)
+if a.exclude_file:
+    ex = set(open(a.exclude_file).read().split())
+    keep0 &= ~files.name.isin(ex).to_numpy()
+sel = np.flatnonzero(keep0)
 names = files.name.to_numpy()[sel]
 print(f"{len(sel)} files", flush=True)
 T = TiltEB(p, nuisance=not a.no_nuisance).fit([np.asarray(R[i], dtype=np.float64) for i in sel], files.score.to_numpy()[sel], a.base_score)

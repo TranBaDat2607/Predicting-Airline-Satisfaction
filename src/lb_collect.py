@@ -121,7 +121,13 @@ for name, src, score, obj in items:
     if h in seen:
         j = seen[h]
         if abs(rows[j]["score"] - score) > 1e-9:
-            rows[j]["conflict"] = True
+            # the same ranking with two scores: trust the more reliable source (our own exact scores, then probe
+            # tables and score-named files, then notebooks whose listed score may belong to another version)
+            rel = {"own": 4, "atlas": 3, "lb": 3, "dataset": 2, "named": 2, "notebook": 1}
+            if rel.get(src, 0) > rel.get(rows[j]["source"], 0) and not rows[j].get("tied"):
+                rows[j].update(name=name, source=src, score=score)
+            elif rel.get(src, 0) == rel.get(rows[j]["source"], 0):
+                rows[j]["conflict"] = True
         rows[j]["dups"] += 1
         continue
     seen[h] = len(rows)

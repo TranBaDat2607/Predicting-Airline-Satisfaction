@@ -1,6 +1,6 @@
 # Public-LB tilt — how the public top 5 was reached (2026-10-27), and top 2 (2026-10-29)
 
-**Status (2026-10-29):** public LB **0.96414, 2nd** (0067; 1st Kawamata 0.96443, who wrote in the forum that his gains
+**Status (2026-10-29):** public LB **0.96432, 2nd** (0068; 1st Kawamata 0.96443, who wrote in the forum that his gains
 come from LB probing over ~200 entries and will not carry over to private). Tilted files are *public-LB fitted*: they
 raise the public score and lower the private one, so they are never final picks (see `final-selection.md`).
 
@@ -30,6 +30,14 @@ raise the public score and lower the private one, so they are never final picks 
 | 0065 | 423, probe: 10k largest moves at eta 2 (KG-chosen) | same | – | 0.96379 | 0.96373 |
 | 0066 | 424 | k1 fixed 80 (best leave-own-tilt-out) | 1.0 | 0.96387 | 0.96369 |
 | 0067 | 467 (90 matched/recovered) | k1 80 | 1.0 | 0.96410 | **0.96414** |
+| 0068 | 476 (+ nina2025/ps-s6e10-04, score-named notebook outputs, 101 matched) | REML k1 8.3 | 1.0 | 0.96442 | **0.96432** (2nd, 11u behind 1st) |
+| 0069 | 310 "clean" (170 unmatched multi-version notebooks left out) | REML k1 3.7 | 1.0 | 0.96487 | 0.96391 ✗ |
+| 0070 | 480 incl. 0069 | nu 1, REML k1 6.3 | 1.0 | 0.96439 | 0.96428 |
+
+- 0069 lesson: a smaller, more self-consistent file set gets a lower model error, trusts every file more, tilts
+  further (rank corr 0.954) and is 96u optimistic. The full-data model had predicted 0069 within 9u. Keep all files.
+- Gauss-Newton re-linearisation around the posterior (`TiltGN`, `src/tilt_gn_check.py`) does not remove the
+  optimism (held-out errors +20/+4/+13u vs linear +10/+4.5/+13u): linearisation is not its cause.
 
 Own probes (Kaggle CPU simulation `kernels/tilt-sim`, 300 public-like files with 25 % wrong scores, 15 own probes):
 probing the unscored model with the largest posterior sd gains ~0.5u per submission (0.96424 → 0.96432), a random
