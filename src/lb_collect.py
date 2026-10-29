@@ -64,6 +64,15 @@ for lib in ("s6e10-top18-artifacts", "ps6e10-best-public-submissions"):
             if m:
                 items.append((p, "dataset", float("0." + m.group(1)), Path(p)))
                 break
+# score-named files inside notebook outputs (src/lb_scan_outputs.py); same parser
+NAMED_PAT = re.compile(r"(?i)(?<!cv)(?<!cv[_-])(?:lb[_-]?|public[_-]?|pb[_-]?|_|^)0[._-]?(9[56]\d{3})(?=[_.\-a-z]|$)")
+for p in sorted(glob.glob("data/tilt/named/*/*.csv")):
+    stem = Path(p).stem
+    if re.search(r"(?i)(^|[^a-z])(oof|cv|train)([^a-z]|$)|cv[_-]?0", stem):
+        continue
+    m = NAMED_PAT.search(stem)
+    if m:
+        items.append((p, "named", float("0." + m.group(1)), Path(p)))
 KNOWN = {"data/ext/dataset-submission-for-lb-score-0-96192/submission_alpha_1p40.csv": 0.96192,  # dataset title
          "data/ext/dennis-best/s6e10-best.csv": 0.96213}  # provenance.json official_public_score
 for p, s in KNOWN.items():

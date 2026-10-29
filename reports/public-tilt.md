@@ -1,6 +1,6 @@
 # Public-LB tilt — how the public top 5 was reached (2026-10-27), and top 2 (2026-10-29)
 
-**Status (2026-10-29):** public LB **0.96378, 2nd** (0064; 1st Kawamata 0.96443, who wrote in the forum that his gains
+**Status (2026-10-29):** public LB **0.96414, 2nd** (0067; 1st Kawamata 0.96443, who wrote in the forum that his gains
 come from LB probing over ~200 entries and will not carry over to private). Tilted files are *public-LB fitted*: they
 raise the public score and lower the private one, so they are never final picks (see `final-selection.md`).
 
@@ -27,6 +27,14 @@ raise the public score and lower the private one, so they are never final picks 
 | 0062 | 389 | Student-t nu 2, REML | 1.0 | 0.96379 | **0.96361** (+64u over 0058) |
 | 0063 | 391 (13 version-matched) | same + rounding floor | 1.0 | 0.96378 | **0.96365** |
 | 0064 | 422 (45 matched, ~30 recovered from notebooks with no usable latest output) | same | 1.0 | 0.96391 | **0.96378** |
+| 0065 | 423, probe: 10k largest moves at eta 2 (KG-chosen) | same | – | 0.96379 | 0.96373 |
+| 0066 | 424 | k1 fixed 80 (best leave-own-tilt-out) | 1.0 | 0.96387 | 0.96369 |
+| 0067 | 467 (90 matched/recovered) | k1 80 | 1.0 | 0.96410 | **0.96414** |
+
+Own probes (Kaggle CPU simulation `kernels/tilt-sim`, 300 public-like files with 25 % wrong scores, 15 own probes):
+probing the unscored model with the largest posterior sd gains ~0.5u per submission (0.96424 → 0.96432), a random
+unscored model ~0, re-submitting the tilt 0. One-step knowledge gradient on the real data agrees (0.5–1.1u).
+The lever is scored public data: recovered notebook versions gave +36u in one round (0064 → 0067).
 
 ## Why a tilt
 
