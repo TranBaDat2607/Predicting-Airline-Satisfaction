@@ -20,7 +20,10 @@ parts of a competition that are easy to get subtly wrong:
 - ``kgkit.evalset``     the evaluation set's fingerprint and the paired noise measured on it
 - ``kgkit.backlog``     the ranked idea backlog and screen-vs-full fidelity
 - ``kgkit.kernels``     study and reproduce public notebooks; their public score on record and title claims
+- ``kgkit.finals``      which submissions Kaggle would auto-select as finals and whether one is public-LB fitted
+- ``kgkit.kaggle_submissions`` the team's scored and selected submissions from Kaggle's API (run in a child process)
 - ``kgkit.kaggle_search`` notebooks' best public scores from Kaggle's search API (run in a child process)
+- ``kgkit.kaggle_outputs`` the files and log of a kernel's last session, e.g. a run its cap stopped (child process)
 - ``kgkit.kaggle_cli``  the Kaggle CLI with Kaggle's reason for a refused request (kgkit's CLI calls run through it)
 - ``kgkit.discussions`` competition forums (topics, search, write-ups, threads), live or from Meta Kaggle
 - ``kgkit.datasets``    dataset download with a per-file fallback when the whole-dataset archive 404s
@@ -37,4 +40,4 @@ parts of a competition that are easy to get subtly wrong:
 Run ``python -m kgkit --help`` for the command line interface.
 """
 
-__version__ = "1.8.0"
+__version__ = "1.12.0"
