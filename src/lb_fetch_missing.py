@@ -43,8 +43,12 @@ def fetch(ref, v):
         return len(list(d.glob("*.csv")))
     d.mkdir(parents=True, exist_ok=True)
     for i in range(6):
-        r = subprocess.run(["kaggle", "kernels", "output", f"{ref}/{v}", "-p", str(d), "--file-pattern",
-                            r"(?i)^[^/]*\.csv$", "-q"], capture_output=True, text=True, timeout=900)
+        try:
+            r = subprocess.run(["kaggle", "kernels", "output", f"{ref}/{v}", "-p", str(d), "--file-pattern",
+                                r"(?i)^[^/]*\.csv$", "-q"], capture_output=True, text=True, timeout=2400)
+        except subprocess.TimeoutExpired:  # huge outputs (dozens of probe CSVs): keep what arrived
+            (d / ".done_all").write_text("timeout")
+            return len(list(d.glob("*.csv")))
         msg = (r.stdout + r.stderr).lower()
         if "rate limit" in msg or "429" in msg:
             time.sleep(20 + 20 * i)

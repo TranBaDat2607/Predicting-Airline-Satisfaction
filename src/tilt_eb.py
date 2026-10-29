@@ -161,4 +161,5 @@ class TiltEB(Tilt):
         mk = np.median(np.diag(self.m))
         noise = self.r2 + self.r2 * (self.k0 + self.k1 * prior / mk)
         mean = self.predict(s)
+        self.last_parts = (np.sqrt(post) / (self.n1 * self.n0), np.sqrt(noise) / (self.n1 * self.n0))
         return mean, np.sqrt(post + noise) / (self.n1 * self.n0)

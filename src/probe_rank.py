@@ -61,8 +61,9 @@ for nm, v in cands.items():
     if rc < 0.9:
         continue
     mu, sd = t.predict_dist(r, q)
-    rows.append({"name": nm, "pred": mu, "sd_u": sd * 1e5, "corr": rc})
-df = pd.DataFrame(rows).sort_values("sd_u", ascending=False)
+    sp, sn = t.last_parts
+    rows.append({"name": nm, "pred": mu, "sd_u": sd * 1e5, "post_sd_u": sp * 1e5, "noise_sd_u": sn * 1e5, "corr": rc})
+df = pd.DataFrame(rows).sort_values("post_sd_u", ascending=False)
 df.to_csv("data/tilt/probe_rank.csv", index=False)
 print(f"{len(df)} candidates; sd quantiles (u): {np.percentile(df.sd_u, [10, 50, 90]).round(2)}")
 print(df.head(25).to_string())

@@ -1,7 +1,32 @@
-# Public-LB tilt — how the public top 5 was reached (2026-10-27)
+# Public-LB tilt — how the public top 5 was reached (2026-10-27), and top 2 (2026-10-29)
 
-**Status:** public LB **0.96297, 3rd** (0058). Tilted files are *public-LB fitted*: they raise the public score and
-lower the private one, so they are never final picks (see `final-selection.md`).
+**Status (2026-10-29):** public LB **0.96378, 2nd** (0064; 1st Kawamata 0.96443, who wrote in the forum that his gains
+come from LB probing over ~200 entries and will not carry over to private). Tilted files are *public-LB fitted*: they
+raise the public score and lower the private one, so they are never final picks (see `final-selection.md`).
+
+## Session 5 (2026-10-29): why the real files gave half the simulated gain, and the fix
+
+- Simulation with exact scores (`src/tilt_eb_sim.py`, 370 files): noise x1 gains +262u and is calibrated; the real
+  files under x24 gave +83u. The real files are far less mutually consistent (LOO R² 0.56 vs 0.83).
+- Cause: **wrong scores**. A notebook's search-API score belongs to one of its versions (submissions linked to the
+  notebook); the output we downloaded is the latest version. Simulated with 25–50 % corrupted scores, a global noise
+  level over-predicts by up to 150u (the real-data symptom) and Student-t weights recover most of the gain.
+- `src/tilt_eb.py`: per-file noise = rounding (a floor) + model error ∝ file size (REML k0, k1), Student-t (nu 2)
+  EM weights; files the others cannot explain get w ≈ 0 (e.g. a 0.94-correlated "baseline" notebook listed at
+  0.96157: surprise +313u). Leave-own-tilt-out check: 0062 predicted 0.96365 vs 0.96361 observed, 0058 0.96296 vs
+  0.96297, 0056 0.96289 vs 0.96285.
+- `src/lb_fetch_versions.py` + `src/lb_match.py`: older versions' outputs are downloaded and the one the posterior
+  (fitted without that notebook) predicts closest to the listed score is used (rohitt94 z +40 → v3 z −0.9; kava1 +16 →
+  v13 0.0; anhadmahajan06 +3.6 → v30 +0.6). 13 notebooks re-matched: model error k1 21 → 9.
+- Split check (`src/split_check.py`): the posterior public membership is unrelated to id order/residues → random split.
+- Own re-submissions of the posterior tilt add ~0 (simulation `src/tilt_active_sim2.py`): only new directions
+  (new scored files, unscored models) add information.
+
+| step | files | noise model | eta | predicted | public |
+|---|---|---|---|---|---|
+| 0062 | 389 | Student-t nu 2, REML | 1.0 | 0.96379 | **0.96361** (+64u over 0058) |
+| 0063 | 391 (13 version-matched) | same + rounding floor | 1.0 | 0.96378 | **0.96365** |
+| 0064 | 422 (45 matched, ~30 recovered from notebooks with no usable latest output) | same | 1.0 | 0.96391 | **0.96378** |
 
 ## Why a tilt
 

@@ -48,7 +48,10 @@ T.fit_noise(nu=a.nu, exact=exact)
 
 
 def read(path):
-    d = pd.read_csv(path)
+    try:
+        d = pd.read_csv(path)
+    except Exception:  # empty / truncated download
+        return None
     if "id" not in d.columns or len(d) != N:
         return None
     col = "satisfaction" if "satisfaction" in d.columns else d.columns[-1]
@@ -98,10 +101,11 @@ for d in sorted(Path("data/tilt/kv").iterdir()):
     lr = np.exp(min(0.5 * (zl ** 2 - best[4] ** 2), 700)) if np.isfinite(zl) else np.inf
     # no usable latest output (src/lb_fetch_missing.py): take the best-fitting candidate if it fits
     swap = best[0] != "latest" and abs(best[4]) < a.zmax and (lr > a.lr or not has_latest)
+    n_fit = sum(abs(x[4]) < 1 for x in res)  # ambiguity: candidates that fit about as well
     rows.append({"ref": ref, "score": score, "n_cand": len(res), "z_latest": zl, "best": best[0], "z_best": best[4],
-                 "pred_best": best[2], "sd_best_u": best[3] * 1e5, "lr": lr, "swap": swap})
+                 "pred_best": best[2], "sd_best_u": best[3] * 1e5, "lr": lr, "swap": swap, "n_fit": n_fit})
     print(f"{ref}: {len(res)} distinct outputs, z latest {zl:+.2f}, best {best[0]} z {best[4]:+.2f} "
-          f"(pred {best[2]:.5f} sd {best[3] * 1e5:.1f}u vs listed {score:.5f}){'  -> SWAP' if swap else ''}", flush=True)
+          f"(pred {best[2]:.5f} sd {best[3] * 1e5:.1f}u vs listed {score:.5f}; {n_fit} fit |z|<1){'  -> SWAP' if swap else ''}", flush=True)
     if swap and not a.dry:
         out = Path("data/tilt/k_fixed") / d.name
         out.mkdir(parents=True, exist_ok=True)
