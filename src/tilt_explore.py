@@ -23,7 +23,8 @@ ap.add_argument("--etas", type=float, nargs="*", default=[0.8, 1.0, 1.25, 1.5])
 ap.add_argument("--no-nuisance", action="store_true")
 a = ap.parse_args()
 SPEC = {"x24": dict(fixed=(576, 1e-9)), "reml": dict(), "t4": dict(nu=4), "t2": dict(nu=2), "t1": dict(nu=1),
-        "t05": dict(nu=0.5)}
+        "t05": dict(nu=0.5), "t2k5": dict(nu=2, fixed=(1e-6, 5)), "t2k20": dict(nu=2, fixed=(1e-6, 20)),
+        "t2k40": dict(nu=2, fixed=(1e-6, 40)), "t2k80": dict(nu=2, fixed=(1e-6, 80)), "t2k160": dict(nu=2, fixed=(1e-6, 160)), "t2k320": dict(nu=2, fixed=(1e-6, 320))}
 
 ids = pd.read_csv("data/test.csv", usecols=["id"])["id"].to_numpy()
 oof = np.load("artifacts/0020_stack-lr-pool319-kaggle/oof.npy").astype(float)

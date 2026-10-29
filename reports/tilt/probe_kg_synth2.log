@@ -1,0 +1,16 @@
+REML noise: k0 1e-06 k1 80 (x rounding var); weights < 0.5: 7, < 0.2: 5; REML -4565.43
+current tilt: predicted 0.96381
+eta0.7           mu 0.96373 sd   4.0u (post   3.0u) KG  +0.40u
+eta1.4           mu 0.96365 sd   6.4u (post   4.7u) KG  +0.49u
+top5000-x0.5     mu 0.96373 sd   6.2u (post   5.4u) KG  +0.73u
+top5000-x0.75    mu 0.96380 sd   4.7u (post   3.4u) KG  +0.49u
+top5000-x1.5     mu 0.96379 sd   5.3u (post   3.9u) KG  +0.54u
+rest5000-x1.5    mu 0.96359 sd   7.4u (post   6.0u) KG  +0.63u
+top20000-x0.5    mu 0.96366 sd   6.5u (post   5.9u) KG  +0.76u
+top20000-x0.75   mu 0.96378 sd   4.8u (post   3.6u) KG  +0.53u
+top20000-x1.5    mu 0.96374 sd   6.3u (post   5.0u) KG  +0.67u
+rest20000-x1.5   mu 0.96363 sd   7.5u (post   6.3u) KG  +0.66u
+top60000-x0.5    mu 0.96357 sd   5.7u (post   5.2u) KG  +0.71u
+top60000-x0.75   mu 0.96377 sd   4.5u (post   3.5u) KG  +0.49u
+top60000-x1.5    mu 0.96365 sd   7.0u (post   5.6u) KG  +0.64u
+rest60000-x1.5   mu 0.96371 sd   6.6u (post   5.5u) KG  +0.57u

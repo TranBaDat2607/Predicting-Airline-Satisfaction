@@ -85,6 +85,23 @@ reports/     EDA, recon, adversarial validation, post-mortems
 
 ## Current plan / notes
 
+- 2026-10-29 (session 5, /goal: public top 1, Kaggle GPU+CPU, commit progress, UAT issues):
+  - **Public 2nd: 0.96378 (0064)**; 1st Kawamata 0.96443 (wrote in the forum that it is LB probing over ~200 entries and
+    will not carry over to private). Method/evidence: `reports/public-tilt.md` (session 5 section).
+  - Root cause of the weak real-data tilt: wrong (file, score) pairs - a notebook's search-API score belongs to one of
+    its versions, the downloaded output is the latest. Fix: `src/tilt_eb.py` (Student-t nu 2 per-file weights, noise =
+    rounding floor + model error k1 x file size) + version recovery `src/lb_fetch_versions.py`, `src/lb_fetch_missing.py`
+    (every CSV of recent versions of scored notebooks with no usable output) -> `src/lb_match.py` (picks the version the
+    posterior without that notebook predicts closest to the listed score; writes data/tilt/k_fixed, preferred by
+    `src/lb_collect.py`). Loop: fetch -> `lb_match.py` -> `lb_collect.py` -> `tilt_run2.py --nu 2 [--fixed 1e-6 80]`.
+  - Calibration: leave-own-tilt-out (`src/tilt_explore.py`) is best at k1 ~ 80, but every posterior's OWN eta-1 tilt
+    scores 13-18u below its prediction (0062-0066: 0.96361/0.96365/0.96378/0.96373/0.96369). Re-tilting or averaging
+    the same data gives ~0.9638; only new scored files or new-direction probes add (KG ~0.5-1u per own submission,
+    `src/probe_kg.py`, `src/probe_kg_synth.py`).
+  - Kaggle upload from here is ~40 KB/s, so the 446 MB tilt inputs cannot be shipped per iteration; the tilt fit stays a
+    local LB-layer step. Kaggle CPU runs the tilt simulations from our own kernel output (kernels/tilt-sim).
+  - UAT issue filed: #61 (noise line rounds paired SE to 0.0000).
+
 - 2026-10-27 (session 4, /goal: public top 5, Kaggle GPU+CPU, commit progress, UAT issues):
   - **Public 3rd (0.96297, 0058)** with a *public-LB fitted* tilt: `src/lb_files.py` → `lb_fetch.sh`/`lb_fetch2.sh` → `lb_collect.py`
     (365 scored public files: notebook outputs with search-API `best_public_score`, nina/anhad/atlas/own files) →
