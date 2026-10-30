@@ -1,0 +1,16 @@
+660 files
+group probes: 3 files
+group newmined: 11 files
+rank-diff sd failed vs anchor 0.02528
+all-no-failed            files 659 k1 6.85 own pred 0.96486 rank-diff sd to anchor 0.02528 to failed 0.00000 corr base 0.95772
+no-probes                files 656 k1 6.79 own pred 0.96484 rank-diff sd to anchor 0.02431 to failed 0.00748 corr base 0.95785
+no-newmined              files 648 k1 5.78 own pred 0.96483 rank-diff sd to anchor 0.02346 to failed 0.01205 corr base 0.95803
+no-probes+newmined       files 645 k1 6.15 own pred 0.96481 rank-diff sd to anchor 0.02220 to failed 0.01410 corr base 0.95816
+ALL files k1 8.40 own pred 0.96479 rank-diff sd to anchor 0.01953 corr base 0.95803
+under the posterior of ALL files:
+  all-no-failed            predicted 0.96456
+  no-probes                predicted 0.96455
+  no-newmined              predicted 0.96453
+  no-probes+newmined       predicted 0.96452
+  ALL                      predicted 0.96479
+  anchor predicted 0.96467; failed predicted 0.96456
