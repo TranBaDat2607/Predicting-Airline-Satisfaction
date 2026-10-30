@@ -20,6 +20,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--holdout", nargs="*", default=[])
 ap.add_argument("--grid", nargs="+", required=True, help="k0:k1:nu; k1 = 0 means REML")
 ap.add_argument("--anchor", default="0073")
+ap.add_argument("--exact-sources", nargs="+", default=["own"])
 a = ap.parse_args()
 ids = pd.read_csv("data/test.csv", usecols=["id"])["id"].to_numpy()
 N = len(ids)
@@ -38,7 +39,7 @@ for s in a.holdout:
 sel, hsel = np.flatnonzero(keep & ~hold), np.flatnonzero(keep & hold)
 print(f"used {len(sel)}, held out {len(hsel)}", flush=True)
 t = TiltExp(p).fit([np.asarray(R[i], dtype=np.float64) for i in sel], files.score.to_numpy()[sel], 0.96214)
-exact = files.source.to_numpy()[sel] == "own"
+exact = files.source.isin(a.exact_sources).to_numpy()[sel]
 out = Path("data/tilt/grid")
 out.mkdir(exist_ok=True)
 hr = {files.name[i].split("/")[-1][:4]: np.asarray(R[i], np.float64) for i in hsel}

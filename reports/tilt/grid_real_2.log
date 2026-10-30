@@ -1,0 +1,4 @@
+used 654, held out 6
+0:12:1     k0 1e-09 k1 12 w<.5  13 own pred 0.96493 corr base 0.95646 diff to anchor 0.0224 | held-out pred - actual (u): 0072:+5.0 0073:+13.1 0074:+5.2 0075:+13.2 0076:+9.1 0077:+29.8
+0:18:1     k0 1e-09 k1 18 w<.5  12 own pred 0.96488 corr base 0.95690 diff to anchor 0.0218 | held-out pred - actual (u): 0072:+2.0 0073:+8.2 0074:+0.3 0075:+8.3 0076:+4.2 0077:+25.5
+0:25:1     k0 1e-09 k1 25 w<.5  11 own pred 0.96483 corr base 0.95728 diff to anchor 0.0214 | held-out pred - actual (u): 0072:-1.1 0073:+3.5 0074:-4.4 0075:+3.6 0076:-0.5 0077:+21.2

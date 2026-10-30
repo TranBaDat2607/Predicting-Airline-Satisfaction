@@ -34,6 +34,7 @@ ap.add_argument("--save", default="data/tilt/fit_eb.npz")
 ap.add_argument("--onesided", action="store_true", help="one-sided score-error EM on the suspect files")
 ap.add_argument("--suspect-file", default="data/tilt/suspect_files.txt")
 ap.add_argument("--em-iters", type=int, default=8)
+ap.add_argument("--exact-sources", nargs="+", default=["own"], help="sources whose scores are exact: their weight is never below 1")
 ap.add_argument("--exp", action="store_true", help="exponential-tilt posterior (src/tilt_exp.py) for --scan and --write")
 a = ap.parse_args()
 
@@ -62,7 +63,7 @@ hsel = np.flatnonzero(keep & hold)
 print(f"files {len(files)}, used {len(sel)}, held out {len(hsel)}")
 
 t = (TiltExp if a.exp else TiltEB)(p, f=0.2).fit([np.asarray(R[i], dtype=np.float64) for i in sel], files.score.to_numpy()[sel], a.base_score)
-exact = (files.source.to_numpy()[sel] == "own")
+exact = files.source.isin(a.exact_sources).to_numpy()[sel]
 t.fit_noise(nu=a.nu, fixed=a.fixed, exact=exact)
 if a.onesided:
     sus = files.name.isin(set(open(a.suspect_file).read().split())).to_numpy()[sel]
