@@ -15,7 +15,7 @@ from scipy.special import expit
 from sklearn.metrics import roc_auc_score
 
 sys.path.insert(0, "src")
-from tilt_eb import TiltEB  # noqa: E402
+from tilt_eb import TiltEB, onesided_em  # noqa: E402
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--k", type=int, default=400)
@@ -26,6 +26,9 @@ ap.add_argument("--one-sided", action="store_true", help="wrong scores are alway
 ap.add_argument("--bags", type=int, default=8)
 ap.add_argument("--frac", type=float, default=0.7)
 ap.add_argument("--nu", type=float, default=2.0)
+ap.add_argument("--onesided", action="store_true", help="also fit the one-sided error EM (src/tilt_eb.onesided_em)")
+ap.add_argument("--em-iters", type=int, default=6)
+ap.add_argument("--suspect-extra", type=float, default=-1, help="EM only on a suspect group = corrupted files + this share of clean ones")
 ap.add_argument("--train", default="data/train.csv")
 ap.add_argument("--pool", default="artifacts/pool/oof.npy")
 ap.add_argument("--base", default="artifacts/0020_stack-lr-pool319-kaggle/oof.npy")
@@ -67,6 +70,20 @@ res = {}
 for eta in (0.6, 0.8, 1.0):
     s = t.score(eta)
     res[f"full eta{eta}"] = (roc_auc_score(y[pub], s[pub]), t.predict(s))
+if a.onesided:
+    y_keep = t.yraw.copy()
+    sus = None
+    if a.suspect_extra >= 0:
+        sus = bad | (rng.random(a.k) < a.suspect_extra)
+        print(f"  suspect group {sus.sum()} files ({bad.sum()} corrupted)")
+    onesided_em(t, nu=a.nu, verbose=True, suspect=sus, iters=a.em_iters)
+    print(f"  one-sided E[e] on corrupted files {t.onesided_e[bad].mean():.2f}u, on clean {t.onesided_e[~bad].mean():.2f}u")
+    for eta in (0.6, 0.8, 1.0, 1.2):
+        s = t.score(eta)
+        res[f"1side eta{eta}"] = (roc_auc_score(y[pub], s[pub]), t.predict(s))
+    t.yraw = y_keep
+    t.fit_noise(nu=a.nu, verbose=False)
+    da_full, db_full = t.da.copy(), t.db.copy()
 DA, DB = np.zeros_like(da_full), np.zeros_like(db_full)
 for bgi in range(a.bags):
     idx = np.sort(rng.choice(a.k, int(a.frac * a.k), replace=False))

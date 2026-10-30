@@ -271,3 +271,44 @@ class TiltGN(TiltEB):
             d = float(np.square(w - self.wb).mean())
             y += self.beta[0] * c / np.abs(self.cs).max() + self.beta[1] * d / max(self.dist.max(), 1e-12)
         return self.base_score + (y + c) / (self.n1 * self.n0)
+
+
+def onesided_em(t, nu=2.0, exact=None, iters=6, pi0=0.2, sig_u=10.0, verbose=True, suspect=None, **kw):
+    """One-sided score errors: a listed notebook score is its BEST version's, so when the file we hold is another
+    version the listed score is too HIGH (never too low). Model r_k = e_k + noise, e_k = 0 (prob 1 - pi) or
+    half-normal(sigma_e) (prob pi), r_k = file k's leave-one-out surprise residual. EM: subtract E[e_k | r_k] from
+    each non-exact file's surprise, refit the robust tilt, re-estimate pi and sigma_e. Returns t (refitted)."""
+    from scipy.stats import norm as _n
+    k = len(t.yraw)
+    exact = np.zeros(k, bool) if exact is None else np.asarray(exact, bool)
+    y0 = t.yraw.copy()
+    unit = 1e-5 * t.n1 * t.n0
+    pi, se = pi0, sig_u * unit
+    e = np.zeros(k)
+    for it in range(iters):
+        t.yraw = y0 - e
+        t.fit_noise(nu=nu, exact=exact, verbose=False, **kw)
+        q = np.linalg.inv(t._cov(t.noise_var))
+        r = t.loo + e  # residual of the ORIGINAL surprise: what the others predict vs the listed score
+        v = 1.0 / np.diag(q)
+        m = r * se ** 2 / (se ** 2 + v)
+        s = np.sqrt(se ** 2 * v / (se ** 2 + v))
+        l1 = 2 * _n.pdf(r, 0, np.sqrt(se ** 2 + v)) * _n.cdf(m / s)
+        l0 = _n.pdf(r, 0, np.sqrt(v))
+        g = pi * l1 / np.maximum(pi * l1 + (1 - pi) * l0, 1e-300)
+        g[exact] = 0
+        if suspect is not None:  # only files whose listed score can belong to another version
+            g[~np.asarray(suspect, bool)] = 0
+        ee = m + s * _n.pdf(m / s) / np.maximum(_n.cdf(m / s), 1e-300)
+        e = g * ee
+        e2 = g * (ee ** 2 + s ** 2 - (m + s * 0) * 0)  # second moment approx (truncated var ignored)
+        grp = ~exact if suspect is None else (np.asarray(suspect, bool) & ~exact)
+        pi = float(np.clip(g[grp].mean(), 1e-3, 0.9))
+        se = float(np.sqrt(max(e2[grp].sum() / max(g[grp].sum(), 1e-9), (1 * unit) ** 2)))
+        if verbose:
+            print(f"one-sided EM {it + 1}: pi {pi:.3f} sigma_e {se / unit:.1f}u, mean shift {e[~exact].mean() / unit:.2f}u, "
+                  f"files with E[e] > 3u: {(e > 3 * unit).sum()}", flush=True)
+    t.yraw = y0 - e
+    t.fit_noise(nu=nu, exact=exact, verbose=False, **kw)
+    t.onesided_e = e / unit
+    return t

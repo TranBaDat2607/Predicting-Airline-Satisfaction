@@ -91,6 +91,11 @@ for npz, csv, key, col in [("own_scored_ranks.npz", "own_scores.csv", "key", "pu
 for f in ["rabari_v41_submission.csv", "rabari_v43_submission.csv", "rabari_v54_submission.csv"]:
     pass  # scores unknown except v43 (in lb_surface.PUBLIC)
 
+# recipes and files whose public score their author measured and published (src/lb_mined.py): no version ambiguity
+if (OUT / "mined.csv").exists():
+    for r in pd.read_csv(OUT / "mined.csv").itertuples():
+        items.append((f"mined:{r.name}", "mined", float(r.score), np.load(OUT / "mined" / f"{r.name}.npy")))
+
 import sys
 sys.path.insert(0, "src")
 try:
@@ -123,7 +128,7 @@ for name, src, score, obj in items:
         if abs(rows[j]["score"] - score) > 1e-9:
             # the same ranking with two scores: trust the more reliable source (our own exact scores, then probe
             # tables and score-named files, then notebooks whose listed score may belong to another version)
-            rel = {"own": 4, "atlas": 3, "lb": 3, "dataset": 2, "named": 2, "notebook": 1}
+            rel = {"own": 4, "mined": 3, "atlas": 3, "lb": 3, "dataset": 2, "named": 2, "notebook": 1}
             if rel.get(src, 0) > rel.get(rows[j]["source"], 0) and not rows[j].get("tied"):
                 rows[j].update(name=name, source=src, score=score)
             elif rel.get(src, 0) == rel.get(rows[j]["source"], 0):

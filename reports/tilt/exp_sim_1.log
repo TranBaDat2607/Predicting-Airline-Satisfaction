@@ -1,0 +1,40 @@
+base 0.96296; K 400; corrupted 129 (one-sided)
+built system 29s
+REML noise: k0 98.1 k1 79.4 (x rounding var); weights < 0.5: 38, < 0.2: 26; REML -4631.36
+Gaussian solved 39s
+gaussian eta0.7            public 0.96424  gain  +128.0u  predicted 0.96431 (optimism +6.9u)
+gaussian eta0.85           public 0.96430  gain  +133.6u  predicted 0.96438 (optimism +8.3u)
+gaussian eta1              public 0.96430  gain  +134.4u  predicted 0.96440 (optimism +9.6u)
+gaussian eta1.15           public 0.96428  gain  +131.7u  predicted 0.96438 (optimism +10.7u)
+gaussian eta1.3            public 0.96423  gain  +126.5u  predicted 0.96434 (optimism +11.3u)
+one-step exp eta0.7        public 0.96424  gain  +127.6u
+one-step exp eta0.85       public 0.96429  gain  +133.4u
+one-step exp eta1          public 0.96431  gain  +134.7u
+one-step exp eta1.15       public 0.96429  gain  +132.5u
+one-step exp eta1.3        public 0.96424  gain  +127.5u
+  newton 1: step 1, rel change 1.0000, merit 356.25
+  newton 2: step 1, rel change 0.0734, merit 1.27
+  newton 3: step 1, rel change 0.0013, merit 0.00
+  newton 4: step 1, rel change 0.0000, merit 0.00
+exp fit round 0: weights < 0.5: 38, sd(x - z) 0.261, E[n1] 26653 E[n0] 33381
+exp fit round 1: weights < 0.5: 38, sd(x - z) 0.261, E[n1] 26653 E[n0] 33381
+exp fit round 2: weights < 0.5: 37, sd(x - z) 0.261, E[n1] 26653 E[n0] 33381
+exp fit 62s
+exp eta0.7                 public 0.96423  gain  +127.2u  predicted 0.96428 (optimism +4.9u)
+exp eta0.85                public 0.96430  gain  +134.1u  predicted 0.96435 (optimism +5.0u)
+exp eta1                   public 0.96432  gain  +136.3u  predicted 0.96437 (optimism +4.8u)
+exp eta1.15                public 0.96431  gain  +135.2u  predicted 0.96435 (optimism +4.1u)
+exp eta1.3                 public 0.96427  gain  +131.1u  predicted 0.96431 (optimism +3.5u)
+weights: gaussian corrupted 0.78 clean 1.11; exp corrupted 0.78 clean 1.11
+relinearised 1: 93s, E[n1] 26709, E[n0] 33460
+exp relin1 eta0.7          public 0.96423  gain  +127.0u  predicted 0.96428 (optimism +4.7u)
+exp relin1 eta0.85         public 0.96430  gain  +133.9u  predicted 0.96435 (optimism +4.7u)
+exp relin1 eta1            public 0.96432  gain  +136.2u  predicted 0.96437 (optimism +4.4u)
+exp relin1 eta1.15         public 0.96431  gain  +135.2u  predicted 0.96435 (optimism +3.6u)
+exp relin1 eta1.3          public 0.96427  gain  +131.2u  predicted 0.96430 (optimism +2.9u)
+relinearised 2: 124s, E[n1] 26708, E[n0] 33460
+exp relin2 eta0.7          public 0.96423  gain  +127.0u  predicted 0.96428 (optimism +4.9u)
+exp relin2 eta0.85         public 0.96430  gain  +133.9u  predicted 0.96435 (optimism +4.9u)
+exp relin2 eta1            public 0.96432  gain  +136.2u  predicted 0.96437 (optimism +4.6u)
+exp relin2 eta1.15         public 0.96431  gain  +135.2u  predicted 0.96435 (optimism +3.9u)
+exp relin2 eta1.3          public 0.96427  gain  +131.1u  predicted 0.96430 (optimism +3.2u)
