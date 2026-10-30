@@ -45,6 +45,7 @@ names = files.name.to_numpy()[sel].astype(str)
 T = TiltEB(p).fit([np.asarray(R[i], dtype=np.float64) for i in sel], files.score.to_numpy()[sel], a.base_score)
 exact = files.source.to_numpy()[sel] == "own"
 T.fit_noise(nu=a.nu, exact=exact)
+print("posterior ready", flush=True)
 
 
 def read(path):
@@ -62,6 +63,28 @@ def read(path):
 
 
 kern = pd.read_csv("data/tilt/kernels.csv").set_index("ref").best_public_score
+# leave-one-notebook-out in closed form: Q without file j is a rank-one downdate of the full inverse
+Q = np.linalg.inv(T._cov(T.noise_var))
+yv = T.y
+va32, vb32, cab32 = (x.astype(np.float32) for x in (T.va, T.vb, T.cab))
+xmat = T._x()
+mk = np.median(np.diag(T.m))
+
+
+def predict_without(j, Qj, r):
+    g, h, c, d = T.file_coefs(r)
+    prior = float((g * va32) @ g + (h * vb32) @ h + 2 * (g * cab32) @ h)
+    kv = (T.g @ (va32 * g) + T.h @ (vb32 * h) + T.g @ (cab32 * h) + T.h @ (cab32 * g)).astype(np.float64)
+    if j is not None:
+        kv[j] = 0.0  # the notebook's own current file does not vote
+    mean = float(kv @ (Qj @ yv))
+    if T.nuisance:
+        mean += T.beta[0] * c / np.abs(T.cs).max() + T.beta[1] * d / max(T.dist.max(), 1e-12)
+    post = max(prior - kv @ Qj @ kv, 0.0)
+    noise = T.r2 + T.r2 * (T.k0 + T.k1 * prior / mk)
+    return T.base_score + (mean + c) / (T.n1 * T.n0), np.sqrt(post + noise) / (T.n1 * T.n0)
+
+
 rows = []
 for d in sorted(Path("data/tilt/kv").iterdir()):
     ref = d.name.replace("__", "/", 1)
@@ -76,11 +99,13 @@ for d in sorted(Path("data/tilt/kv").iterdir()):
     if len(cands) < (2 if has_latest else 1):
         continue
     j = np.flatnonzero(names == ref)
-    t = T.subset(np.setdiff1d(np.arange(len(sel)), j))
-    t.noise_var = np.delete(T.noise_var, j)
-    t.w = np.delete(T.w, j)
-    t.solve_nv(t.noise_var)
-    q = np.linalg.inv(t._cov(t.noise_var))
+    j = int(j[0]) if len(j) else None
+    if j is None:
+        Qj = Q
+    else:
+        Qj = Q - np.outer(Q[:, j], Q[j, :]) / Q[j, j]
+        Qj[j, :] = 0.0
+        Qj[:, j] = 0.0
     res = []
     seen = set()
     for c, f in cands:
@@ -91,7 +116,7 @@ for d in sorted(Path("data/tilt/kv").iterdir()):
         if key in seen:
             continue
         seen.add(key)
-        mu, sd = t.predict_dist(r, q)
+        mu, sd = predict_without(j, Qj, r)
         res.append((c, f, mu, sd, (score - mu) / sd))
     if not res:
         continue

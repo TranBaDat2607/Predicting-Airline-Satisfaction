@@ -1,0 +1,23 @@
+REML noise: k0 6.53e-39 k1 8.16 (x rounding var); weights < 0.5: 15, < 0.2: 10; REML -6055.21
+rows per unit log-odds: [0, 1, 3, 14, 43, 95, 133, 106, 58, 30, 17, 11, 11, 15, 17, 13, 9, 8, 9, 8, 5, 4, 4, 5, 8, 16, 38, 78, 98, 80, 46, 23, 12, 7, 5, 3, 2, 1, 1, 0] edges [-5.27  6.28]
+Gaussian posterior tilt predicted 0.96462; current file predicted 0.96454
+low45   t 0.03 rank-diff sd 0.00684 mu 0.96453 sd  6.15u (post  6.01u noise 1.29u) KG  +0.63u
+low45   t 0.06 rank-diff sd 0.01359 mu 0.96449 sd  7.07u (post  6.95u noise 1.30u) KG  +0.70u
+low45   t 0.12 rank-diff sd 0.02648 mu 0.96435 sd  9.78u (post  9.69u noise 1.33u) KG  +0.79u
+low45   t 0.25 rank-diff sd 0.04990 mu 0.96384 sd 15.82u (post 15.75u noise 1.44u) KG  +0.79u
+high40  t 0.03 rank-diff sd 0.00457 mu 0.96453 sd  6.02u (post  5.88u noise 1.29u) KG  +0.61u
+high40  t 0.06 rank-diff sd 0.00910 mu 0.96451 sd  6.62u (post  6.50u noise 1.29u) KG  +0.64u
+high40  t 0.12 rank-diff sd 0.01785 mu 0.96440 sd  8.57u (post  8.46u noise 1.31u) KG  +0.69u
+high40  t 0.25 rank-diff sd 0.03417 mu 0.96400 sd 13.29u (post 13.22u noise 1.39u) KG  +0.70u
+all     t 0.03 rank-diff sd 0.00827 mu 0.96452 sd  6.36u (post  6.23u noise 1.29u) KG  +0.64u
+all     t 0.06 rank-diff sd 0.01641 mu 0.96445 sd  7.80u (post  7.69u noise 1.30u) KG  +0.71u
+all     t 0.12 rank-diff sd 0.03201 mu 0.96417 sd 11.68u (post 11.60u noise 1.36u) KG  +0.78u
+all     t 0.25 rank-diff sd 0.06096 mu 0.96314 sd 19.94u (post 19.88u noise 1.54u) KG  +0.78u
+low20   t 0.03 rank-diff sd 0.00426 mu 0.96454 sd  5.91u (post  5.77u noise 1.28u) KG  +0.61u
+low20   t 0.06 rank-diff sd 0.00834 mu 0.96453 sd  6.22u (post  6.08u noise 1.29u) KG  +0.64u
+low20   t 0.12 rank-diff sd 0.01614 mu 0.96448 sd  7.25u (post  7.13u noise 1.30u) KG  +0.71u
+low20   t 0.25 rank-diff sd 0.03145 mu 0.96431 sd 10.21u (post 10.12u noise 1.33u) KG  +0.77u
+mid     t 0.03 rank-diff sd 0.00089 mu 0.96454 sd  5.81u (post  5.67u noise 1.28u) KG  +0.59u
+mid     t 0.06 rank-diff sd 0.00179 mu 0.96453 sd  5.87u (post  5.73u noise 1.28u) KG  +0.58u
+mid     t 0.12 rank-diff sd 0.00374 mu 0.96450 sd  6.11u (post  5.97u noise 1.29u) KG  +0.56u
+mid     t 0.25 rank-diff sd 0.00910 mu 0.96435 sd  7.34u (post  7.22u noise 1.30u) KG  +0.47u

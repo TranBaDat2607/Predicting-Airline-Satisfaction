@@ -68,7 +68,7 @@ class TiltExp(TiltEB):
 
     def _sigma(self, nv):
         k = len(nv)
-        return np.diag(nv) + self.r2 * np.ones((k, k))
+        return self._noise_mat(nv) + self.r2 * np.ones((k, k))
 
     def _newton(self, nv, lam=None, beta=None, iters=8, tol=1e-3, verbose=False, max_eta_step=None):
         k = len(self.yraw)
@@ -126,8 +126,9 @@ class TiltExp(TiltEB):
                       f"E[n1] {self.qp.sum():.0f} E[n0] {self.qn.sum():.0f}", flush=True)
             if e == em or nu <= 0:
                 break
-            m = nv * lam
-            v = nv - nv * np.diag(self.q_inv) * nv
+            sn = self._noise_mat(nv)
+            m = sn @ lam
+            v = np.diag(sn) - np.einsum("ij,ji->i", sn @ self.q_inv, sn)
             w = (nu + 1) / (nu + (m ** 2 + np.maximum(v, 0)) / base)
             w[exact] = np.maximum(w[exact], 1.0)
             nv = self.noise_vector(self.k0, self.k1, w)

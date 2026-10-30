@@ -31,9 +31,22 @@ class TiltEB(Tilt):
         self.w = None
 
     # --- linear algebra for a given noise vector ---------------------------------------------------------------
+    def _noise_mat(self, nv):
+        """Noise covariance of the files. Rounding is independent. The model error (nv - r2) is independent too unless
+        kernel_power m > 0: then two files' errors correlate as corr(M)^m, so near-identical files share their model error
+        and their DIFFERENCE is known to rounding precision (the second-order AUC terms of two similar files are similar)."""
+        m_pow = getattr(self, "kernel_power", 0)
+        if not m_pow:
+            return np.diag(nv)
+        d = np.sqrt(np.diag(self.m))
+        corr = self.m / np.outer(d, d)
+        np.fill_diagonal(corr, 1.0)
+        e = np.sqrt(np.maximum(nv - self.r2, 0))
+        return np.diag(np.full(len(nv), self.r2)) + np.outer(e, e) * np.power(np.abs(corr), m_pow) * np.sign(corr) ** (m_pow % 2)
+
     def _cov(self, nv):
         k = len(self.yraw)
-        return self.m + np.diag(nv) + self.r2 * np.ones((k, k))
+        return self.m + self._noise_mat(nv) + self.r2 * np.ones((k, k))
 
     def _x(self):
         cs, dist = self.cs, self.dist
@@ -99,8 +112,9 @@ class TiltEB(Tilt):
             c = self._cov(nv)
             ci = np.linalg.inv(c)
             r = self._resid(ci)
-            mvec = nv * (ci @ r)
-            vvec = nv - nv * np.diag(ci) * nv
+            sn = self._noise_mat(nv)
+            mvec = sn @ (ci @ r)
+            vvec = np.diag(sn) - np.einsum("ij,ji->i", sn @ ci, sn)
             base = self.noise_vector(np.exp(th[0]), np.exp(th[1]))
             w_new = (nu + 1) / (nu + (mvec ** 2 + vvec) / base)
             w_new[exact] = np.maximum(w_new[exact], 1.0)

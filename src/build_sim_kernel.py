@@ -16,7 +16,7 @@ ap.add_argument("--runs", nargs="+", required=True)
 ap.add_argument("--slug", default="s6e10-tilt-sim")
 a = ap.parse_args()
 
-MODS = {m: base64.b64encode(Path(f"src/{m}").read_bytes()).decode() for m in ("tilt.py", "tilt_eb.py", a.script)}
+MODS = {m: base64.b64encode(Path(f"src/{m}").read_bytes()).decode() for m in ("tilt.py", "tilt_eb.py", "tilt_exp.py", a.script)}
 SCRIPT = r'''
 import base64, subprocess, sys, time
 from pathlib import Path

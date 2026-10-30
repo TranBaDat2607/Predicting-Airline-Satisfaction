@@ -92,9 +92,10 @@ for f in ["rabari_v41_submission.csv", "rabari_v43_submission.csv", "rabari_v54_
     pass  # scores unknown except v43 (in lb_surface.PUBLIC)
 
 # recipes and files whose public score their author measured and published (src/lb_mined.py): no version ambiguity
-if (OUT / "mined.csv").exists():
-    for r in pd.read_csv(OUT / "mined.csv").itertuples():
-        items.append((f"mined:{r.name}", "mined", float(r.score), np.load(OUT / "mined" / f"{r.name}.npy")))
+for table in ("mined.csv", "mined_extra.csv"):  # src/lb_extra.py: per-version scores documented by notebooks
+    if (OUT / table).exists():
+        for r in pd.read_csv(OUT / table).itertuples():
+            items.append((f"mined:{r.name}", "mined", float(r.score), np.load(OUT / "mined" / f"{r.name}.npy")))
 
 import sys
 sys.path.insert(0, "src")
