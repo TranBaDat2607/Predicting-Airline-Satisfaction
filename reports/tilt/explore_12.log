@@ -1,0 +1,3 @@
+476 files
+t2k80 k0   1e-06 k1      80 w<.2   5 | 0067_tilt-v8-vfix90- pred 0.96407 obs 0.96414 | 0066_tilt-v7-t2k80-e pred 0.96388 obs 0.96369 || eta1 0.96420
+t2    k0 2.85e-24 k1    8.28 w<.2   6 | 0067_tilt-v8-vfix90- pred 0.96423 obs 0.96414 | 0066_tilt-v7-t2k80-e pred 0.96382 obs 0.96369 || eta1 0.96442

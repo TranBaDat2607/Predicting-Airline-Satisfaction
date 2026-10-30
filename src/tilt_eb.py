@@ -58,7 +58,35 @@ class TiltEB(Tilt):
 
     def _x(self):
         cs, dist = self.cs, self.dist
-        return np.stack([cs / np.abs(cs).max(), dist / max(dist.max(), 1e-12)], 1)
+        x = np.stack([cs / np.abs(cs).max(), dist / max(dist.max(), 1e-12)], 1)
+        if getattr(self, "xe", None) is not None and len(self.xe) == len(cs):
+            x = np.hstack([x, self.xe])
+        return x
+
+    def set_calibration(self, n_knots=10):
+        """The prior's calibration curve as nuisance: the true prior log-odds are logit p + eta(base log-odds), eta piecewise linear on n_knots quantile knots.
+        To first order eta shifts each file's expected pair count by sum_i f p (1 - p) eta_i (g_k(i) - h_k(i)), one regressor per knot. The prior is a quantile
+        map from a different file's OOF ranks, so eta is not zero, and with a free eta the far files need much less model-error noise."""
+        lo = np.log(self.p / (1 - self.p))
+        knots = np.quantile(lo, np.linspace(0, 1, n_knots))
+        phi = np.empty((n_knots, self.n), dtype=np.float32)
+        for m in range(n_knots):
+            e = np.zeros(n_knots)
+            e[m] = 1.0
+            phi[m] = np.interp(lo, knots, e)
+        w = (self.f * self.p * (1 - self.p)).astype(np.float32)
+        x = np.stack([(self.g @ (w * phi[m]) - self.h @ (w * phi[m])).astype(np.float64) for m in range(n_knots)], 1)
+        self.phi = phi
+        self.xe_scale = np.abs(x).max(0)
+        self.xe = x / self.xe_scale
+        return self
+
+    def eta_hat(self, beta=None):
+        """The fitted calibration shift per row (log-odds), zero without set_calibration."""
+        if getattr(self, "xe", None) is None:
+            return np.zeros(self.n)
+        beta = self.beta if beta is None else beta
+        return (beta[2:] / self.xe_scale) @ self.phi.astype(np.float64)
 
     def reml(self, nv):
         c = self._cov(nv)
@@ -80,7 +108,7 @@ class TiltEB(Tilt):
 
     def noise_vector(self, k0, k1, w=None):
         mk = np.diag(self.m)
-        extra = self.r2 * (k0 + k1 * mk / np.median(mk))  # model error: heavy-tailed (Student-t weights)
+        extra = self.r2 * (k0 + k1 * (mk / np.median(mk)) ** getattr(self, "gamma", 1.0))  # model error: heavy-tailed (Student-t weights)
         if getattr(self, "group", None) is not None and len(self.group) == len(mk):
             extra = extra * np.where(self.group, getattr(self, "gmult", 1.0), 1.0)  # suspect files: own level
         if w is not None:
@@ -143,7 +171,7 @@ class TiltEB(Tilt):
     def _resid(self, ci):
         y = self.yraw
         if not self.nuisance:
-            self.beta = np.zeros(2)
+            self.beta = np.zeros(self._x().shape[1])
             return y
         x = self._x()
         self.beta = np.linalg.solve(x.T @ ci @ x, x.T @ ci @ y)
@@ -175,6 +203,8 @@ class TiltEB(Tilt):
         t.__dict__.update(self.__dict__)
         t.g, t.h = self.g[idx], self.h[idx]
         t.yraw, t.cs, t.dist = self.yraw[idx], self.cs[idx], self.dist[idx]
+        if getattr(self, "xe", None) is not None:
+            t.xe = self.xe[idx]
         t.m = self.m[np.ix_(idx, idx)]
         t.noise_var, t.w = None, None
         if getattr(self, "group", None) is not None:

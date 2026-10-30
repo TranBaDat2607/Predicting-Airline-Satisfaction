@@ -1,0 +1,5 @@
+REML noise: k0 1.03e-31 k1 9.4 (x rounding var); weights < 0.5: 11, < 0.2: 6; REML -5124.44
+REML noise: k0 7.64e-28 k1 9.62 (x rounding var); weights < 0.5: 10, < 0.2: 7; REML -5051.72
+linear        | 0068 pred 0.96442 obs 0.96432 (+9.8u) | 0067 pred 0.96419 obs 0.96414 (+4.5u) | 0066 pred 0.96382 obs 0.96369 (+12.6u) || own tilt eta1 predicted 0.96434
+gauss-newton  | 0068 pred 0.96452 obs 0.96432 (+20.2u) | 0067 pred 0.96418 obs 0.96414 (+4.2u) | 0066 pred 0.96382 obs 0.96369 (+13.4u) || own tilt eta1 predicted 0.96413
+rank corr GN tilt vs linear tilt 0.98509

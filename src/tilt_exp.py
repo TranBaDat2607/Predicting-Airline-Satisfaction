@@ -136,7 +136,7 @@ class TiltExp(TiltEB):
         return self
 
     def score_exp(self, eta=1.0):
-        return np.log(self.abar / self.bbar) + eta * (self.x_ - self.z_)
+        return np.log(self.abar / self.bbar) + self.eta_hat(self.beta_exp) + eta * (self.x_ - self.z_)
 
     def score_exp_one_step(self, eta=1.0):
         """Same lam as the Gaussian fit (self.lam), only the row-level map changes from linear to exponential."""

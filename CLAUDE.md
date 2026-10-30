@@ -85,6 +85,11 @@ reports/     EDA, recon, adversarial validation, post-mortems
 
 ## Current plan / notes
 
+- **OPEN, ONLY THE USER CAN DO IT (no API): tick the finals on the website by 2026-10-31 23:59 UTC (2026-11-01 06:59 UTC+7).**
+  Pick 1 `0020_stack-lr-pool319-kaggle.csv`, pick 2 `0057_lbb-settf16-10.csv`; steps and evidence in `reports/final-selection.md`. Then run
+  `python -m kgkit final` (it reads the selection back and records `final_picks`). Do not run `kgkit config final_picks=` before ticking: it silences
+  the auto-selection warning while Kaggle has nothing selected.
+
 - 2026-10-30 (session 6, /goal: public top 1, Kaggle GPU+CPU, commit progress, UAT issues):
   - **Public 1st: 0.96473 (0078)**, Kawamata 0.96451, Altunok 0.96446 (both LB-fitted too; expect a private shake-up).
   - Current best recipe: `python src/lb_mined.py; python src/lb_extra.py match; python src/lb_collect.py;
@@ -94,6 +99,12 @@ reports/     EDA, recon, adversarial validation, post-mortems
   - Per-version pairs: `src/lb_extra.py` (hand-read version tables + Meta Kaggle version titles, each checked by posterior z). Own nudge probes:
     `src/tilt_probe_noise.py` (KG ~0.8u each, `src/probe_kg_noise.py`). Marking mined files exact made calibration worse: keep exact = own.
   - UAT issue filed: #63 (submissions-today counter stays 0/10 for submits through a wrapper script).
+  - Closed by the user on 2026-10-30 ~10:30 UTC, all 10 daily submissions used, public 1st. 0079-0081 are nudge probes of 0078 (all 0.96467).
+    NOT met from the goal: the fits behind the submitted tilts ran locally and Kaggle GPU was not used this session (Kaggle CPU: simulations, Meta Kaggle check).
+    If public work resumes: 10 submissions per UTC day; `src/lb_fetch_unmatched.py` (stopped part-way, cached, resumes) -> `src/lb_match.py --nu 2` -> recipe above.
+    Unfinished: calibration-curve nuisance `TiltEB.set_calibration` (off by default) gave a broken ranking (corr with base -0.46: its eta collides with the
+    cs/dist regressors) although held-out own tilts looked better at k1 12; old notebook sources (scratchpad, not kept); Kaggle CPU sims s6e10-tilt-expsim and
+    s6e10-tilt-onesided never read. Private dataset `tranbadat/s6e10-tilt-inputs` (401 MB, ranks of 669 files) was uploaded for a Kaggle-side fit, never used.
   - New this session: `src/tilt_exp.py` (exponential-tilt posterior: the Gaussian fit moved E[a] of rare rows by +-43 % and clipped 1.6 % of
     them; sim +2u, optimism halved) and `src/lb_mined.py` (exact (recipe, public score) pairs rebuilt from notebooks' published tables and
     checked against pinned files: goodpjw2008, tkms0816, mayankraaz). `python src/lb_mined.py` -> `src/lb_collect.py` ->

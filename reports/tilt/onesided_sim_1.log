@@ -1,0 +1,18 @@
+one-sided EM 1: pi 0.154 sigma_e 9.5u, mean shift 0.99u, files with E[e] > 3u: 43
+one-sided EM 2: pi 0.138 sigma_e 9.5u, mean shift 0.95u, files with E[e] > 3u: 44
+one-sided EM 3: pi 0.130 sigma_e 9.8u, mean shift 0.94u, files with E[e] > 3u: 41
+one-sided EM 4: pi 0.128 sigma_e 10.1u, mean shift 0.97u, files with E[e] > 3u: 42
+one-sided EM 5: pi 0.130 sigma_e 10.6u, mean shift 1.06u, files with E[e] > 3u: 42
+one-sided EM 6: pi 0.136 sigma_e 11.2u, mean shift 1.19u, files with E[e] > 3u: 47
+  one-sided E[e] on corrupted files 2.97u, on clean 0.34u
+base 0.96296; K 400; corrupt 129 (one-sided); bags 1 x 0.7
+full eta0.6    public 0.96417  (predicted 0.96423, optimism +5.9u)
+full eta0.8    public 0.96428  (predicted 0.96436, optimism +7.8u)
+full eta1.0    public 0.96430  (predicted 0.96440, optimism +9.6u)
+1side eta0.8   public 0.96436  (predicted 0.96470, optimism +34.7u)
+1side eta1.0   public 0.96434  (predicted 0.96475, optimism +40.6u)
+1side eta1.2   public 0.96427  (predicted 0.96472, optimism +45.4u)
+bag eta0.6     public 0.96393
+bag eta0.8     public 0.96401
+bag eta1.0     public 0.96401
+bag eta1.2     public 0.96396

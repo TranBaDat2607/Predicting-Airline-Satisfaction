@@ -69,12 +69,28 @@ print(f"built system {time.time() - t0:.0f}s", flush=True)
 if a.grid:
     bad_w = lambda: (t.w_exp[bad].mean(), t.w_exp[~bad].mean())  # noqa: E731
     for g in a.grid:
-        k0, k1, nu = (float(v) for v in g.split(":"))
+        v = g.split(":")
+        k0, k1, nu = float(v[0]), float(v[1]), float(v[2])
+        t.gamma = float(v[3]) if len(v) > 3 else 1.0
+        t.nuisance = (v[4] != "0") if len(v) > 4 else True
+        relin = int(v[5]) if len(v) > 5 else 0
         t.fit_noise(nu=nu, fixed=(max(k0, 1e-9), max(k1, 1e-9)), verbose=False)
         t.fit_exp(nu=nu, em=a.em, verbose=False)
-        s = t.score_exp(1.0)
-        pv, pr = auc(s), t.predict_exp(s)
-        print(f"k0 {k0:g} k1 {k1:g} nu {nu:g}: public {pv:.5f} gain {(pv - b5) * 1e5:+7.1f}u predicted {pr:.5f} (optimism {(pr - pv) * 1e5:+.1f}u); weights corrupted {bad_w()[0]:.2f} clean {bad_w()[1]:.2f}; {time.time() - t0:.0f}s", flush=True)
+        if relin:
+            keep = (t.g.copy(), t.h.copy(), t.yraw.copy())
+            for _ in range(relin):
+                t.relinearize(files, scores)
+                t._newton(t.nv_exp, t.lam_exp, t.beta_exp, iters=5)
+            s = t.score_exp(1.0)
+            pv, pr = auc(s), t.predict_exp(s)
+            t.g, t.h, t.yraw = keep
+            del t.q0p, t.q0n
+        else:
+            s = t.score_exp(1.0)
+            pv, pr = auc(s), t.predict_exp(s)
+        print(f"{g}: public {pv:.5f} gain {(pv - b5) * 1e5:+7.1f}u predicted {pr:.5f} (optimism {(pr - pv) * 1e5:+.1f}u); weights corrupted {bad_w()[0]:.2f} clean {bad_w()[1]:.2f}; corr pub {np.corrcoef(s, p)[0, 1]:.4f}; {time.time() - t0:.0f}s", flush=True)
+        for eta in a.etas if getattr(a, "scan_eta", False) else []:
+            print(f"   eta {eta:g}: public {auc(t.score_exp(eta)):.5f}", flush=True)
     sys.exit(0)
 t.fit_noise(nu=a.nu, verbose=True)
 print(f"Gaussian solved {time.time() - t0:.0f}s", flush=True)

@@ -1,0 +1,4 @@
+480 files
+t2    k0 3.32e-27 k1    10.8 w<.2   6 | 0068_tilt-v9-reml-et pred 0.96441 obs 0.96432 | 0067_tilt-v8-vfix90- pred 0.96419 obs 0.96414 | 0069_tilt-v10-clean- pred 0.96382 obs 0.96391 || eta0.8 0.96431  eta1 0.96435
+t1    k0   0.228 k1    6.33 w<.2  10 | 0068_tilt-v9-reml-et pred 0.96437 obs 0.96432 | 0067_tilt-v8-vfix90- pred 0.96419 obs 0.96414 | 0069_tilt-v10-clean- pred 0.96379 obs 0.96391 || eta0.8 0.96435  eta1 0.96439
+t4    k0 4.56e-19 k1    15.4 w<.2   6 | 0068_tilt-v9-reml-et pred 0.96437 obs 0.96432 | 0067_tilt-v8-vfix90- pred 0.96419 obs 0.96414 | 0069_tilt-v10-clean- pred 0.96384 obs 0.96391 || eta0.8 0.96432  eta1 0.96435

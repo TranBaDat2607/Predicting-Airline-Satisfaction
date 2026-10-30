@@ -21,6 +21,7 @@ ap.add_argument("--holdout", nargs="*", default=[])
 ap.add_argument("--grid", nargs="+", required=True, help="k0:k1:nu; k1 = 0 means REML")
 ap.add_argument("--anchor", default="0073")
 ap.add_argument("--exact-sources", nargs="+", default=["own"])
+ap.add_argument("--calib", type=int, default=0, help="knots of the calibration-curve nuisance (TiltEB.set_calibration)")
 a = ap.parse_args()
 ids = pd.read_csv("data/test.csv", usecols=["id"])["id"].to_numpy()
 N = len(ids)
@@ -40,6 +41,8 @@ sel, hsel = np.flatnonzero(keep & ~hold), np.flatnonzero(keep & hold)
 print(f"used {len(sel)}, held out {len(hsel)}", flush=True)
 t = TiltExp(p).fit([np.asarray(R[i], dtype=np.float64) for i in sel], files.score.to_numpy()[sel], 0.96214)
 exact = files.source.isin(a.exact_sources).to_numpy()[sel]
+if a.calib:
+    t.set_calibration(a.calib)
 out = Path("data/tilt/grid")
 out.mkdir(exist_ok=True)
 hr = {files.name[i].split("/")[-1][:4]: np.asarray(R[i], np.float64) for i in hsel}
@@ -55,5 +58,7 @@ for g in a.grid:
     rk = (rankdata(s) - 0.5) / N
     np.save(out / f"k{k0:g}_{k1:g}_nu{nu:g}.npy", rk.astype(np.float32))
     errs = " ".join(f"{k}:{(t.predict_exp(r) - hs[k]) * 1e5:+.1f}" for k, r in hr.items())
-    print(f"{g:10s} k0 {t.k0:.3g} k1 {t.k1:.3g} w<.5 {(t.w_exp < .5).sum():3d} own pred {t.predict_exp(s):.5f} corr base {np.corrcoef(rk, rb)[0, 1]:.5f}"
+    if a.calib:
+        print("   eta_hat at knots:", np.round(t.beta_exp[2:] / t.xe_scale, 3).tolist(), f"beta cs/dist {t.beta_exp[:2].round(0).tolist()}", flush=True)
+    print(f"{g:10s} REML {t.reml(t.noise_var):.1f} k0 {t.k0:.3g} k1 {t.k1:.3g} w<.5 {(t.w_exp < .5).sum():3d} own pred {t.predict_exp(s):.5f} corr base {np.corrcoef(rk, rb)[0, 1]:.5f}"
           + (f" diff to anchor {(rk - anchor).std():.4f}" if anchor is not None else "") + f" | held-out pred - actual (u): {errs}", flush=True)

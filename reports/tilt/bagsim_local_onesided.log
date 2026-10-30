@@ -1,0 +1,8 @@
+base 0.96296; K 400; corrupt 129 (one-sided); bags 4 x 0.7
+full eta0.6    public 0.96417  (predicted 0.96423, optimism +5.9u)
+full eta0.8    public 0.96428  (predicted 0.96436, optimism +7.8u)
+full eta1.0    public 0.96430  (predicted 0.96440, optimism +9.6u)
+bag eta0.6     public 0.96401
+bag eta0.8     public 0.96416
+bag eta1.0     public 0.96423
+bag eta1.2     public 0.96424

@@ -1,0 +1,11 @@
+REML noise: k0 3.32e-27 k1 10.8 (x rounding var); weights < 0.5: 12, < 0.2: 6; REML -5159.07
+bag 1: own-tilt predicted by the bag 0.96455
+bag 2: own-tilt predicted by the bag 0.96452
+bag 3: own-tilt predicted by the bag 0.96454
+bag 4: own-tilt predicted by the bag 0.96452
+bag 5: own-tilt predicted by the bag 0.96452
+bag 6: own-tilt predicted by the bag 0.96452
+bag 7: own-tilt predicted by the bag 0.96452
+bag 8: own-tilt predicted by the bag 0.96454
+full-posterior tilt predicted 0.96435; bagged tilt predicted (by the full model) 0.96437; rank corr 0.95847
+subs/0071_tilt-v12-bag-eta1.csv

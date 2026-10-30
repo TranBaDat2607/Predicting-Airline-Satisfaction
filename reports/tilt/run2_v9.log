@@ -1,0 +1,36 @@
+files 484, used 476, held out 0
+REML noise: k0 2.85e-24 k1 8.28 (x rounding var); weights < 0.5: 8, < 0.2: 6; REML -5112.39
+LOO R2 0.859; surprise sd 47.55u; LOO resid sd 18.96u
+            n    w_mean  w_lt05  noise_med_u   resid_sd
+source                                                 
+atlas      40  1.143274       1     0.385995   0.468693
+dataset    56  1.099859       3     0.624191   9.113422
+lb          2  1.175425       0     0.393838   0.536228
+named       2  1.108899       0     0.387605   0.524725
+notebook  346  1.011254       4     1.040557  21.932001
+own        30  1.066150       0     0.291794   3.903915
+lowest weights:
+                                                                name    source    score      corr  surprise_u  loo_resid_u  noise_sd_u         w
+310                  arunklenin/ps6e10-airline-satisfaction-baseline  notebook  0.96157  0.939414  309.836477   373.266589  210.653863  0.000045
+353                              data/ext/ps-s6e10-02/0.96122_FE.csv   dataset  0.96122  0.974192   44.438755    65.852625   34.234504  0.000637
+229                      sarunpm/airline-satisfaction-for-0-96168-lb  notebook  0.96171  0.988427    4.887649    24.126877   11.287156  0.002509
+193                               amanatar/s6e10-the-consensus-forge  notebook  0.96167  0.991065   -3.873888    19.176725    9.167424  0.003195
+399  data/ext/s6e10-top18-artifacts/pillar3_taisei_newton_096182.csv   dataset  0.96182  0.992549    3.497037    13.965995    6.779818  0.004796
+169                                   samanyu1808/s6e10-megastack-v1  notebook  0.96184  0.994766   -4.935812     3.981246    1.815411  0.048261
+446                                          atlas:q5_gate_ours_only     atlas  0.96205  0.999411   -1.411327    -0.846069    0.365417  0.434692
+375                                  data/ext/ps-s6e10-7/0.96201.csv   dataset  0.96201  0.998826    0.079565    -1.069405    0.422342  0.438262
+448                                         atlas:q7_gate_3teach_w40     atlas  0.96205  0.999392   -1.694429    -0.668695    0.354000  0.524957
+368                                 data/ext/ps-s6e10-04/0.96165.csv   dataset  0.96165  0.991473   -8.294466     2.137826    0.745817  0.534070
+own files (surprise vs LOO residual):
+                                         name source    score      corr  surprise_u  loo_resid_u  noise_sd_u         w
+476                subs/0058_tilt-v3-eta1.csv    own  0.96297  0.981633  155.418966     1.518796    0.790493  1.031512
+477  subs/0060_stack-lr-pool321-kaggle-v3.csv    own  0.96185  0.995996   -9.129827     0.472847    0.441276  1.060926
+478             subs/0062_tilt-v4-t2-eta1.csv    own  0.96361  0.966249  294.941255     8.722104    1.082027  1.000000
+479      subs/0063_tilt-v5-t2-vfix13-eta1.csv    own  0.96365  0.967253  292.680676    -1.058234    1.047434  1.019961
+480      subs/0064_tilt-v6-t2-vfix45-eta1.csv    own  0.96378  0.965176  318.103467     7.301953    1.097797  1.000000
+481             subs/0065_probe-top10k-x2.csv    own  0.96373  0.958959  335.041408     9.919508    1.185113  1.000000
+482          subs/0066_tilt-v7-t2k80-eta1.csv    own  0.96369  0.965076  301.366005   -11.111635    1.102496  1.000000
+483         subs/0067_tilt-v8-vfix90-eta1.csv    own  0.96414  0.962669  361.398671    -8.673255    1.134619  1.000000
+eta  0.90: predicted public 0.96442
+eta  1.00: predicted public 0.96442
+eta 1.0: rank corr with base 0.959384 -> subs/0068_tilt-v9-reml-eta1.csv
