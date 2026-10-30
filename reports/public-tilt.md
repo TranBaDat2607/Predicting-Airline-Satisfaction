@@ -1,8 +1,20 @@
 # Public-LB tilt — how the public top 5 was reached (2026-10-27), and top 2 (2026-10-29)
 
-**Status (2026-10-29):** public LB **0.96432, 2nd** (0068; 1st Kawamata 0.96443, who wrote in the forum that his gains
-come from LB probing over ~200 entries and will not carry over to private). Tilted files are *public-LB fitted*: they
+**Status (2026-10-30):** public LB **0.96452, 1st** (0072; Kawamata 0.96451, who wrote in the forum that his gains
+come from LB probing over ~200 entries and will not carry over to private; Altunok 0.96446). Tilted files are *public-LB fitted*: they
 raise the public score and lower the private one, so they are never final picks (see `final-selection.md`).
+
+## Session 6 (2026-10-30): exact pairs and an exponential posterior
+
+| step | files | model | eta | predicted | public |
+|---|---|---|---|---|---|
+| 0072 | 582 (+87 mined exact pairs, new public files) | exponential tilt, nu 2, REML | 1.0 | 0.96469 | **0.96452 (1st)** |
+
+- `src/lb_mined.py`: notebooks document (recipe, public score) tables. These pairs have no version ambiguity; every rebuild is checked against the
+  author's pinned file (rank corr 1.0000 for probe G, the climb, T3 and the final Mirror Pair file).
+- `src/tilt_exp.py`: rows have three states, so conditioning on K linear measurements tilts each row's prior exponentially; the Gaussian solution is
+  the first Newton step of its dual. Simulation (K 400, 30 % one-sided wrong scores): +136.3u vs +134.4u, optimism 4.8u vs 9.6u.
+- Meta Kaggle has no submissions or teams of a running competition, and the LB CSV's date is the last submission's: no exact version-score link.
 
 ## Session 5 (2026-10-29): why the real files gave half the simulated gain, and the fix
 

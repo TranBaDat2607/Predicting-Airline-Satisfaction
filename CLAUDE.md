@@ -48,8 +48,8 @@ reports/     EDA, recon, adversarial validation, post-mortems
 ## Compute (from 2026-10-24: Linux machine, no local GPU — user rule: use Kaggle GPU **and** CPU)
 
 - Local: Linux, 12 CPU threads, 15 GB RAM, **no GPU**. Python env: `/home/nammovuivui/anaconda3/envs/airline-satisfaction/bin/python`
-  (3.12: pandas, sklearn, lightgbm, xgboost, catboost, torch-cpu). `kaggle` CLI on PATH. kgkit 1.8.0 is vendored in
-  `src/kgkit` (scripts need no PYTHONPATH); the plugin copy is `~/.claude/plugins/cache/claude-code-kaggle-grandmaster/kaggle-grandmaster/1.8.0`.
+  (3.12: pandas, sklearn, lightgbm, xgboost, catboost, torch-cpu). `kaggle` CLI on PATH. kgkit 1.13.0 is vendored in
+  `src/kgkit` (scripts need no PYTHONPATH); the plugin copy is `~/.claude/plugins/cache/claude-code-kaggle-grandmaster/kaggle-grandmaster/1.13.0`.
   The plugin is installed for another project, so its skills are not auto-loaded here: read them from that path.
 - **Kaggle GPU (2x T4)** for every model that trains: `python -m kgkit gpu build --name <exp> --cmd "python src/<x>.py --name <exp> --folds {fold}" ...`
   then `python -m kgkit gpu push kernels/<slug>`; hand-written kernels (TabPFN: `kernels/tabpfn-*`) go through
@@ -84,6 +84,16 @@ reports/     EDA, recon, adversarial validation, post-mortems
 - `/kaggle-grandmaster:kg-final` — choose the final submissions
 
 ## Current plan / notes
+
+- 2026-10-30 (session 6, /goal: public top 1, Kaggle GPU+CPU, commit progress, UAT issues):
+  - **Public 1st: 0.96452 (0072)**, Kawamata 0.96451, Altunok 0.96446 (both LB-fitted too; expect a private shake-up).
+  - New this session: `src/tilt_exp.py` (exponential-tilt posterior: the Gaussian fit moved E[a] of rare rows by +-43 % and clipped 1.6 % of
+    them; sim +2u, optimism halved) and `src/lb_mined.py` (exact (recipe, public score) pairs rebuilt from notebooks' published tables and
+    checked against pinned files: goodpjw2008, tkms0816, mayankraaz). `python src/lb_mined.py` -> `src/lb_collect.py` ->
+    `src/tilt_run2.py --nu 2 --exp --write 1.0 --name <n>`.
+  - Meta Kaggle (kernels/meta-subs, Kaggle CPU): submissions and teams of a running competition are not exported, so no per-version scores;
+    it does give every version's title/number (data/tilt/meta_versions.csv). The LB CSV date is the LAST submission's, not the best's.
+  - Final picks stay honest (0057 + 0020/0060), ticked by hand on the website by 2026-10-31 23:59 UTC. See `reports/final-selection.md`.
 
 - 2026-10-29 (session 5, /goal: public top 1, Kaggle GPU+CPU, commit progress, UAT issues):
   - **Public 2nd: 0.96432 (0068)**; 1st Kawamata 0.96443 (wrote in the forum that it is LB probing over ~200 entries and

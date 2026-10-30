@@ -24,7 +24,8 @@ drops** (S6E9 measured about -0.9u private per +1u public for such files).
 | `0054_tilt-v1-eta0-3.csv` | 0.96266 | public-label tilt of 0044, eta 0.3 |
 | `0056_tilt-v2-eta0-6.csv` | 0.96285 | public-label tilt of 0044, eta 0.6, EB noise x16 |
 | `0058_tilt-v3-eta1.csv` | 0.96297 | public-label tilt of 0044, eta 1.0, EB noise x24, 370 files (predicted 0.96301) |
-| `0062` … `0070` (session 5: `tilt-v4` … `tilt-v11`, `probe-top10k-x2`) | 0.96361 … **0.96432** | robust tilts (Student-t noise, version-matched notebook scores); 0068 is the public best |
+| `0062` … `0071` (session 5: `tilt-v4` … `tilt-v12`, `probe-top10k-x2`) | 0.96361 … 0.96432 | robust tilts (Student-t noise, version-matched notebook scores) |
+| `0072` and later (session 6: `tilt-v13` …) | **0.96452** … | exponential-posterior tilts with mined exact pairs; the public best |
 
 These exist only to hold the public-LB position the goal asked for. They are fitted to the 20 % public rows using
 365 publicly shared scored files (`src/tilt.py`), so on the 80 % private rows they are noise on top of 0044.
