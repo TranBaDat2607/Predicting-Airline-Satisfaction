@@ -35,6 +35,14 @@ class TiltEB(Tilt):
         """Noise covariance of the files. Rounding is independent. The model error (nv - r2) is independent too unless
         kernel_power m > 0: then two files' errors correlate as corr(M)^m, so near-identical files share their model error
         and their DIFFERENCE is known to rounding precision (the second-order AUC terms of two similar files are similar)."""
+        blocks = getattr(self, "noise_blocks", None)
+        if blocks:  # files of one block (own nudge probes of one anchor) share their model error; rounding stays independent
+            e = np.sqrt(np.maximum(nv - self.r2, 0))
+            sn = np.diag(nv)
+            for b in blocks:
+                sn[np.ix_(b, b)] = np.outer(e[b], e[b])
+                sn[b, b] = nv[b]
+            return sn
         m_pow = getattr(self, "kernel_power", 0)
         if not m_pow:
             return np.diag(nv)

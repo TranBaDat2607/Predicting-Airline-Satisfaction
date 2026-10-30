@@ -1,0 +1,28 @@
+base 0.96292; K 580; corrupted 71 (one-sided)
+built system 100s
+REML noise: k0 23.7 k1 5.63e-19 (x rounding var); weights < 0.5: 37, < 0.2: 33; REML -6445.69
+Gaussian solved 1333s
+gaussian eta0.85           public 0.96508  gain  +216.4u  predicted 0.96522 (optimism +13.1u)
+gaussian eta1              public 0.96510  gain  +218.3u  predicted 0.96524 (optimism +13.9u)
+gaussian eta1.15           public 0.96508  gain  +215.8u  predicted 0.96522 (optimism +13.9u)
+gaussian eta1.3            public 0.96501  gain  +209.4u  predicted 0.96516 (optimism +14.3u)
+gaussian eta1.5            public 0.96489  gain  +197.0u  predicted 0.96504 (optimism +15.1u)
+one-step exp eta0.85       public 0.96512  gain  +219.9u
+one-step exp eta1          public 0.96512  gain  +220.5u
+one-step exp eta1.15       public 0.96508  gain  +215.7u
+one-step exp eta1.3        public 0.96498  gain  +206.4u
+one-step exp eta1.5        public 0.96481  gain  +189.0u
+  newton 1: step 1, rel change 1.0000, merit 491.78
+  newton 2: step 1, rel change 0.0675, merit 5.62
+  newton 3: step 1, rel change 0.0052, merit 0.01
+  newton 4: step 1, rel change 0.0000, merit 0.00
+exp fit round 0: weights < 0.5: 37, sd(x - z) 0.341, E[n1] 26693 E[n0] 33389
+exp fit round 1: weights < 0.5: 37, sd(x - z) 0.341, E[n1] 26693 E[n0] 33389
+exp fit round 2: weights < 0.5: 37, sd(x - z) 0.342, E[n1] 26693 E[n0] 33389
+exp fit 1450s
+exp eta0.85                public 0.96512  gain  +219.7u  predicted 0.96511 (optimism -0.4u)
+exp eta1                   public 0.96515  gain  +223.0u  predicted 0.96514 (optimism -0.9u)
+exp eta1.15                public 0.96513  gain  +220.9u  predicted 0.96512 (optimism -1.1u)
+exp eta1.3                 public 0.96507  gain  +214.7u  predicted 0.96505 (optimism -1.4u)
+exp eta1.5                 public 0.96493  gain  +201.0u  predicted 0.96492 (optimism -1.3u)
+weights: gaussian corrupted 0.57 clean 1.07; exp corrupted 0.57 clean 1.07

@@ -1,0 +1,153 @@
+REML noise: k0 6.28e-41 k1 6.35 (x rounding var); weights < 0.5: 13, < 0.2: 9; REML -6764.39
+posterior ready
+rabari9999/s6e10-lb-0-96209-rank-10 v21 0.96195: v21/submission.csv pred 0.96195 sd 0.5u z +0.52 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v26 0.96199: v26/submission.csv pred 0.96200 sd 0.4u z -1.57 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v27 0.96200: v27/submission.csv pred 0.96200 sd 0.5u z +0.22 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v28 0.96200: v28/submission.csv pred 0.96200 sd 0.5u z -0.09 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v29 0.96201: v29/submission.csv pred 0.96201 sd 0.4u z -0.43 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v30 0.96201: v30/submission.csv pred 0.96202 sd 0.4u z -1.26 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v31 0.96201: v31/submission.csv pred 0.96202 sd 0.4u z -1.64 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v34 0.96207: v34/submission.csv pred 0.96207 sd 0.4u z +0.38 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v35 0.96206: v35/submission.csv pred 0.96206 sd 0.4u z -1.06 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v36 0.96206: v36/submission.csv pred 0.96207 sd 0.4u z -2.15 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v37 0.96206: v37/submission.csv pred 0.96206 sd 0.4u z -0.97 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v38 0.96207: v38/submission.csv pred 0.96207 sd 0.4u z +0.29 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v39 0.96206: v39/submission.csv pred 0.96206 sd 0.4u z -0.12 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v40 0.96207: v40/submission.csv pred 0.96207 sd 0.4u z +0.09 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v41 0.96207: v41/submission.csv pred 0.96207 sd 0.4u z -0.22 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v42 0.96207: v42/submission.csv pred 0.96207 sd 0.4u z -0.42 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v43 0.96207: v43/submission.csv pred 0.96207 sd 0.4u z +0.09 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v45 0.96208: v45/submission.csv pred 0.96208 sd 0.3u z -0.13 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v46 0.96208: v46/submission.csv pred 0.96208 sd 0.4u z +0.48 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v47 0.96208: v47/submission.csv pred 0.96208 sd 0.3u z -0.43 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v48 0.96208: v48/submission.csv pred 0.96208 sd 0.4u z -0.47 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v49 0.96207: v49/submission.csv pred 0.96208 sd 0.4u z -1.90 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v50 0.96208: v50/submission.csv pred 0.96208 sd 0.4u z -1.25 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v51 0.96208: v51/submission.csv pred 0.96208 sd 0.4u z -0.13 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v52 0.96208: v52/submission.csv pred 0.96209 sd 0.4u z -1.75 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v53 0.96208: v53/submission.csv pred 0.96208 sd 0.4u z -0.21 ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 v54 0.96209: v54/submission.csv pred 0.96209 sd 0.4u z +0.42 ACCEPT
+sarunpm/airline-satisfaction-lgbm-0-96059-lb v2 0.95844: v2/submission.csv pred 0.95844 sd 2.0u z +0.11 ACCEPT
+sarunpm/airline-satisfaction-lgbm-0-96059-lb v3 0.95765: v3/submission.csv pred 0.95766 sd 2.1u z -0.35 ACCEPT
+sarunpm/airline-satisfaction-lgbm-0-96059-lb v6 0.95787: v6/submission.csv pred 0.95787 sd 2.0u z -0.13 ACCEPT
+sarunpm/airline-satisfaction-lgbm-0-96059-lb v8 0.96025: v8/submission.csv pred 0.96025 sd 1.4u z +0.01 ACCEPT
+sarunpm/airline-satisfaction-lgbm-0-96059-lb v9 0.96027: v9/submission.csv pred 0.96027 sd 1.4u z -0.16 ACCEPT
+sarunpm/airline-satisfaction-lgbm-0-96059-lb v13 0.96016: v13/submission.csv pred 0.96017 sd 1.4u z -0.62 ACCEPT
+sarunpm/airline-satisfaction-lgbm-0-96059-lb v43 0.96031: v43/submission_cps.csv pred 0.96031 sd 1.5u z +0.07 ACCEPT
+sarunpm/airline-satisfaction-lgbm-0-96059-lb v44: no output
+sarunpm/airline-satisfaction-lgbm-0-96059-lb v47 0.96045: v47/submission_cps.csv pred 0.96047 sd 5.2u z -0.40 ACCEPT
+sarunpm/airline-satisfaction-lgbm-0-96059-lb v48 0.96057: v48/submission_cps.csv pred 0.96047 sd 5.3u z +1.88 ACCEPT
+sarunpm/airline-satisfaction-lgbm-0-96059-lb v46 0.96059: v46/submission.csv pred 0.96045 sd 5.0u z +2.85 ACCEPT
+anhadmahajan06/s6e10-are-you-satisfied v1 0.95808: v1/submission.csv pred 0.90646 sd 87.0u z +59.36 reject
+anhadmahajan06/s6e10-are-you-satisfied v2 0.96076: v2/submission.csv pred 0.96076 sd 1.3u z +0.02 ACCEPT
+anhadmahajan06/s6e10-are-you-satisfied v13 0.96092: v13/submission_xgb_d10.csv pred 0.96092 sd 2.6u z -0.00 ACCEPT
+anhadmahajan06/s6e10-are-you-satisfied v15 0.96095: v15/submission_xgb_trio.csv pred 0.96095 sd 1.1u z -0.23 ACCEPT
+anhadmahajan06/s6e10-are-you-satisfied v16 0.96096: v16/submission.csv pred 0.96096 sd 1.1u z -0.20 ACCEPT
+anhadmahajan06/s6e10-are-you-satisfied v17 0.96086: v17/submission.csv pred 0.96087 sd 1.2u z -0.44 ACCEPT
+anhadmahajan06/s6e10-are-you-satisfied v27 0.96100: v27/submission_track1_plus_meta.csv pred 0.96098 sd 1.2u z +1.85 ACCEPT
+anhadmahajan06/s6e10-are-you-satisfied v30 0.96110: v30/submission_slsqp.csv pred 0.96110 sd 1.0u z +0.15 ACCEPT
+anhadmahajan06/s6e10-are-you-satisfied v31 0.96110: v31/submission_slsqp.csv pred 0.96110 sd 1.2u z +0.03 ACCEPT
+nursrijan/s6e10-airline-passenger-satisfaction-0-96184-lb v1 0.96017: v1/submission.csv pred 0.96184 sd 0.5u z -308.33 reject
+nursrijan/s6e10-airline-passenger-satisfaction-0-96184-lb v2 0.96068: v2/submission.csv pred 0.96184 sd 0.5u z -214.20 reject
+nursrijan/s6e10-airline-passenger-satisfaction-0-96184-lb v3: no output
+nursrijan/s6e10-airline-passenger-satisfaction-0-96184-lb v4: no output
+nursrijan/s6e10-airline-passenger-satisfaction-0-96184-lb v5: no output
+nursrijan/s6e10-airline-passenger-satisfaction-0-96184-lb v6: no output
+yeashusemwal/secrets-to-satisfaction-it-s-stacking v1 0.96171: v1/submission.csv pred 0.96171 sd 1.1u z +0.28 ACCEPT
+yeashusemwal/secrets-to-satisfaction-it-s-stacking v2 0.96176: v2/submission.csv pred 0.96176 sd 0.7u z -0.42 ACCEPT
+yeashusemwal/secrets-to-satisfaction-it-s-stacking v4 0.96181: v4/submission.csv pred 0.96181 sd 0.6u z -0.34 ACCEPT
+yeashusemwal/secrets-to-satisfaction-it-s-stacking v13 0.96190: v13/submission.csv pred 0.96190 sd 0.5u z -0.31 ACCEPT
+yeashusemwal/secrets-to-satisfaction-it-s-stacking v14 0.96213: v14/submission.csv pred 0.96213 sd 0.3u z +0.71 ACCEPT
+yeashusemwal/trust-the-cv v6 0.96181: v6/submission.csv pred 0.96182 sd 0.6u z -0.95 ACCEPT
+sadamtorres/s6e10-14-experiments-what-worked-lb-0-96108 v1 0.95851: v1/submission.csv pred 0.95851 sd 1.9u z -0.02 ACCEPT
+sadamtorres/s6e10-14-experiments-what-worked-lb-0-96108 v2 0.95963: v2/submission.csv pred 0.95963 sd 1.6u z -0.13 ACCEPT
+sadamtorres/s6e10-14-experiments-what-worked-lb-0-96108 v3 0.96108: v3/submission.csv pred 0.95963 sd 1.6u z +89.92 reject
+areebbb/s6e10-what-each-idea-is-worth-stack-0-96186 v2 0.95986: v2/submission_own_blend.csv pred 0.95986 sd 1.6u z +0.02 ACCEPT
+areebbb/s6e10-what-each-idea-is-worth-stack-0-96186 v3: no output
+soukeaizenz/lb-0-96124-top-25-all-according-to-plan-meta v1 0.96115: v1/submission.csv pred 0.96115 sd 1.0u z +0.25 ACCEPT
+soukeaizenz/lb-0-96124-top-25-all-according-to-plan-meta v2 0.96124: v2/submission.csv pred 0.96125 sd 0.9u z -0.55 ACCEPT
+chinzorigtganbat/s6e10-lightgbm-oof v9 0.96046: v9/submission_v9_fixed_blend.csv pred 0.96045 sd 1.3u z +0.51 ACCEPT
+chinzorigtganbat/s6e10-lightgbm-oof v12 0.96042: v12/submission_v12_xgb_reference.csv pred 0.96042 sd 1.3u z -0.32 ACCEPT
+chinzorigtganbat/s6e10-lightgbm-oof v13 0.96042: v13/submission_v13_xgb_reference.csv pred 0.96042 sd 1.3u z -0.32 ACCEPT
+chinzorigtganbat/s6e10-lightgbm-oof v14 0.96040: v14/submission_v14_cat25_augmented_25pct.csv pred 0.96041 sd 1.3u z -0.56 ACCEPT
+miickey/s6e10-fast-oof-ensemble-meta-stacking v6 0.96130: v6/submission.csv pred 0.96130 sd 1.0u z -0.49 ACCEPT
+ou20040313/s6e10-orange-blend v15 0.96187: v15/submission.csv pred 0.96187 sd 0.5u z +0.50 ACCEPT
+amanatar/s6e10-frontier-megastack-original-brain v6: no output
+amanatar/s6e10-the-consensus-forge v3: no output
+amanatar/s6e10-the-consensus-forge v4: no output
+amanatar/s6e10-the-consensus-forge v5: no output
+sarunpm/airline-satisfaction-0-95974-lb v4 0.95810: v4/submission.csv pred 0.95811 sd 2.0u z -0.39 ACCEPT
+sarunpm/airline-satisfaction-0-95974-lb v8 0.95781: v8/submission.csv pred 0.95781 sd 2.2u z +0.12 ACCEPT
+sarunpm/airline-satisfaction-0-95974-lb v11 0.95961: v11/submission_xgb.csv pred 0.95961 sd 1.6u z -0.13 ACCEPT
+sarunpm/airline-satisfaction-0-95974-lb v13 0.95974: v13/submission.csv pred 0.95974 sd 1.6u z -0.11 ACCEPT
+sarunpm/airline-satisfaction-0-95974-lb v14 0.95974: v14/submission.csv pred 0.95974 sd 1.6u z -0.03 ACCEPT
+kava1/s6e10-predicting-airline-satisfaction v2: no output
+kava1/s6e10-predicting-airline-satisfaction v5 0.95848: v5/submission.csv pred 0.95852 sd 7.7u z -0.55 ACCEPT
+kava1/s6e10-predicting-airline-satisfaction v8 0.95828: v8/submission.csv pred 0.95810 sd 12.2u z +1.50 ACCEPT
+kava1/s6e10-predicting-airline-satisfaction v10 0.95981: v10/submission.csv pred 0.95989 sd 13.7u z -0.58 ACCEPT
+kava1/s6e10-predicting-airline-satisfaction v12 0.95954: v12/submission.csv pred 0.95958 sd 10.6u z -0.37 ACCEPT
+kava1/s6e10-predicting-airline-satisfaction v16 0.95910: v16/submission.csv pred 0.95913 sd 5.1u z -0.59 ACCEPT
+kava1/s6e10-predicting-airline-satisfaction v18 0.95984: v18/submission.csv pred 0.95991 sd 10.0u z -0.73 ACCEPT
+kava1/s6e10-predicting-airline-satisfaction v21 0.95958: v21/submission.csv pred 0.95967 sd 9.9u z -0.92 ACCEPT
+kava1/s6e10-predicting-airline-satisfaction v26 0.95919: v26/submission.csv pred 0.95919 sd 1.8u z +0.05 ACCEPT
+kava1/s6e10-predicting-airline-satisfaction v28 0.95986: v28/submission.csv pred 0.95994 sd 10.6u z -0.76 ACCEPT
+hittmg/261010playground-s6e10day2-3-lightgbm v1 0.95745: v1/submission.csv pred 0.95734 sd 15.4u z +0.70 ACCEPT
+hittmg/261010playground-s6e10day2-3-lightgbm v2 0.95746: v2/submission.csv pred 0.95746 sd 1.9u z -0.09 ACCEPT
+anujsaha0123456789/airline-satisfaction-0-95806-gbdt-ensemble title 0.95806: v5/submission.csv pred 0.95806 sd 2.1u z +0.20, 1 fit, same True ACCEPT
+ewtherka/s6e10-stacker-s-c-penalty-on-model-families title 0.96185: v1/submission.csv pred 0.96186 sd 0.6u z -1.56, 0 fit, same True reject
+goodpjw2008/s6e10-catboost-ctr-glm-margin-xgb-lb-0-96152 title 0.96127: v1/submission.csv pred 0.96127 sd 0.9u z -0.28, 1 fit, same True ACCEPT
+goodpjw2008/s6e10-catboost-ctr-glm-margin-xgb-lb-0-96152 title 0.96152: v4/submission.csv pred 0.96152 sd 0.8u z -0.43, 1 fit, same True ACCEPT
+goodpjw2008/s6e10-meta-stack-on-public-oof-lb-0-96217 title 0.96180: v1/submission.csv pred 0.96180 sd 0.6u z -0.52, 13 fit, same True ACCEPT
+goodpjw2008/s6e10-meta-stack-on-public-oof-lb-0-96217 title 0.96191: v3/submission.csv pred 0.96191 sd 0.5u z -0.61, 11 fit, same True ACCEPT
+goodpjw2008/s6e10-meta-stack-on-public-oof-lb-0-96217 title 0.96197: v4/submission.csv pred 0.96197 sd 0.4u z -0.38, 10 fit, same True ACCEPT
+goodpjw2008/s6e10-meta-stack-on-public-oof-lb-0-96217 title 0.96213: v6/submission.csv pred 0.96213 sd 0.3u z +0.73, 8 fit, same True ACCEPT
+goodpjw2008/s6e10-meta-stack-on-public-oof-lb-0-96217 title 0.96215: v11/submission.csv pred 0.96215 sd 0.3u z +1.12, 1 fit, same True ACCEPT
+goodpjw2008/s6e10-meta-stack-on-public-oof-lb-0-96217 title 0.96216: v12/submission.csv pred 0.96216 sd 0.3u z -0.21, 2 fit, same True ACCEPT
+goodpjw2008/s6e10-realmlp-aux-task-features-lb-0-96159 title 0.96141: v1/submission.csv pred 0.96141 sd 0.9u z -0.54, 1 fit, same True ACCEPT
+goodpjw2008/s6e10-route-id-fe-og-model-stack-lb-0-96144 title 0.96108: v2/submission.csv pred 0.96109 sd 1.1u z -0.57, 2 fit, same True ACCEPT
+goodpjw2008/s6e10-route-id-fe-og-model-stack-lb-0-96144 title 0.96133: v3/submission.csv pred 0.96133 sd 1.0u z -0.27, 2 fit, same True ACCEPT
+goodpjw2008/s6e10-tabpfn-3-5-member-lb-0-96159 title 0.96159: v3/submission.csv pred 0.96159 sd 0.7u z -0.36, 1 fit, same True ACCEPT
+goodpjw2008/s6e10-twin-stacks-family-reg-lb-0-96187 title 0.96184: v2/submission_ours_228.csv pred 0.96184 sd 0.6u z -0.40, 6 fit, same True ACCEPT
+goodpjw2008/s6e10-twin-stacks-family-reg-lb-0-96187 title 0.96186: v14/submission_family_reg.csv pred 0.96186 sd 0.8u z +0.01, 19 fit, same True ACCEPT
+goodpjw2008/s6e10-two-view-gbdt-realmlp-stack-lb-0-96149 title 0.96129: v2/submission.csv pred 0.96130 sd 0.9u z -0.55, 2 fit, same True ACCEPT
+karttikjangid05/181-of-340-oofs-are-near-copies-lb-0-96184 title 0.96182: v1/submission.csv pred 0.96182 sd 0.6u z -0.35, 8 fit, same True ACCEPT
+kozykappa/s6e10-route-profile-cross-fitted-target title 0.96132: v2/submission_v3_consensus30.csv pred 0.96132 sd 0.7u z +0.05, 22 fit, same True ACCEPT
+kozykappa/s6e10-route-profile-cross-fitted-target title 0.96177: v10/submission_exp_context_lgb_0p5.csv pred 0.96177 sd 1.5u z -0.22, 19 fit, same False reject
+manishpatil115/0-96043-auc-diverse-boostings-oof-ensemble title 0.96048: v5/submission.csv pred 0.96043 sd 1.3u z +3.54, 0 fit, same True reject
+manishpatil115/0-96043-auc-diverse-boostings-oof-ensemble title 0.96069: nothing within 12u of it
+matterhorn3838/s6e10-0-96183-public-score title 0.96093: v1/submission.csv pred 0.96093 sd 1.0u z -0.16, 1 fit, same True ACCEPT
+matterhorn3838/s6e10-0-96183-public-score title 0.96124: v3/submission.csv pred 0.96124 sd 0.9u z -0.41, 1 fit, same True ACCEPT
+matterhorn3838/s6e10-0-96183-public-score title 0.96132: v5/submission_balanced.csv pred 0.96132 sd 0.8u z +0.00, 6 fit, same False reject
+matterhorn3838/s6e10-0-96183-public-score title 0.96133: v15/submission.csv pred 0.96137 sd 6.4u z -0.58, 5 fit, same False reject
+matterhorn3838/s6e10-0-96183-public-score title 0.96152: v11/submission.csv pred 0.96158 sd 0.8u z -7.37, 0 fit, same True reject
+matterhorn3838/s6e10-0-96183-public-score title 0.96159: v10/submission.csv pred 0.96159 sd 0.7u z +0.60, 1 fit, same True ACCEPT
+matterhorn3838/s6e10-0-96183-public-score title 0.96160: v12/submission.csv pred 0.96160 sd 0.7u z -0.28, 3 fit, same True ACCEPT
+matterhorn3838/s6e10-0-96183-public-score title 0.96177: v16/submission.csv pred 0.96177 sd 0.6u z -0.33, 1 fit, same True ACCEPT
+matterhorn3838/s6e10-0-96183-public-score title 0.96183: v21/submission.csv pred 0.96183 sd 0.5u z +0.11, 1 fit, same True ACCEPT
+matterhorn3838/s6e10-aiming-for-space-0-96180 title 0.96160: v4/submission.csv pred 0.96164 sd 0.8u z -4.83, 0 fit, same True reject
+matterhorn3838/s6e10-aiming-for-space-0-96180 title 0.96180: v11/submission.csv pred 0.96181 sd 0.6u z -2.15, 0 fit, same True reject
+mayankraaz/s6e10-lb-surface-ascent-v2-0-96208 title 0.96196: v1/submission.csv pred 0.96196 sd 0.4u z -0.14, 2 fit, same True ACCEPT
+mayankraaz/s6e10-lb-surface-ascent-v2-0-96208 title 0.96206: v3/submission.csv pred 0.96206 sd 0.4u z +0.60, 1 fit, same True ACCEPT
+mayankraaz/s6e10-summit-composer-0-96210 title 0.96210: v1/submission.csv pred 0.96210 sd 0.4u z -0.91, 1 fit, same True ACCEPT
+miickey/s6e10-one-lightgbm-lb-0-96024 title 0.96017: v2/submission_single_lightgbm.csv pred 0.96021 sd 9.4u z -0.46, 2 fit, same False reject
+rabari9999/s6e10-lb-0-96209-rank-10 title 0.96188: v8/submission.csv pred 0.96188 sd 0.5u z +0.35, 4 fit, same True ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 title 0.96190: v14/submission.csv pred 0.96190 sd 0.5u z -0.34, 5 fit, same True ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 title 0.96195: v21/submission.csv pred 0.96195 sd 0.5u z +0.52, 1 fit, same True ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 title 0.96201: v29/submission.csv pred 0.96201 sd 0.4u z -0.43, 2 fit, same True ACCEPT
+rabari9999/s6e10-lb-0-96209-rank-10 title 0.96207: v43/submission.csv pred 0.96207 sd 0.4u z +0.09, 8 fit, same True ACCEPT
+sachith7/s6e10-what-each-step-was-worth title 0.96134: v1/submission.csv pred 0.96139 sd 2.6u z -1.82, 0 fit, same True reject
+sarunpm/airline-satisfaction-0-95974-lb title 0.95961: v11/submission_xgb.csv pred 0.95961 sd 1.6u z -0.13, 6 fit, same False reject
+sarunpm/airline-satisfaction-for-0-96168-lb title 0.95000: nothing within 12u of it
+sarunpm/airline-satisfaction-for-0-96168-lb title 0.96155: v3/submission_blend_w1_0.01_w2_0.99.csv pred 0.96156 sd 1.0u z -0.62, 7 fit, same False reject
+sarunpm/airline-satisfaction-for-0-96168-lb title 0.96162: v7/submission_blend_w1_0.01_w2_0.99.csv pred 0.96162 sd 1.0u z -0.29, 2 fit, same True ACCEPT
+sarunpm/airline-satisfaction-for-0-96168-lb title 0.96164: v10/submission_blend_w1_0.010_w2_0.490.csv pred 0.96164 sd 0.9u z -0.50, 3 fit, same True ACCEPT
+sarunpm/airline-satisfaction-for-0-96168-lb title 0.96168: v10/submission_blend_w1_0.010_w2_0.490.csv pred 0.96164 sd 0.9u z +3.73, 0 fit, same True reject
+sarunpm/airline-satisfaction-lgbm-0-96059-lb title 0.96025: v8/submission.csv pred 0.96025 sd 1.4u z +0.01, 7 fit, same False reject
+sarunpm/airline-satisfaction-lgbm-0-96059-lb title 0.96031: v43/submission_cps.csv pred 0.96031 sd 1.5u z +0.07, 13 fit, same False reject
+sarunpm/airline-satisfaction-lgbm-0-96059-lb title 0.96035: v62/submission_cps.csv pred 0.96037 sd 6.1u z -0.33, 19 fit, same False reject
+sarunpm/airline-satisfaction-lgbm-0-96059-lb title 0.96057: v72/submission.csv pred 0.96048 sd 5.5u z +1.66, 0 fit, same True reject
+sarunpm/airline-satisfaction-lgbm-0-96059-lb title 0.96059: v72/submission.csv pred 0.96048 sd 5.5u z +2.02, 0 fit, same True reject
+thisray/s6e10-where-the-auc-is-lost-xgb-lb-0-96083 title 0.96080: v2/submission.csv pred 0.96080 sd 1.3u z -0.37, 1 fit, same True ACCEPT
+valek22/baseline-ps-s6e10-mini-eda-catboost-0-95812 title 0.95812: v1/submission.csv pred 0.95820 sd 2.1u z -3.80, 0 fit, same True reject
+yuvrajlamba01/airline-passenger-satisfaction-0-96276 title 0.96276: nothing within 12u of it
+113 accepted

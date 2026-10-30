@@ -1,7 +1,7 @@
 {
- "id": "tranbadat/s6e10-tilt-expsim",
- "title": "s6e10-tilt-expsim",
- "code_file": "s6e10-tilt-expsim.py",
+ "id": "tranbadat/s6e10-tilt-onesided",
+ "title": "s6e10-tilt-onesided",
+ "code_file": "s6e10-tilt-onesided.py",
  "language": "python",
  "kernel_type": "script",
  "is_private": true,
