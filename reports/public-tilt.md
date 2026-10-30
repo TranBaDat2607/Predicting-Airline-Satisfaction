@@ -1,6 +1,6 @@
 # Public-LB tilt — how the public top 5 was reached (2026-10-27), and top 2 (2026-10-29)
 
-**Status (2026-10-30):** public LB **0.96452, 1st** (0072; Kawamata 0.96451, who wrote in the forum that his gains
+**Status (2026-10-30):** public LB **0.96473, 1st** (0078; Kawamata 0.96451, who wrote in the forum that his gains
 come from LB probing over ~200 entries and will not carry over to private; Altunok 0.96446). Tilted files are *public-LB fitted*: they
 raise the public score and lower the private one, so they are never final picks (see `final-selection.md`).
 
@@ -9,12 +9,22 @@ raise the public score and lower the private one, so they are never final picks 
 | step | files | model | eta | predicted | public |
 |---|---|---|---|---|---|
 | 0072 | 582 (+87 mined exact pairs, new public files) | exponential tilt, nu 2, REML | 1.0 | 0.96469 | **0.96452 (1st)** |
+| 0073 | 650 (+70 per-version pairs, 98 re-matched versions) | same | 1.0 | 0.96484 | **0.96462** |
+| 0074-0076 | nudge probes of 0073 (t 0.08 on the low-score 45 % of rows) | - | - | 0.96453 mean | 0.96461 / 0.96453 / 0.96457 |
+| 0077 | 664 | same | 1.0 | 0.96486 | 0.96451 (rank-diff sd to 0073 0.025, public sd of that move ~7u) |
+| 0078 | 660, noise calibrated: nu 1, k1 18 | exponential tilt | 1.0 | 0.96479 | **0.96473** |
 
 - `src/lb_mined.py`: notebooks document (recipe, public score) tables. These pairs have no version ambiguity; every rebuild is checked against the
   author's pinned file (rank corr 1.0000 for probe G, the climb, T3 and the final Mirror Pair file).
 - `src/tilt_exp.py`: rows have three states, so conditioning on K linear measurements tilts each row's prior exponentially; the Gaussian solution is
   the first Newton step of its dual. Simulation (K 400, 30 % one-sided wrong scores): +136.3u vs +134.4u, optimism 4.8u vs 9.6u.
 - Meta Kaggle has no submissions or teams of a running competition, and the LB CSV's date is the last submission's: no exact version-score link.
+- Noise calibration. Simulation grid on Kaggle CPU (K 650, `reports/tilt/exp_grid_kaggle_*.log`): nu 1 beats nu 2 by 7-18u, and the best k1 is the one with small
+  optimism (nu 2, 5 % wrong scores: k1 6 +314u, optimism +45u; k1 12 +317u, optimism +1u). On the real files REML gives k1 5.4 and held-out own tilts are
+  predicted +18..+45u too high; k1 18-25 at nu 1 predicts them within 8u (0077, the outlier, +15..+25u) (`src/tilt_grid_real.py`). 0078 at nu 1, k1 18 realised 6u
+  under its prediction and +11u over the previous best, on the same data as 0077.
+- Rejected: correlated model errors (`kernel_power`, REML +93 but held-out tilts up to 28u too low), shared errors within a probe family (no change), marking
+  mined files exact (held-out errors +5u worse).
 
 ## Session 5 (2026-10-29): why the real files gave half the simulated gain, and the fix
 

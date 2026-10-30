@@ -86,7 +86,14 @@ reports/     EDA, recon, adversarial validation, post-mortems
 ## Current plan / notes
 
 - 2026-10-30 (session 6, /goal: public top 1, Kaggle GPU+CPU, commit progress, UAT issues):
-  - **Public 1st: 0.96452 (0072)**, Kawamata 0.96451, Altunok 0.96446 (both LB-fitted too; expect a private shake-up).
+  - **Public 1st: 0.96473 (0078)**, Kawamata 0.96451, Altunok 0.96446 (both LB-fitted too; expect a private shake-up).
+  - Current best recipe: `python src/lb_mined.py; python src/lb_extra.py match; python src/lb_collect.py;
+    python src/tilt_run2.py --nu 1 --fixed 1e-9 18 --exp --write 1.0 --name <n>`. REML under-estimates the model error on the real files (held-out
+    own tilts +18..+45u): Kaggle CPU noise grid (`reports/tilt/exp_grid_kaggle_*.log`) says nu 1 and small optimism realise most; calibrated
+    on held-out own tilts (`src/tilt_grid_real.py`) that is k1 ~ 18, and 0078 then scored 6u under its prediction instead of 20-35u.
+  - Per-version pairs: `src/lb_extra.py` (hand-read version tables + Meta Kaggle version titles, each checked by posterior z). Own nudge probes:
+    `src/tilt_probe_noise.py` (KG ~0.8u each, `src/probe_kg_noise.py`). Marking mined files exact made calibration worse: keep exact = own.
+  - UAT issue filed: #63 (submissions-today counter stays 0/10 for submits through a wrapper script).
   - New this session: `src/tilt_exp.py` (exponential-tilt posterior: the Gaussian fit moved E[a] of rare rows by +-43 % and clipped 1.6 % of
     them; sim +2u, optimism halved) and `src/lb_mined.py` (exact (recipe, public score) pairs rebuilt from notebooks' published tables and
     checked against pinned files: goodpjw2008, tkms0816, mayankraaz). `python src/lb_mined.py` -> `src/lb_collect.py` ->
