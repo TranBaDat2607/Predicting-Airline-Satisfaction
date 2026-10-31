@@ -1,0 +1,6 @@
+477 files
+t2    k0 1.03e-31 k1     9.4 w<.2   6 | 0068_tilt-v9-reml-et pred 0.96442 obs 0.96432 | 0067_tilt-v8-vfix90- pred 0.96419 obs 0.96414 | 0066_tilt-v7-t2k80-e pred 0.96382 obs 0.96369 || eta1 0.96434
+t1    k0 1.29e-25 k1    6.56 w<.2   8 | 0068_tilt-v9-reml-et pred 0.96434 obs 0.96432 | 0067_tilt-v8-vfix90- pred 0.96418 obs 0.96414 | 0066_tilt-v7-t2k80-e pred 0.96380 obs 0.96369 || eta1 0.96438
+t4    k0 1.7e-39 k1    13.6 w<.2   6 | 0068_tilt-v9-reml-et pred 0.96438 obs 0.96432 | 0067_tilt-v8-vfix90- pred 0.96419 obs 0.96414 | 0066_tilt-v7-t2k80-e pred 0.96383 obs 0.96369 || eta1 0.96434
+t2k20 k0   1e-06 k1      20 w<.2   7 | 0068_tilt-v9-reml-et pred 0.96426 obs 0.96432 | 0067_tilt-v8-vfix90- pred 0.96419 obs 0.96414 | 0066_tilt-v7-t2k80-e pred 0.96383 obs 0.96369 || eta1 0.96434
+t2k40 k0   1e-06 k1      40 w<.2   6 | 0068_tilt-v9-reml-et pred 0.96417 obs 0.96432 | 0067_tilt-v8-vfix90- pred 0.96419 obs 0.96414 | 0066_tilt-v7-t2k80-e pred 0.96384 obs 0.96369 || eta1 0.96434

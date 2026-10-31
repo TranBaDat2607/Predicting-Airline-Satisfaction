@@ -1,0 +1,19 @@
+  suspect group 238 files (129 corrupted)
+one-sided EM 1: pi 0.182 sigma_e 10.0u, mean shift 0.77u, files with E[e] > 3u: 42
+one-sided EM 2: pi 0.196 sigma_e 10.5u, mean shift 0.92u, files with E[e] > 3u: 49
+one-sided EM 3: pi 0.223 sigma_e 11.1u, mean shift 1.14u, files with E[e] > 3u: 50
+one-sided EM 4: pi 0.265 sigma_e 11.8u, mean shift 1.49u, files with E[e] > 3u: 53
+one-sided EM 5: pi 0.309 sigma_e 12.6u, mean shift 1.86u, files with E[e] > 3u: 64
+one-sided EM 6: pi 0.351 sigma_e 13.5u, mean shift 2.27u, files with E[e] > 3u: 69
+  one-sided E[e] on corrupted files 6.33u, on clean 0.33u
+base 0.96296; K 400; corrupt 129 (one-sided); bags 1 x 0.7
+full eta0.6    public 0.96417  (predicted 0.96423, optimism +5.9u)
+full eta0.8    public 0.96428  (predicted 0.96436, optimism +7.8u)
+full eta1.0    public 0.96430  (predicted 0.96440, optimism +9.6u)
+1side eta0.8   public 0.96456  (predicted 0.96492, optimism +36.7u)
+1side eta1.0   public 0.96454  (predicted 0.96497, optimism +43.3u)
+1side eta1.2   public 0.96446  (predicted 0.96493, optimism +47.5u)
+bag eta0.6     public 0.96389
+bag eta0.8     public 0.96399
+bag eta1.0     public 0.96402
+bag eta1.2     public 0.96399

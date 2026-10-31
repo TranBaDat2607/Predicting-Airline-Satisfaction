@@ -1,0 +1,263 @@
+REML noise: k0 4.95e-20 k1 8.55 (x rounding var); weights < 0.5: 8, < 0.2: 6; REML -5121.95
+abdullahsafwan333/aviator-xgboost-optuna-tuned: 1 distinct outputs, z latest +inf, best v1/submission.csv z +1.84 (pred 0.96093 sd 8.0u vs listed 0.96108; 0 fit |z|<1)  -> SWAP
+alikalwar/airline-satisfaction-lightgbm-baseline-auc-0-9578: 1 distinct outputs, z latest -0.35, best latest z -0.35 (pred 0.95785 sd 13.1u vs listed 0.95780; 1 fit |z|<1)
+amanatar/s6e10-realmlp-original-prior-gpu: 9 distinct outputs, z latest -0.51, best latest z -0.51 (pred 0.96031 sd 8.8u vs listed 0.96027; 1 fit |z|<1)
+amanatar/s6e10-signal-forge-ii-pseudo-label-arms-cpu: 1 distinct outputs, z latest -0.61, best latest z -0.61 (pred 0.96186 sd 0.5u vs listed 0.96186; 1 fit |z|<1)
+amanatar/s6e10-the-apex-consensus: 17 distinct outputs, z latest -1.21, best v3/submission_D_top2.csv z +0.16 (pred 0.96180 sd 1.2u vs listed 0.96180; 3 fit |z|<1)
+amanatar/s6e10-the-consensus-tuner: 2 distinct outputs, z latest +0.42, best v1/submission.csv z +0.17 (pred 0.96186 sd 0.5u vs listed 0.96186; 2 fit |z|<1)
+amanatar/s6e10-the-ghost-in-the-generator: 2 distinct outputs, z latest +0.37, best latest z +0.37 (pred 0.95844 sd 7.1u vs listed 0.95847; 1 fit |z|<1)
+amansharma1812/predicting-airline-satisfaction: 1 distinct outputs, z latest +0.10, best latest z +0.10 (pred 0.95578 sd 15.8u vs listed 0.95580; 1 fit |z|<1)
+amri11/predicting-airline-satisfaction-use-python: 4 distinct outputs, z latest +7.44, best v3/submission_xgb.csv z +0.14 (pred 0.95741 sd 13.9u vs listed 0.95743; 2 fit |z|<1)  -> SWAP
+angaddeepsingh5875/playground-series: 2 distinct outputs, z latest -1.78, best v1/submission.csv z -1.61 (pred 0.95823 sd 6.6u vs listed 0.95812; 0 fit |z|<1)
+anhadmahajan06/s6e10-are-you-satisfied: 68 distinct outputs, z latest +2.96, best v30/submission_slsqp.csv z +0.42 (pred 0.96110 sd 1.0u vs listed 0.96110; 10 fit |z|<1)  -> SWAP
+anhadmahajan06/s6e10-are-you-satisfied-ensemble-version: 6 distinct outputs, z latest -0.30, best v1/submission_meta_v1_balanced.csv z +0.01 (pred 0.96097 sd 1.0u vs listed 0.96097; 6 fit |z|<1)
+anthonytherrien/airline-satisfaction-5-fold: 1 distinct outputs, z latest -0.76, best latest z -0.76 (pred 0.95916 sd 4.1u vs listed 0.95913; 1 fit |z|<1)
+anthonytherrien/airline-satisfaction-lightgbm: 1 distinct outputs, z latest -1.76, best latest z -1.76 (pred 0.95900 sd 6.4u vs listed 0.95889; 0 fit |z|<1)
+anthonytherrien/airline-satisfaction-randomforest: 1 distinct outputs, z latest -0.48, best latest z -0.48 (pred 0.95724 sd 20.1u vs listed 0.95714; 1 fit |z|<1)
+anthonytherrien/airline-satisfaction-xgboost: 2 distinct outputs, z latest +2.78, best v12/submission.csv z +1.98 (pred 0.95901 sd 5.7u vs listed 0.95912; 0 fit |z|<1)
+anujsaha0123456789/airline-satisfaction-0-95806-gbdt-ensemble: 2 distinct outputs, z latest +4.68, best v2/submission.csv z -0.97 (pred 0.95837 sd 5.1u vs listed 0.95832; 1 fit |z|<1)  -> SWAP
+areebbb/s6e10-crushing-the-leaderboard: 26 distinct outputs, z latest +inf, best v5/n08_A115_tabpfn35_m15.csv z +0.26 (pred 0.96214 sd 0.7u vs listed 0.96214; 6 fit |z|<1)  -> SWAP
+areebbb/s6e10-do-you-need-less-lb-0-96217: 68 distinct outputs, z latest +inf, best v3/u07_META105_xgb05.csv z -0.03 (pred 0.96217 sd 0.4u vs listed 0.96217; 7 fit |z|<1)  -> SWAP
+areebbb/s6e10-do-you-need-more-0-96215: 45 distinct outputs, z latest +inf, best v3/p05_A108_tpfn_m05_ownall_m03.csv z +0.02 (pred 0.96215 sd 0.4u vs listed 0.96215; 13 fit |z|<1)  -> SWAP
+areebbb/s6e10-what-each-idea-is-worth-stack-0-96186: 5 distinct outputs, z latest +0.33, best latest z +0.33 (pred 0.96186 sd 0.6u vs listed 0.96186; 1 fit |z|<1)
+arhancanli12/s6e10-generator-fingerprints-lgbm-cv-0-9610: 2 distinct outputs, z latest -0.88, best latest z -0.88 (pred 0.96083 sd 4.2u vs listed 0.96079; 1 fit |z|<1)
+arizalfirdaus123/s6e10-pooled-gbdt-mlp-ensemble: 5 distinct outputs, z latest -0.09, best latest z -0.09 (pred 0.96029 sd 8.0u vs listed 0.96028; 1 fit |z|<1)
+arunklenin/ps6e10-airline-satisfaction-baseline: 6 distinct outputs, z latest +34.64, best v5/submission_blend.csv z +19.60 (pred 0.96108 sd 2.5u vs listed 0.96157; 0 fit |z|<1)
+atifkhan12/airline-satisfaction-kumbo-tabular: 1 distinct outputs, z latest +inf, best v2/submission.csv z +1.18 (pred 0.95803 sd 6.3u vs listed 0.95810; 0 fit |z|<1)  -> SWAP
+atifkhan12/s6e10-airline-satisfaction: 1 distinct outputs, z latest +inf, best v11/submission.csv z -1.13 (pred 0.95841 sd 5.6u vs listed 0.95835; 0 fit |z|<1)  -> SWAP
+aumpatel131/s6e10: 3 distinct outputs, z latest +12.88, best v2/submission.csv z +1.78 (pred 0.95771 sd 11.8u vs listed 0.95792; 0 fit |z|<1)  -> SWAP
+ayeshasummaiyya/s6e10-airline-satisfaction: 27 distinct outputs, z latest +inf, best v10/submission_blend.csv z +0.17 (pred 0.96063 sd 9.1u vs listed 0.96065; 3 fit |z|<1)  -> SWAP
+aymankhan555/airline-satisfaction-eda-xgb-0-95: 2 distinct outputs, z latest -1.13, best latest z -1.13 (pred 0.95780 sd 9.1u vs listed 0.95770; 0 fit |z|<1)
+balajivaraprasad/ps-s06e10-predicting-airline-satisfaction: 7 distinct outputs, z latest +inf, best v4/XGB_submission.csv z +0.76 (pred 0.95809 sd 6.3u vs listed 0.95814; 2 fit |z|<1)  -> SWAP
+chinzorigtganbat/s6e10-lightgbm-oof: 25 distinct outputs, z latest -0.26, best v11/submission_v11_xgb_seed2.csv z -0.01 (pred 0.96046 sd 6.3u vs listed 0.96046; 12 fit |z|<1)
+daoviet/s6e10-on-the-journey-to-your-first-top-100: 3 distinct outputs, z latest +0.49, best latest z +0.49 (pred 0.96213 sd 0.3u vs listed 0.96213; 1 fit |z|<1)
+deeplumiere/s6e10-solution-2: 5 distinct outputs, z latest +0.69, best latest z +0.69 (pred 0.96007 sd 5.9u vs listed 0.96011; 2 fit |z|<1)
+denpugovkin/s6e10-hard-labels-better-ranks-realmlp-gpu: 1 distinct outputs, z latest -0.68, best latest z -0.68 (pred 0.96184 sd 1.4u vs listed 0.96183; 1 fit |z|<1)
+devashish001/ps-s6-e10-lightgbm-oof: 4 distinct outputs, z latest -1.77, best latest z -1.77 (pred 0.96041 sd 8.4u vs listed 0.96026; 0 fit |z|<1)
+dmitriykolmikov/notebooke0487487da: 1 distinct outputs, z latest +inf, best v1/submission.csv z -0.98 (pred 0.95833 sd 5.4u vs listed 0.95828; 1 fit |z|<1)  -> SWAP
+dmitriykolmikov/s6e10-catboost-all-cat-original-cv-0-9607: 2 distinct outputs, z latest -0.43, best latest z -0.43 (pred 0.96005 sd 12.0u vs listed 0.96000; 1 fit |z|<1)
+docxian/ps-s6-e10-airline-satisfaction: 4 distinct outputs, z latest -0.72, best latest z -0.72 (pred 0.95827 sd 13.6u vs listed 0.95817; 1 fit |z|<1)
+docxian/ps-s6-e10-tabpfn-first-try: 12 distinct outputs, z latest +inf, best v3/submission_LGB.csv z -1.56 (pred 0.95768 sd 18.4u vs listed 0.95739; 0 fit |z|<1)  -> SWAP
+dranilkumardubey/airlinesatisfaction-prediction: 3 distinct outputs, z latest +inf, best v2/submission_rank_blend.csv z -1.50 (pred 0.95845 sd 5.8u vs listed 0.95836; 0 fit |z|<1)  -> SWAP
+ektarr/four-model-stacking: 6 distinct outputs, z latest +inf, best v4/submission.csv z -0.21 (pred 0.96123 sd 4.5u vs listed 0.96122; 1 fit |z|<1)  -> SWAP
+eulerspoon/playground-s6e10: 3 distinct outputs, z latest +1.98, best latest z +1.98 (pred 0.94552 sd 32.0u vs listed 0.94615; 0 fit |z|<1)
+evgendvorkin/s6e10-lightgbm-cv-5-folds-0-96111: 8 distinct outputs, z latest -0.09, best latest z -0.09 (pred 0.96070 sd 9.0u vs listed 0.96069; 1 fit |z|<1)
+ewtherka/s6e10-0-96188-lb-l2-family-wise-actually-helps: 6 distinct outputs, z latest +4.11, best v2/submission_plain_lr.csv z +0.19 (pred 0.96188 sd 0.5u vs listed 0.96188; 2 fit |z|<1)  -> SWAP
+ewtherka/s6e10-catboost-slice-keys: 4 distinct outputs, z latest +2.15, best v5/submission.csv z +0.37 (pred 0.96008 sd 14.4u vs listed 0.96013; 1 fit |z|<1)
+ewtherka/s6e10-factorization-machine-w-more-variants: 8 distinct outputs, z latest +inf, best v3/submission_fm_seeds3.csv z -0.08 (pred 0.95748 sd 21.6u vs listed 0.95746; 4 fit |z|<1)  -> SWAP
+ewtherka/s6e10-stacker-s-c-penalty-on-model-families: 2 distinct outputs, z latest +inf, best v1/submission_baseline_flat_c0.003.csv z -0.51 (pred 0.96186 sd 0.6u vs listed 0.96186; 2 fit |z|<1)  -> SWAP
+ewtherka/s6e10-tabfm-trying-to-be-better: 1 distinct outputs, z latest +inf, best v9/submission_tabfm_fsE.csv z -0.35 (pred 0.95904 sd 14.7u vs listed 0.95899; 1 fit |z|<1)  -> SWAP
+extergeist/airline-satisfaction-single-realmlp-model: 2 distinct outputs, z latest -0.44, best latest z -0.44 (pred 0.96092 sd 6.6u vs listed 0.96089; 1 fit |z|<1)
+eymenakb/airline-satisfaction-xgboost-v1: 3 distinct outputs, z latest -0.99, best v6/submission.csv z -0.83 (pred 0.95824 sd 10.7u vs listed 0.95815; 2 fit |z|<1)
+ferariz/a-fair-model-benchmark-and-survey-aware-features: 4 distinct outputs, z latest +inf, best v2/submission.csv z +0.08 (pred 0.95845 sd 7.4u vs listed 0.95846; 3 fit |z|<1)  -> SWAP
+francescoalbanesephd/s6e10-gbdt-v1-3: 4 distinct outputs, z latest +0.87, best v5/submission.csv z +0.24 (pred 0.96010 sd 8.8u vs listed 0.96012; 2 fit |z|<1)
+francescoliveras/predicting-airline-satisfaction: 2 distinct outputs, z latest -1.27, best latest z -1.27 (pred 0.96029 sd 9.3u vs listed 0.96017; 0 fit |z|<1)
+gauravduttaiiitb/ensemble-s6e10-flaml-roc-auc: 2 distinct outputs, z latest +inf, best v2/roc_auc.csv z -0.70 (pred 0.95907 sd 9.6u vs listed 0.95900; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex1-s6e10-autogluon-optimize-for-deployment: 1 distinct outputs, z latest +inf, best v1/optimize_for_deployment.csv z -3.44 (pred 0.95805 sd 11.3u vs listed 0.95766; 0 fit |z|<1)
+gauravduttaiiitb/ex100-s6e10-lgbm-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -0.72 (pred 0.95994 sd 12.1u vs listed 0.95985; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex100-s6e10-lrl1-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +2.57 (pred 0.90966 sd 87.1u vs listed 0.91190; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex100-s6e10-sgd-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +2.17 (pred 0.92057 sd 77.4u vs listed 0.92225; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex100-s6e10-xgb-limitdepth-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -1.51 (pred 0.95842 sd 6.6u vs listed 0.95832; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex100-s6e10-xgboost-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +1.15 (pred 0.95832 sd 6.7u vs listed 0.95840; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex15-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -0.70 (pred 0.95861 sd 11.2u vs listed 0.95853; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex3-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +0.02 (pred 0.95897 sd 7.7u vs listed 0.95897; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex30-s6e10-lgbm-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +0.31 (pred 0.95906 sd 1.8u vs listed 0.95907; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex33-s6e10-lgbm-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +2.46 (pred 0.95892 sd 6.2u vs listed 0.95907; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex36-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -2.58 (pred 0.96036 sd 8.4u vs listed 0.96014; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex39-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +1.72 (pred 0.96004 sd 10.2u vs listed 0.96022; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex39-s6e10-tabpfn-3-5: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -1.53 (pred 0.95929 sd 12.9u vs listed 0.95909; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex42-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -0.35 (pred 0.95882 sd 4.5u vs listed 0.95880; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex43-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -2.92 (pred 0.96000 sd 8.3u vs listed 0.95976; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex44-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +1.69 (pred 0.95938 sd 17.3u vs listed 0.95967; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex45-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +1.46 (pred 0.95855 sd 19.6u vs listed 0.95884; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex46-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -0.45 (pred 0.96005 sd 10.9u vs listed 0.96000; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex47-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +0.45 (pred 0.95880 sd 4.6u vs listed 0.95882; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex48-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -2.86 (pred 0.95922 sd 11.9u vs listed 0.95888; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex49-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +1.24 (pred 0.95969 sd 9.6u vs listed 0.95981; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex50-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +0.29 (pred 0.96011 sd 10.2u vs listed 0.96014; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex51-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +1.05 (pred 0.95815 sd 20.5u vs listed 0.95837; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex6-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -0.94 (pred 0.95902 sd 6.4u vs listed 0.95896; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/ex600-s6e10-good-quality: 1 distinct outputs, z latest +inf, best v1/good_quality.csv z +1.32 (pred 0.95845 sd 9.2u vs listed 0.95857; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/org-s6e10-autogluon-optimize-for-deployment: 1 distinct outputs, z latest +inf, best v1/optimize_for_deployment.csv z +0.90 (pred 0.95771 sd 13.8u vs listed 0.95783; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/org-s6e10-flaml-ap: 1 distinct outputs, z latest +inf, best v1/ap.csv z -0.99 (pred 0.95857 sd 6.8u vs listed 0.95850; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/org-s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -0.87 (pred 0.95857 sd 6.8u vs listed 0.95851; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-autogluon-best-v150: 1 distinct outputs, z latest +inf, best v1/best_v150.csv z +2.70 (pred 0.95862 sd 5.8u vs listed 0.95878; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-autogluon-good-quality: 1 distinct outputs, z latest +inf, best v1/good_quality.csv z -1.33 (pred 0.95856 sd 9.3u vs listed 0.95844; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-autogluon-medium-quality: 1 distinct outputs, z latest +inf, best v1/medium_quality.csv z -2.40 (pred 0.95827 sd 7.3u vs listed 0.95809; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-autogluon-optimize-for-deployment: 1 distinct outputs, z latest +inf, best v1/optimize_for_deployment.csv z +1.53 (pred 0.95817 sd 7.7u vs listed 0.95829; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-catboost-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -1.33 (pred 0.95741 sd 11.5u vs listed 0.95726; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-extra-tree-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +1.73 (pred 0.95707 sd 12.9u vs listed 0.95729; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-fe-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +0.20 (pred 0.95826 sd 15.0u vs listed 0.95829; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-flaml-accuracy: 1 distinct outputs, z latest +inf, best v1/accuracy.csv z +0.34 (pred 0.95881 sd 11.6u vs listed 0.95885; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-flaml-ap: 1 distinct outputs, z latest +inf, best v1/ap.csv z +0.31 (pred 0.95906 sd 1.8u vs listed 0.95907; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-flaml-log-loss: 1 distinct outputs, z latest +inf, best v2/log_loss.csv z -1.09 (pred 0.95829 sd 8.3u vs listed 0.95820; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-flaml-ndcg: 1 distinct outputs, z latest +inf, best v1/ndcg.csv z +0.24 (pred 0.95839 sd 12.3u vs listed 0.95842; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-flaml-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +0.31 (pred 0.95906 sd 1.8u vs listed 0.95907; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-flaml-roc-auc-weighted: 1 distinct outputs, z latest +inf, best v1/roc_auc_weighted.csv z +0.31 (pred 0.95906 sd 1.8u vs listed 0.95907; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-lgbm-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +0.61 (pred 0.95901 sd 9.2u vs listed 0.95907; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-pseudo-medium-quality: 1 distinct outputs, z latest +inf, best v1/medium_quality.csv z -1.54 (pred 0.95846 sd 8.9u vs listed 0.95832; 0 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-rf-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -0.78 (pred 0.95762 sd 13.4u vs listed 0.95752; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-tabpfn-3-5: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +0.08 (pred 0.95965 sd 6.5u vs listed 0.95966; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-tabpfn-3-5-context-250-000: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z +0.54 (pred 0.96033 sd 3.8u vs listed 0.96035; 1 fit |z|<1)  -> SWAP
+gauravduttaiiitb/s6e10-xgboost-roc-auc: 1 distinct outputs, z latest +inf, best v1/roc_auc.csv z -3.38 (pred 0.95843 sd 6.6u vs listed 0.95821; 0 fit |z|<1)
+giannhsstamelias/s6e10-eda-stacking-13basemodels-6metalear-caruana: 6 distinct outputs, z latest +0.13, best v36/submission.csv z +0.13 (pred 0.95833 sd 9.9u vs listed 0.95834; 5 fit |z|<1)
+goodpjw2008/s6e10-anatomy-of-a-public-0-96188-lb-0-96188: 1 distinct outputs, z latest -0.19, best latest z -0.19 (pred 0.96188 sd 0.5u vs listed 0.96188; 1 fit |z|<1)
+goodpjw2008/s6e10-auxiliary-task-features-lb-0-96161: 2 distinct outputs, z latest +1.16, best latest z +1.16 (pred 0.96159 sd 1.9u vs listed 0.96161; 0 fit |z|<1)
+goodpjw2008/s6e10-catboost-ctr-glm-margin-xgb-lb-0-96152: 3 distinct outputs, z latest -17.29, best v3/submission.csv z -1.96 (pred 0.96129 sd 2.0u vs listed 0.96125; 0 fit |z|<1)  -> SWAP
+goodpjw2008/s6e10-meta-stack-on-public-oof-lb-0-96216: 7 distinct outputs, z latest -0.88, best latest z -0.88 (pred 0.96216 sd 0.4u vs listed 0.96216; 1 fit |z|<1)
+goodpjw2008/s6e10-more-aux-carriers-lb-0-96163: 2 distinct outputs, z latest +1.26, best latest z +1.26 (pred 0.96162 sd 1.1u vs listed 0.96163; 0 fit |z|<1)
+goodpjw2008/s6e10-realmlp-aux-task-features-lb-0-96159: 2 distinct outputs, z latest -0.85, best latest z -0.85 (pred 0.96160 sd 1.2u vs listed 0.96159; 1 fit |z|<1)
+goodpjw2008/s6e10-route-id-fe-og-model-stack-lb-0-96144: 4 distinct outputs, z latest +1.51, best latest z +1.51 (pred 0.96139 sd 3.1u vs listed 0.96144; 0 fit |z|<1)
+goodpjw2008/s6e10-tabpfn-3-5-member-lb-0-96159: 2 distinct outputs, z latest -1.68, best v1/submission.csv z -0.23 (pred 0.96156 sd 0.8u vs listed 0.96156; 1 fit |z|<1)
+goodpjw2008/s6e10-twin-stacks-family-reg-lb-0-96187: 8 distinct outputs, z latest -0.56, best v10/submission.csv z -0.17 (pred 0.96187 sd 0.6u vs listed 0.96187; 5 fit |z|<1)
+goodpjw2008/s6e10-two-view-gbdt-realmlp-stack-lb-0-96149: 3 distinct outputs, z latest -1.50, best latest z -1.50 (pred 0.96153 sd 2.5u vs listed 0.96149; 0 fit |z|<1)
+goutamsharma12/airlinesatisfaction-aerorankrcp-adaptive-ensemble: 1 distinct outputs, z latest +inf, best v2/airline_satisfaction_v4_aerorank_rcp_submission.csv z -1.30 (pred 0.96039 sd 8.9u vs listed 0.96028; 0 fit |z|<1)  -> SWAP
+guoz112/s6e10: 1 distinct outputs, z latest +inf, best v1/submission.csv z -1.44 (pred 0.96183 sd 1.0u vs listed 0.96182; 0 fit |z|<1)  -> SWAP
+hanifnoerrofiq/agentic-ensemble: 4 distinct outputs, z latest +0.41, best latest z +0.41 (pred 0.96204 sd 0.4u vs listed 0.96204; 1 fit |z|<1)
+hassimx/airline-satisfaction-route-id-200-model-stack: 2 distinct outputs, z latest -0.46, best latest z -0.46 (pred 0.96179 sd 0.9u vs listed 0.96179; 2 fit |z|<1)
+hbistechie/ps6-e10: 1 distinct outputs, z latest +0.79, best latest z +0.79 (pred 0.95833 sd 4.6u vs listed 0.95837; 1 fit |z|<1)
+hermengardo/single-catboost-eda-ps6e10: 8 distinct outputs, z latest +1.76, best v23/submission.csv z -0.47 (pred 0.96051 sd 11.5u vs listed 0.96046; 4 fit |z|<1)
+hitarthjain0/s6e10-165-model-stack-cv-tuned-lb-0-96176: 10 distinct outputs, z latest +0.68, best v14/submission_rank_calibrated.csv z -0.00 (pred 0.96176 sd 1.3u vs listed 0.96176; 9 fit |z|<1)
+hittmg/261010playground-s6e10day2-3-lightgbm: 3 distinct outputs, z latest +0.03, best v2/submission.csv z +0.03 (pred 0.95745 sd 17.4u vs listed 0.95746; 3 fit |z|<1)
+hittmg/261017playground-s6e10day3-1-lightgbm-params: 2 distinct outputs, z latest +0.08, best latest z +0.08 (pred 0.95803 sd 15.0u vs listed 0.95804; 1 fit |z|<1)
+jenillangaliya/s6e10-tri-engine-gbdt-lgbm-xgb-catboost: 2 distinct outputs, z latest +0.54, best latest z +0.54 (pred 0.96171 sd 1.4u vs listed 0.96172; 1 fit |z|<1)
+jimgruman/come-fly-with-me: 5 distinct outputs, z latest +inf, best v23/submission.csv z +1.75 (pred 0.95941 sd 10.9u vs listed 0.95960; 0 fit |z|<1)  -> SWAP
+johnha9/airline-satisfaction-lightgbm-baseline-s6e10: 1 distinct outputs, z latest -0.38, best latest z -0.38 (pred 0.95835 sd 7.3u vs listed 0.95832; 1 fit |z|<1)
+juna1013/s6e10-train-submission: 8 distinct outputs, z latest +0.27, best v25/submission.csv z -0.08 (pred 0.96029 sd 6.9u vs listed 0.96028; 6 fit |z|<1)
+karttikjangid05/181-of-340-oofs-are-near-copies-lb-0-96184: 2 distinct outputs, z latest -0.08, best latest z -0.08 (pred 0.96184 sd 0.5u vs listed 0.96184; 1 fit |z|<1)
+karttikjangid05/22-oofs-nearly-match-a-full-stack-lb-0-96181: 1 distinct outputs, z latest -0.17, best latest z -0.17 (pred 0.96181 sd 2.3u vs listed 0.96181; 1 fit |z|<1)
+karttikjangid05/s6e10-do-popular-tricks-beat-random-features: 2 distinct outputs, z latest +inf, best v5/submission.csv z +0.03 (pred 0.95744 sd 6.3u vs listed 0.95744; 1 fit |z|<1)  -> SWAP
+kava1/s6e10-predicting-airline-satisfaction: 20 distinct outputs, z latest +17.60, best v15/submission.csv z +0.06 (pred 0.95991 sd 11.4u vs listed 0.95992; 7 fit |z|<1)  -> SWAP
+kazunoriuchiyama/airline-satisfaction-eda-ablation-cv: 1 distinct outputs, z latest +inf, best v4/submission.csv z +1.64 (pred 0.95791 sd 9.5u vs listed 0.95806; 0 fit |z|<1)  -> SWAP
+keyadobriyal/eda-5foldcv-xgb-cat-lgbm: 3 distinct outputs, z latest +7.29, best v7/submission.csv z +1.09 (pred 0.95872 sd 7.7u vs listed 0.95880; 0 fit |z|<1)  -> SWAP
+keyadobriyal/lgbm-xgb-lgbm-realmlp-tabpfn: 3 distinct outputs, z latest +3.71, best v2/submission.csv z -0.57 (pred 0.95845 sd 5.1u vs listed 0.95842; 1 fit |z|<1)  -> SWAP
+kirikiti/caruana-hill-climbing-6-gbdt-stacking-s6e10-1: 5 distinct outputs, z latest +0.97, best latest z +0.97 (pred 0.96015 sd 4.7u vs listed 0.96020; 1 fit |z|<1)
+kirilltym/s6e10-nine-rank-ensemble-experiments: 2 distinct outputs, z latest -1.17, best v1/submission.csv z +0.23 (pred 0.96204 sd 0.5u vs listed 0.96204; 1 fit |z|<1)
+kirilltym/s6e10-two-teachers-one-consensus: 1 distinct outputs, z latest -1.02, best latest z -1.02 (pred 0.96205 sd 0.4u vs listed 0.96205; 0 fit |z|<1)
+kiza123123/s6e10-authentic-solution-pipeline: 3 distinct outputs, z latest -0.15, best latest z -0.15 (pred 0.96062 sd 4.8u vs listed 0.96061; 2 fit |z|<1)
+kiza123123/s6e10-winning-multi-model-pipeline-invalid: 18 distinct outputs, z latest +0.16, best latest z +0.16 (pred 0.96208 sd 0.4u vs listed 0.96208; 1 fit |z|<1)
+korokke3/s6e10-is-your-0-00001-real-lb-noise-calculator: 1 distinct outputs, z latest -1.00, best latest z -1.00 (pred 0.96168 sd 0.9u vs listed 0.96167; 0 fit |z|<1)
+kospintr/airline-lgbm-catb-xgb-realmlp-baseline: 6 distinct outputs, z latest +0.52, best latest z +0.52 (pred 0.96072 sd 7.6u vs listed 0.96076; 1 fit |z|<1)
+koushikkumardinda/s6e10-eda-fe-optuna-3-model-ensemble: 2 distinct outputs, z latest -1.24, best latest z -1.24 (pred 0.95829 sd 6.1u vs listed 0.95821; 0 fit |z|<1)
+kozykappa/s6e10-fast-exact-strong-stack-guarded-residual: 29 distinct outputs, z latest -1.21, best v4/submission_bridge_a025.csv z -0.06 (pred 0.96181 sd 0.6u vs listed 0.96181; 10 fit |z|<1)
+kozykappa/s6e10-route-profile-cross-fitted-target: 49 distinct outputs, z latest -1.43, best v13/submission_clipped_1p65.csv z +0.01 (pred 0.96192 sd 0.5u vs listed 0.96192; 5 fit |z|<1)
+kratosyan/s6e10-stacking-every-public-oof-library: 2 distinct outputs, z latest -0.47, best latest z -0.47 (pred 0.96167 sd 0.9u vs listed 0.96167; 1 fit |z|<1)
+kratosyan/s6e10-xgboost-realmlp-route-id-teacher: 2 distinct outputs, z latest -0.45, best latest z -0.45 (pred 0.96098 sd 6.7u vs listed 0.96095; 2 fit |z|<1)
+lucifer19/flight-log-s6e10-v28-public-top-3-blend: 9 distinct outputs, z latest -1.58, best v23/submission_top_challenger.csv z -0.99 (pred 0.96187 sd 0.5u vs listed 0.96187; 1 fit |z|<1)
+mahmudds/notebook22d9817c45: 3 distinct outputs, z latest +0.50, best latest z +0.50 (pred 0.95850 sd 5.8u vs listed 0.95853; 2 fit |z|<1)
+maiernator/s6e10-ctboost-airline-satisfaction: 2 distinct outputs, z latest +0.00, best latest z +0.00 (pred 0.96050 sd 12.1u vs listed 0.96050; 2 fit |z|<1)
+majjjvinaykumar/simple-code: 1 distinct outputs, z latest -0.33, best latest z -0.33 (pred 0.95749 sd 7.7u vs listed 0.95746; 1 fit |z|<1)
+manishpatil115/0-96043-auc-diverse-boostings-oof-ensemble: 1 distinct outputs, z latest -0.76, best latest z -0.76 (pred 0.96049 sd 7.4u vs listed 0.96043; 1 fit |z|<1)
+mansiaggarwal88/airline-passenger-satisfaction-model-0-96208: 2 distinct outputs, z latest +0.32, best latest z +0.32 (pred 0.96208 sd 0.4u vs listed 0.96208; 1 fit |z|<1)
+marcmaldonado/s6e10-where-the-label-noise-comes-from: 1 distinct outputs, z latest -0.87, best latest z -0.87 (pred 0.95966 sd 9.1u vs listed 0.95958; 1 fit |z|<1)
+marimbero88/airline-satisfaction-predictions: 5 distinct outputs, z latest -0.05, best latest z -0.05 (pred 0.96012 sd 12.4u vs listed 0.96011; 5 fit |z|<1)
+marydata/s6e10-eda-5-fold-cv-route-features-original-data: 4 distinct outputs, z latest +inf, best v8/submission_lgbm.csv z +0.09 (pred 0.95841 sd 8.7u vs listed 0.95842; 1 fit |z|<1)  -> SWAP
+matharamadhana/airline-satisfaction-blend-lightgbm-dan-catboost: 1 distinct outputs, z latest +0.05, best latest z +0.05 (pred 0.95777 sd 7.3u vs listed 0.95777; 1 fit |z|<1)
+mathleteutd/airline-satisfaction: 2 distinct outputs, z latest +0.18, best latest z +0.18 (pred 0.96121 sd 4.2u vs listed 0.96122; 1 fit |z|<1)
+mathsonchain/s6e10-lgbm-trasy: 2 distinct outputs, z latest -1.17, best latest z -1.17 (pred 0.96058 sd 5.4u vs listed 0.96052; 0 fit |z|<1)
+mathsonchain/s6e10-realmlp: 2 distinct outputs, z latest +0.61, best latest z +0.61 (pred 0.96072 sd 2.4u vs listed 0.96073; 1 fit |z|<1)
+mathsonchain/s6e10-stacking-every-public-oof-library: 2 distinct outputs, z latest -1.28, best latest z -1.28 (pred 0.96167 sd 2.0u vs listed 0.96164; 0 fit |z|<1)
+matterhorn3838/s6e10-0-96183-public-score: 10 distinct outputs, z latest -3.59, best v19/submission.csv z -0.30 (pred 0.96181 sd 0.6u vs listed 0.96181; 1 fit |z|<1)  -> SWAP
+matterhorn3838/s6e10-aiming-for-space-0-96180: 8 distinct outputs, z latest -1.13, best latest z -1.13 (pred 0.96186 sd 0.5u vs listed 0.96185; 0 fit |z|<1)
+mayankraaz/s6e10-lb-surface-ascent-v2-0-96208: 4 distinct outputs, z latest +0.24, best latest z +0.24 (pred 0.96208 sd 0.4u vs listed 0.96208; 1 fit |z|<1)
+mayankraaz/s6e10-summit-composer-0-96210: 2 distinct outputs, z latest +1.22, best latest z +1.22 (pred 0.96213 sd 0.4u vs listed 0.96213; 0 fit |z|<1)
+mayankraaz/s6e10-top-10-consensus-stack-0-96190-lb: 6 distinct outputs, z latest -0.07, best latest z -0.07 (pred 0.96190 sd 0.5u vs listed 0.96190; 3 fit |z|<1)
+mcprorolexs/baseline-lightgbm-with-optuna-work-in-progress: 3 distinct outputs, z latest +inf, best v5/submission.csv z -0.23 (pred 0.96000 sd 15.2u vs listed 0.95997; 3 fit |z|<1)  -> SWAP
+mdabdulalhasib/baseline-for-deep-learning-should-be-improved: 3 distinct outputs, z latest -1.08, best v5/submission.csv z -1.08 (pred 0.96181 sd 1.0u vs listed 0.96180; 0 fit |z|<1)
+megayak/s6e10-six-models-one-honest-stack: 3 distinct outputs, z latest -0.15, best latest z -0.15 (pred 0.96112 sd 1.0u vs listed 0.96112; 1 fit |z|<1)
+mehrankazeminia/3-airline-s6e10-ensembling: 1 distinct outputs, z latest +0.49, best latest z +0.49 (pred 0.96213 sd 0.3u vs listed 0.96213; 1 fit |z|<1)
+mehreenrahman/s6e10-airline-satisfaction-stacking-baseline: 7 distinct outputs, z latest -0.33, best v11/submission.csv z -0.29 (pred 0.96097 sd 6.6u vs listed 0.96095; 3 fit |z|<1)
+mengqili0000/s6e10-airline-satisfaction-thorough-eda-tuned-l: 1 distinct outputs, z latest +0.28, best latest z +0.28 (pred 0.95846 sd 5.3u vs listed 0.95847; 1 fit |z|<1)
+mengqili0000/s6e10-feature-engineering-that-beats-the-noise: 1 distinct outputs, z latest -1.05, best latest z -1.05 (pred 0.95901 sd 8.8u vs listed 0.95892; 0 fit |z|<1)
+mengqili0000/s6e10-model-showdown-4-boosters-shap: 1 distinct outputs, z latest -0.59, best latest z -0.59 (pred 0.95911 sd 7.9u vs listed 0.95906; 1 fit |z|<1)
+mengqili0000/s6e10-the-kitchen-sink-push-to-0-97: 1 distinct outputs, z latest +0.30, best latest z +0.30 (pred 0.95983 sd 9.2u vs listed 0.95986; 1 fit |z|<1)
+mercurydust/pas-submission: 2 distinct outputs, z latest +0.45, best latest z +0.45 (pred 0.96217 sd 0.5u vs listed 0.96217; 1 fit |z|<1)
+metaphor9/stacking: 1 distinct outputs, z latest +0.04, best latest z +0.04 (pred 0.95849 sd 5.4u vs listed 0.95849; 1 fit |z|<1)
+miickey/s6e10-detailed-eda-beginner-friendly-baselines: 5 distinct outputs, z latest +inf, best v6/bonus_test.csv z -1.48 (pred 0.96124 sd 3.9u vs listed 0.96118; 0 fit |z|<1)  -> SWAP
+miickey/s6e10-fast-oof-ensemble-meta-stacking: 8 distinct outputs, z latest -2.26, best latest z -2.26 (pred 0.96166 sd 1.3u vs listed 0.96163; 0 fit |z|<1)
+miickey/s6e10-one-lightgbm-lb-0-96024: 4 distinct outputs, z latest -1.92, best v2/submission_single_lightgbm.csv z -0.67 (pred 0.96031 sd 10.3u vs listed 0.96024; 2 fit |z|<1)
+mikhailnaumov/airline-satisfaction-single-xgb: 3 distinct outputs, z latest +1.48, best latest z +1.48 (pred 0.96076 sd 8.2u vs listed 0.96088; 0 fit |z|<1)
+mitudru/s6e10-analysis-first-equality-blocks-stack: 2 distinct outputs, z latest -0.57, best v1/submission.csv z -0.46 (pred 0.96118 sd 4.7u vs listed 0.96116; 2 fit |z|<1)
+mojjeed/s6e10-cv-96180-stacking: 4 distinct outputs, z latest -0.69, best v3/submission.csv z -0.23 (pred 0.96180 sd 1.6u vs listed 0.96180; 3 fit |z|<1)
+mridul2003/satisfaction-prediction: 3 distinct outputs, z latest +0.45, best v15/submission.csv z +0.30 (pred 0.95822 sd 10.6u vs listed 0.95825; 2 fit |z|<1)
+nagendragouda125/airline-satisfaction: 3 distinct outputs, z latest +inf, best v3/sub.csv z +8.13 (pred 0.93007 sd 64.8u vs listed 0.93534; 0 fit |z|<1)
+najiama/high-scoring-oof-cv-0-96221-lb-0-96187: 7 distinct outputs, z latest +0.23, best latest z +0.23 (pred 0.96187 sd 0.6u vs listed 0.96187; 1 fit |z|<1)
+najiama/single-xgboost-model-lb-0-96071-cv-0-96096: 2 distinct outputs, z latest +inf, best v2/SUB_CV_XGBoost.csv z -0.15 (pred 0.96072 sd 8.0u vs listed 0.96071; 2 fit |z|<1)  -> SWAP
+nathanvigouroux/airline-satisfaction-xgb-nn-classifier: 5 distinct outputs, z latest +12.51, best v10/submission.csv z +1.21 (pred 0.95696 sd 14.6u vs listed 0.95714; 0 fit |z|<1)  -> SWAP
+navazshfathi/predicting-airline-satisfaction: 2 distinct outputs, z latest -0.14, best latest z -0.14 (pred 0.96160 sd 1.8u vs listed 0.96160; 1 fit |z|<1)
+nina2025/ps-s6e10-h-blend-pure-rank-s: 6 distinct outputs, z latest -0.74, best v4/submission.csv z -0.35 (pred 0.96213 sd 0.3u vs listed 0.96213; 2 fit |z|<1)
+nursrijan/s6e10-airline-passenger-satisfaction-0-96184-lb: 1 distinct outputs, z latest -0.04, best latest z -0.04 (pred 0.96184 sd 0.6u vs listed 0.96184; 1 fit |z|<1)
+obiaf88/predicting-airline-satisfaction: 8 distinct outputs, z latest -0.60, best v16/submission.csv z -0.48 (pred 0.95964 sd 7.5u vs listed 0.95960; 3 fit |z|<1)
+ou20040313/s6e10-orange-blend: 7 distinct outputs, z latest +1.31, best latest z +1.31 (pred 0.96186 sd 0.5u vs listed 0.96187; 0 fit |z|<1)
+ou20040313/s6e10-orange-lab-0-96213-the-1-test: 1 distinct outputs, z latest +0.82, best latest z +0.82 (pred 0.96213 sd 0.3u vs listed 0.96213; 1 fit |z|<1)
+ou20040313/s6e10-single-models: 5 distinct outputs, z latest +inf, best v5/submission_best.csv z -0.04 (pred 0.96061 sd 4.6u vs listed 0.96061; 3 fit |z|<1)  -> SWAP
+patimakornsrinamen/s6e10-one-catboost-every-column-categorical: 3 distinct outputs, z latest -0.83, best latest z -0.83 (pred 0.96030 sd 7.4u vs listed 0.96024; 1 fit |z|<1)
+pavloivanin/fast-clean-lightgbm-baseline-5-fold-cv: 3 distinct outputs, z latest +0.27, best latest z +0.27 (pred 0.95835 sd 5.3u vs listed 0.95836; 1 fit |z|<1)
+piratesofmonotony/ml-models-only: 3 distinct outputs, z latest -0.89, best latest z -0.89 (pred 0.95786 sd 7.6u vs listed 0.95779; 1 fit |z|<1)
+poojapbabar/lgbmclassifier-with-tunning: 1 distinct outputs, z latest -0.30, best latest z -0.30 (pred 0.95703 sd 9.7u vs listed 0.95700; 1 fit |z|<1)
+rabari9999/s6e10-0-96184-breakthrough-z-logit-quad-stack: 1 distinct outputs, z latest +0.15, best latest z +0.15 (pred 0.96184 sd 0.6u vs listed 0.96184; 1 fit |z|<1)
+rabari9999/s6e10-lb-0-96209-rank-10: 8 distinct outputs, z latest +0.17, best latest z +0.17 (pred 0.96209 sd 0.4u vs listed 0.96209; 2 fit |z|<1)
+rahulvks/predict-n1: 1 distinct outputs, z latest +1.37, best latest z +1.37 (pred 0.95844 sd 5.5u vs listed 0.95852; 0 fit |z|<1)
+rajathrpai/s6e10-the-4-5-noise-floor: 1 distinct outputs, z latest -0.97, best latest z -0.97 (pred 0.95846 sd 9.1u vs listed 0.95837; 1 fit |z|<1)
+razanihababdellatif/airline-satisfaction-0-960-ensemble: 1 distinct outputs, z latest +inf, best v1/submission.csv z -0.17 (pred 0.96051 sd 5.0u vs listed 0.96050; 1 fit |z|<1)  -> SWAP
+riyaraj9/predicting-airline-satisfaction: 8 distinct outputs, z latest -0.17, best latest z -0.17 (pred 0.95706 sd 13.8u vs listed 0.95704; 1 fit |z|<1)
+rohitt94/airline: 2 distinct outputs, z latest +42.14, best v3/submission.csv z -0.71 (pred 0.96159 sd 1.4u vs listed 0.96158; 1 fit |z|<1)  -> SWAP
+rugvedbane/cleared-for-takeoff-lb-0-9606-what-failed: 2 distinct outputs, z latest +0.60, best latest z +0.60 (pred 0.96052 sd 7.1u vs listed 0.96056; 1 fit |z|<1)
+rushisolunke/airline-passenger-satisfaction-strategy: 1 distinct outputs, z latest +inf, best v1/submission.csv z -1.76 (pred 0.95914 sd 13.5u vs listed 0.95890; 0 fit |z|<1)  -> SWAP
+sachith7/s6e10-one-lightgbm-beats-the-blend-cpu-run: 3 distinct outputs, z latest +0.53, best latest z +0.53 (pred 0.96082 sd 7.3u vs listed 0.96086; 1 fit |z|<1)
+sachith7/s6e10-what-each-step-was-worth: 2 distinct outputs, z latest +0.08, best latest z +0.08 (pred 0.96153 sd 3.1u vs listed 0.96153; 1 fit |z|<1)
+sadamtorres/s6e10-14-experiments-what-worked-lb-0-96108: 3 distinct outputs, z latest +1.40, best latest z +1.40 (pred 0.96099 sd 6.4u vs listed 0.96108; 0 fit |z|<1)
+sai10py/airline-satisfaction-qlaya: 1 distinct outputs, z latest +inf, best v7/submission.csv z -0.62 (pred 0.95834 sd 8.0u vs listed 0.95829; 1 fit |z|<1)  -> SWAP
+samanyu1808/s6e10-megastack-v1: 4 distinct outputs, z latest +5.68, best v2/submission_stack_only.csv z +4.58 (pred 0.96176 sd 1.7u vs listed 0.96184; 0 fit |z|<1)
+santosh1974/airline-passenger-satisfaction-modeling: 1 distinct outputs, z latest -0.98, best latest z -0.98 (pred 0.95816 sd 6.6u vs listed 0.95810; 1 fit |z|<1)
+saqibishtiaq699/complete-code-lightgbm-xgboost-and-flaml-automl: 6 distinct outputs, z latest +0.95, best v38/submission.csv z +0.92 (pred 0.95871 sd 10.6u vs listed 0.95881; 2 fit |z|<1)
+sarunpm/airline-satisfaction-0-95974-lb: 31 distinct outputs, z latest +inf, best v16/submission_xgb.csv z +0.03 (pred 0.95974 sd 14.2u vs listed 0.95974; 11 fit |z|<1)  -> SWAP
+sarunpm/airline-satisfaction-for-0-96168-lb: 43 distinct outputs, z latest +6.14, best v8/submission_blend_w1_0.05_w2_0.95.csv z +5.50 (pred 0.96153 sd 3.3u vs listed 0.96171; 0 fit |z|<1)
+sarunpm/airline-satisfaction-lgbm-0-96059-lb: 15 distinct outputs, z latest +inf, best v71/submission.csv z +11.75 (pred 0.96033 sd 9.8u vs listed 0.96148; 0 fit |z|<1)
+sarveshchhetri/airline-passenger-satisfaction-baseline-model: 4 distinct outputs, z latest +0.36, best v5/submission.csv z +0.28 (pred 0.95790 sd 14.1u vs listed 0.95794; 4 fit |z|<1)
+sarveshchhetri/airline-passenger-satisfaction-ensemble-stacking: 3 distinct outputs, z latest +0.66, best v4/submission.csv z +0.37 (pred 0.95848 sd 5.1u vs listed 0.95850; 3 fit |z|<1)
+sarveshchhetri/deep-learning-with-pytorch-embeddings-mlp: 3 distinct outputs, z latest +0.82, best latest z +0.82 (pred 0.95821 sd 8.6u vs listed 0.95828; 2 fit |z|<1)
+sarveshchhetri/the-interpretable-approach: 1 distinct outputs, z latest -0.66, best latest z -0.66 (pred 0.95794 sd 10.5u vs listed 0.95787; 1 fit |z|<1)
+sasha1111/eda-fe-lightgbm-optuna: 6 distinct outputs, z latest -0.25, best v14/submission.csv z -0.07 (pred 0.95973 sd 9.1u vs listed 0.95972; 4 fit |z|<1)
+secretiveplotter1863/predicting-airline-satisfaction: 2 distinct outputs, z latest +0.45, best latest z +0.45 (pred 0.95782 sd 14.3u vs listed 0.95788; 1 fit |z|<1)
+sheikhmadni/feature-engg-and-preprocessing-ipynb: 1 distinct outputs, z latest -0.19, best latest z -0.19 (pred 0.96050 sd 7.5u vs listed 0.96049; 1 fit |z|<1)
+shinichimonden/s6e10-lightgbm-baseline: 1 distinct outputs, z latest +inf, best v8/S6E10_baseline.csv z +1.06 (pred 0.95802 sd 9.3u vs listed 0.95812; 0 fit |z|<1)  -> SWAP
+shinichimonden/s6e10-predicting-airline-satisfaction-lightgbm-2: 1 distinct outputs, z latest -0.47, best latest z -0.47 (pred 0.95943 sd 10.2u vs listed 0.95938; 1 fit |z|<1)
+shinichimonden/s6e10-stacking-with-gpu: 3 distinct outputs, z latest +2.74, best v3/submission.csv z +1.69 (pred 0.96032 sd 7.9u vs listed 0.96045; 0 fit |z|<1)
+slimypunk03/ps-s6e10-0-96110: 2 distinct outputs, z latest +1.49, best v2/submission.csv z +0.49 (pred 0.96109 sd 2.2u vs listed 0.96110; 1 fit |z|<1)
+sometimessubodh/ps6e10-does-feature-engineering-beat-baseline: 9 distinct outputs, z latest +6.94, best v2/submission.csv z +0.40 (pred 0.95808 sd 8.7u vs listed 0.95811; 1 fit |z|<1)  -> SWAP
+soukeaizenz/lb-0-96124-top-25-all-according-to-plan-meta: 2 distinct outputs, z latest -0.49, best latest z -0.49 (pred 0.96125 sd 1.8u vs listed 0.96124; 1 fit |z|<1)
+souvikdbiswas/ps-s6-e10-realmlp-pytabkit-gbdt-ensemble: 4 distinct outputs, z latest +0.21, best v1/submission.csv z +0.14 (pred 0.95991 sd 10.1u vs listed 0.95992; 3 fit |z|<1)
+stephentarter/ps-s06e10-catboost: 6 distinct outputs, z latest -0.05, best latest z -0.05 (pred 0.96014 sd 2.7u vs listed 0.96014; 3 fit |z|<1)
+stephentarter/ps-s06e10-lightgbm: 4 distinct outputs, z latest -0.30, best latest z -0.30 (pred 0.96020 sd 3.1u vs listed 0.96019; 1 fit |z|<1)
+stephentarter/ps-s06e10-model-ensembling: 4 distinct outputs, z latest -0.39, best v4/submission.csv z +0.02 (pred 0.96047 sd 4.8u vs listed 0.96047; 2 fit |z|<1)
+stephentarter/ps-s06e10-xgboost: 5 distinct outputs, z latest -0.09, best latest z -0.09 (pred 0.96009 sd 5.0u vs listed 0.96009; 1 fit |z|<1)
+summaiyasafdar/airline-satisfaction-eda-lgbm-xgb-blend: 2 distinct outputs, z latest +2.95, best v1/submission.csv z +0.07 (pred 0.95829 sd 5.0u vs listed 0.95829; 1 fit |z|<1)  -> SWAP
+tamerlanomralinov/s6e10-eda-baseline-from-tamerlan: 3 distinct outputs, z latest -0.60, best latest z -0.60 (pred 0.95860 sd 5.0u vs listed 0.95857; 3 fit |z|<1)
+theteacoder/beyond-the-boarding-pass-airline-satisfaction: 1 distinct outputs, z latest +inf, best v1/submission.csv z +0.51 (pred 0.96008 sd 6.6u vs listed 0.96011; 1 fit |z|<1)  -> SWAP
+thisray/s6e10-where-the-auc-is-lost-xgb-lb-0-96083: 2 distinct outputs, z latest -0.16, best latest z -0.16 (pred 0.96084 sd 6.2u vs listed 0.96083; 2 fit |z|<1)
+thisray/s6e10-xgb-realmlp-catboost-lb-0-96123: 2 distinct outputs, z latest -0.54, best v1/submission.csv z -0.50 (pred 0.96124 sd 2.7u vs listed 0.96123; 2 fit |z|<1)
+tomasa2/s6e10-routes-teachers-and-context: 1 distinct outputs, z latest +0.32, best latest z +0.32 (pred 0.96056 sd 10.7u vs listed 0.96059; 1 fit |z|<1)
+trozan24/basic-eda-and-model-fitting-using-catboost-rf-an: 1 distinct outputs, z latest -0.24, best latest z -0.24 (pred 0.95575 sd 22.9u vs listed 0.95570; 1 fit |z|<1)
+tuannm3812/airline-satisfaction-modeling: 1 distinct outputs, z latest -0.88, best latest z -0.88 (pred 0.95795 sd 5.2u vs listed 0.95790; 1 fit |z|<1)
+udaken10/eda-first-look: 1 distinct outputs, z latest -0.63, best latest z -0.63 (pred 0.95722 sd 13.2u vs listed 0.95714; 1 fit |z|<1)
+udaken10/full-oh-full: 1 distinct outputs, z latest +inf, best v3/submission.csv z -3.10 (pred 0.95727 sd 10.1u vs listed 0.95696; 0 fit |z|<1)
+udaken10/model-oh-model: 1 distinct outputs, z latest +inf, best v2/submission.csv z +3.19 (pred 0.95830 sd 10.2u vs listed 0.95863; 0 fit |z|<1)
+valek22/baseline-ps-s6e10-mini-eda-catboost-0-95812: 1 distinct outputs, z latest +0.89, best latest z +0.89 (pred 0.95809 sd 11.9u vs listed 0.95820; 1 fit |z|<1)
+varshithakolupuri/s6e10-gold-line-0-96208-in-one-cell: 3 distinct outputs, z latest -0.72, best v2/submission.csv z -0.06 (pred 0.96208 sd 0.5u vs listed 0.96208; 3 fit |z|<1)
+vinay24baghira/s6e10-eda-stacked-ensemble-shap: 2 distinct outputs, z latest +1.60, best latest z +1.60 (pred 0.95852 sd 6.6u vs listed 0.95863; 0 fit |z|<1)
+vinay24baghira/s6e10-eleven-models-walk-into-a-stacker: 1 distinct outputs, z latest +inf, best v3/submission.csv z -0.14 (pred 0.96112 sd 3.3u vs listed 0.96112; 1 fit |z|<1)  -> SWAP
+vinay24baghira/s6e10-optuna-tuned-xgboost-with-seed-averaged-cv: 1 distinct outputs, z latest +1.38, best latest z +1.38 (pred 0.95857 sd 6.3u vs listed 0.95866; 0 fit |z|<1)
+vinay24baghira/stack-overflow-not-yet-187-oofs-fresh-diversity: 2 distinct outputs, z latest +inf, best v2/submission.csv z -0.09 (pred 0.96170 sd 1.9u vs listed 0.96170; 2 fit |z|<1)  -> SWAP
+yarukikun/s6e10-eda-model-check-tutorialformyself: 1 distinct outputs, z latest -0.30, best latest z -0.30 (pred 0.95849 sd 5.9u vs listed 0.95847; 1 fit |z|<1)
+yashpalthakor/aeropredict-passenger-satisfaction-modeler: 6 distinct outputs, z latest +6.59, best v5/submission_ultimate_blend.csv z +0.62 (pred 0.96104 sd 11.6u vs listed 0.96111; 1 fit |z|<1)  -> SWAP
+yeashusemwal/s6e10-hill-climbing-vs-logistic-regression: 3 distinct outputs, z latest +0.89, best latest z +0.89 (pred 0.96163 sd 2.1u vs listed 0.96165; 1 fit |z|<1)
+yeashusemwal/secrets-to-satisfaction-it-s-stacking: 12 distinct outputs, z latest +0.79, best latest z +0.79 (pred 0.96213 sd 0.3u vs listed 0.96213; 1 fit |z|<1)
+yeashusemwal/trust-the-cv: 7 distinct outputs, z latest +0.71, best v5/submission.csv z -0.01 (pred 0.96182 sd 1.4u vs listed 0.96182; 4 fit |z|<1)
+yekenot/ps-s6-e10-realmlp-pytabkit: 9 distinct outputs, z latest +1.06, best v9/submission.csv z +1.05 (pred 0.96109 sd 5.8u vs listed 0.96115; 0 fit |z|<1)
+yonatanhaskel/my-kaggle-solution-yonatan-haskel: 4 distinct outputs, z latest +1.84, best v3/submission.csv z +0.55 (pred 0.95581 sd 13.8u vs listed 0.95589; 2 fit |z|<1)
+yumekohata/s6e10-what-the-generator-broke-eda-lgbm: 2 distinct outputs, z latest +1.13, best latest z +1.13 (pred 0.95905 sd 11.5u vs listed 0.95918; 0 fit |z|<1)
+yuvrajlamba01/airline-passenger-satisfaction-0-96208: 2 distinct outputs, z latest +0.24, best latest z +0.24 (pred 0.96208 sd 0.4u vs listed 0.96208; 1 fit |z|<1)
+yuvrajlamba01/airline-passenger-satisfaction-0-96276: 12 distinct outputs, z latest +1.65, best latest z +1.65 (pred 0.96215 sd 0.6u vs listed 0.96216; 0 fit |z|<1)
+znine09/lightgbm-default-v1: 2 distinct outputs, z latest -2.79, best v2/submission.csv z +1.62 (pred 0.95709 sd 12.3u vs listed 0.95729; 0 fit |z|<1)
+261 notebooks with older versions; swaps 95; |z latest| > 3: 102

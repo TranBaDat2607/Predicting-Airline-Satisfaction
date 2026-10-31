@@ -1,0 +1,9 @@
+pseudo-test 299844, public 59969, pool members 319
+base public 0.96296 private 0.962008; files public 0.94970..0.96250
+LOO R2 of the public-score surprises: 0.829  (surprise sd 13.30u)
+eta  0.30  public 0.964618  private 0.961717
+eta  0.60  public 0.965352  private 0.961060
+eta  1.00  public 0.965578  private 0.960091
+eta  1.50  public 0.965343  private 0.958980
+eta  2.00  public 0.964912  private 0.957994
+eta  3.00  public 0.964028  private 0.956380

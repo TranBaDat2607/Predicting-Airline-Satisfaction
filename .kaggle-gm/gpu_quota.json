@@ -3,12 +3,12 @@
  "remaining_h": 7.55,
  "total_h": 30.0,
  "refresh_at": "2026-10-31T00:00:00Z",
- "fetched_at": "2026-10-27T11:25:35Z",
+ "fetched_at": "2026-10-30T09:08:45Z",
  "tpu": {
   "used_h": 0.0,
   "remaining_h": 20.0,
   "total_h": 20.0,
   "refresh_at": "2026-10-31T00:00:00Z",
-  "fetched_at": "2026-10-27T11:25:35Z"
+  "fetched_at": "2026-10-30T09:08:45Z"
  }
 }

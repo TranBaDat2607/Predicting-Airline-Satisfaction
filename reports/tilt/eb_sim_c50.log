@@ -1,0 +1,7 @@
+base public 0.96296 private 0.962008; corrupted files 197 / 370
+x24   k0     576 k1   1e-09 median w bad 1.00 good 1.00 |  eta0.6 pub 0.96385 (pred 0.96543) priv 0.96112  eta1 pub 0.96359 (pred 0.96573) priv 0.96018  eta1.5 pub 0.96303 (pred 0.96556) priv 0.95909  eta2 pub 0.96246 (pred 0.96518) priv 0.95818
+Traceback (most recent call last):
+  File "/home/nammovuivui/Predicting-Airline-Satisfaction/src/tilt_eb_sim.py", line 64, in <module>
+    t.fit_noise(verbose=False, **spec[name])
+                                 ~~~~^^^^^^
+KeyError: 'x32'

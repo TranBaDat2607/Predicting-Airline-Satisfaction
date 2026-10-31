@@ -48,8 +48,8 @@ reports/     EDA, recon, adversarial validation, post-mortems
 ## Compute (from 2026-10-24: Linux machine, no local GPU — user rule: use Kaggle GPU **and** CPU)
 
 - Local: Linux, 12 CPU threads, 15 GB RAM, **no GPU**. Python env: `/home/nammovuivui/anaconda3/envs/airline-satisfaction/bin/python`
-  (3.12: pandas, sklearn, lightgbm, xgboost, catboost, torch-cpu). `kaggle` CLI on PATH. kgkit 1.8.0 is vendored in
-  `src/kgkit` (scripts need no PYTHONPATH); the plugin copy is `~/.claude/plugins/cache/claude-code-kaggle-grandmaster/kaggle-grandmaster/1.8.0`.
+  (3.12: pandas, sklearn, lightgbm, xgboost, catboost, torch-cpu). `kaggle` CLI on PATH. kgkit 1.13.0 is vendored in
+  `src/kgkit` (scripts need no PYTHONPATH); the plugin copy is `~/.claude/plugins/cache/claude-code-kaggle-grandmaster/kaggle-grandmaster/1.13.0`.
   The plugin is installed for another project, so its skills are not auto-loaded here: read them from that path.
 - **Kaggle GPU (2x T4)** for every model that trains: `python -m kgkit gpu build --name <exp> --cmd "python src/<x>.py --name <exp> --folds {fold}" ...`
   then `python -m kgkit gpu push kernels/<slug>`; hand-written kernels (TabPFN: `kernels/tabpfn-*`) go through
@@ -84,6 +84,49 @@ reports/     EDA, recon, adversarial validation, post-mortems
 - `/kaggle-grandmaster:kg-final` — choose the final submissions
 
 ## Current plan / notes
+
+- **Finals ticked by the user and confirmed with `python -m kgkit final` on 2026-10-31 17:40 UTC:** `0057_lbb-settf16-10` (public 0.96214) and
+  `0020_stack-lr-pool319-kaggle` (public 0.96185); recorded in `final_picks`. Evidence in `reports/final-selection.md`.
+
+- 2026-10-30 (session 6, /goal: public top 1, Kaggle GPU+CPU, commit progress, UAT issues):
+  - **Public 1st: 0.96473 (0078)**, Kawamata 0.96451, Altunok 0.96446 (both LB-fitted too; expect a private shake-up).
+  - Current best recipe: `python src/lb_mined.py; python src/lb_extra.py match; python src/lb_collect.py;
+    python src/tilt_run2.py --nu 1 --fixed 1e-9 18 --exp --write 1.0 --name <n>`. REML under-estimates the model error on the real files (held-out
+    own tilts +18..+45u): Kaggle CPU noise grid (`reports/tilt/exp_grid_kaggle_*.log`) says nu 1 and small optimism realise most; calibrated
+    on held-out own tilts (`src/tilt_grid_real.py`) that is k1 ~ 18, and 0078 then scored 6u under its prediction instead of 20-35u.
+  - Per-version pairs: `src/lb_extra.py` (hand-read version tables + Meta Kaggle version titles, each checked by posterior z). Own nudge probes:
+    `src/tilt_probe_noise.py` (KG ~0.8u each, `src/probe_kg_noise.py`). Marking mined files exact made calibration worse: keep exact = own.
+  - UAT issue filed: #63 (submissions-today counter stays 0/10 for submits through a wrapper script).
+  - Closed by the user on 2026-10-30 ~10:30 UTC, all 10 daily submissions used, public 1st. 0079-0081 are nudge probes of 0078 (all 0.96467).
+    NOT met from the goal: the fits behind the submitted tilts ran locally and Kaggle GPU was not used this session (Kaggle CPU: simulations, Meta Kaggle check).
+    If public work resumes: 10 submissions per UTC day; `src/lb_fetch_unmatched.py` (stopped part-way, cached, resumes) -> `src/lb_match.py --nu 2` -> recipe above.
+    Unfinished: calibration-curve nuisance `TiltEB.set_calibration` (off by default) gave a broken ranking (corr with base -0.46: its eta collides with the
+    cs/dist regressors) although held-out own tilts looked better at k1 12; old notebook sources (scratchpad, not kept); Kaggle CPU sims s6e10-tilt-expsim and
+    s6e10-tilt-onesided never read. Private dataset `tranbadat/s6e10-tilt-inputs` (401 MB, ranks of 669 files) was uploaded for a Kaggle-side fit, never used.
+  - New this session: `src/tilt_exp.py` (exponential-tilt posterior: the Gaussian fit moved E[a] of rare rows by +-43 % and clipped 1.6 % of
+    them; sim +2u, optimism halved) and `src/lb_mined.py` (exact (recipe, public score) pairs rebuilt from notebooks' published tables and
+    checked against pinned files: goodpjw2008, tkms0816, mayankraaz). `python src/lb_mined.py` -> `src/lb_collect.py` ->
+    `src/tilt_run2.py --nu 2 --exp --write 1.0 --name <n>`.
+  - Meta Kaggle (kernels/meta-subs, Kaggle CPU): submissions and teams of a running competition are not exported, so no per-version scores;
+    it does give every version's title/number (data/tilt/meta_versions.csv). The LB CSV date is the LAST submission's, not the best's.
+  - Final picks stay honest (0057 + 0020/0060), ticked by hand on the website by 2026-10-31 23:59 UTC. See `reports/final-selection.md`.
+
+- 2026-10-29 (session 5, /goal: public top 1, Kaggle GPU+CPU, commit progress, UAT issues):
+  - **Public 2nd: 0.96432 (0068)**; 1st Kawamata 0.96443 (wrote in the forum that it is LB probing over ~200 entries and
+    will not carry over to private). Method/evidence: `reports/public-tilt.md` (session 5 section).
+  - Root cause of the weak real-data tilt: wrong (file, score) pairs - a notebook's search-API score belongs to one of
+    its versions, the downloaded output is the latest. Fix: `src/tilt_eb.py` (Student-t nu 2 per-file weights, noise =
+    rounding floor + model error k1 x file size) + version recovery `src/lb_fetch_versions.py`, `src/lb_fetch_missing.py`
+    (every CSV of recent versions of scored notebooks with no usable output) -> `src/lb_match.py` (picks the version the
+    posterior without that notebook predicts closest to the listed score; writes data/tilt/k_fixed, preferred by
+    `src/lb_collect.py`). Loop: fetch -> `lb_match.py` -> `lb_collect.py` -> `tilt_run2.py --nu 2 [--fixed 1e-6 80]`.
+  - Calibration: leave-own-tilt-out (`src/tilt_explore.py`) is best at k1 ~ 80, but every posterior's OWN eta-1 tilt
+    scores 13-18u below its prediction (0062-0066: 0.96361/0.96365/0.96378/0.96373/0.96369). Re-tilting or averaging
+    the same data gives ~0.9638; only new scored files or new-direction probes add (KG ~0.5-1u per own submission,
+    `src/probe_kg.py`, `src/probe_kg_synth.py`).
+  - Kaggle upload from here is ~40 KB/s, so the 446 MB tilt inputs cannot be shipped per iteration; the tilt fit stays a
+    local LB-layer step. Kaggle CPU runs the tilt simulations from our own kernel output (kernels/tilt-sim).
+  - UAT issue filed: #61 (noise line rounds paired SE to 0.0000).
 
 - 2026-10-27 (session 4, /goal: public top 5, Kaggle GPU+CPU, commit progress, UAT issues):
   - **Public 3rd (0.96297, 0058)** with a *public-LB fitted* tilt: `src/lb_files.py` → `lb_fetch.sh`/`lb_fetch2.sh` → `lb_collect.py`

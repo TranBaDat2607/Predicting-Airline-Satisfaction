@@ -1,0 +1,38 @@
+files 381, used 372, held out 0
+REML noise: k0 0.568 k1 12.9 (x rounding var); weights < 0.5: 25, < 0.2: 18; REML -3938.67
+LOO R2 0.459; surprise sd 31.26u; LOO resid sd 25.26u
+            n    w_mean  w_lt05  noise_med_u   resid_sd
+source                                                 
+atlas      40  1.192177       2     0.414551   0.421955
+dataset    51  1.087649       4     0.855118   8.419421
+lb          4  1.177099       0     0.418696   0.333228
+notebook  253  0.964728      19     1.339636  30.397821
+own        24  1.065488       0     0.223337   1.104348
+lowest weights:
+                                                              name    source    score      corr  surprise_u  loo_resid_u  noise_sd_u         w
+227                arunklenin/ps6e10-airline-satisfaction-baseline  notebook  0.96157  0.939414  313.865066   355.769520  204.932583  0.000100
+237                    kava1/s6e10-predicting-airline-satisfaction  notebook  0.95992  0.941275  133.160094   161.272325   92.285104  0.000466
+230                   sarunpm/airline-satisfaction-lgbm-0-96057-lb  notebook  0.96148  0.973602   81.827324   102.984976   58.627568  0.000489
+92               amri11/predicting-airline-satisfaction-use-python  notebook  0.95743  0.906457  151.048855   202.597378  111.728845  0.000526
+134       yashpalthakor/aeropredict-passenger-satisfaction-modeler  notebook  0.96111  0.974220   31.579071    58.457846   31.512262  0.001552
+261                            data/ext/ps-s6e10-02/0.96122_FE.csv   dataset  0.96122  0.974192   44.624961    57.977335   31.338170  0.001641
+216       goodpjw2008/s6e10-catboost-ctr-glm-margin-xgb-lb-0-96152  notebook  0.96125  0.990302  -42.419310   -28.216572   16.158675  0.002475
+94   sometimessubodh/ps6e10-does-feature-engineering-beat-baseline  notebook  0.95811  0.928605   40.564543    70.354373   38.079067  0.003336
+170                    sarunpm/airline-satisfaction-for-0-96168-lb  notebook  0.96171  0.988427    4.535422    22.132725   11.533885  0.005388
+139                             amanatar/s6e10-the-consensus-forge  notebook  0.96167  0.991065   -3.857634    17.277330    9.443103  0.006835
+own files (surprise vs LOO residual):
+                                         name source    score      corr  surprise_u  loo_resid_u  noise_sd_u         w
+372                 subs/0034_lbb-settf15.csv    own  0.96213  0.999992   -0.434044     0.278235    0.220473  1.000000
+373                 subs/0035_lbb-settf20.csv    own  0.96212  0.999979   -0.799894    -0.105077    0.206581  1.180985
+375              subs/0045_lbb-settf8-125.csv    own  0.96214  0.999999    0.046442     0.217006    0.206818  1.108906
+376              subs/0054_tilt-v1-eta0-3.csv    own  0.96266  0.987485   99.411336     3.877897    0.916859  1.005488
+377              subs/0056_tilt-v2-eta0-6.csv    own  0.96285  0.989571  110.633470    -2.656254    0.835503  1.000000
+378              subs/0057_lbb-settf16-10.csv    own  0.96214  1.000000    0.032575     0.222984    0.207789  1.097369
+379                subs/0058_tilt-v3-eta1.csv    own  0.96297  0.981633  154.846154     0.234503    1.064161  1.075610
+380  subs/0060_stack-lr-pool321-kaggle-v3.csv    own  0.96185  0.995996   -9.136972     0.402439    0.518879  1.095685
+eta  0.50: predicted public 0.96338
+eta  0.75: predicted public 0.96361
+eta  1.00: predicted public 0.96366
+eta  1.25: predicted public 0.96358
+eta  1.50: predicted public 0.96342
+eta  2.00: predicted public 0.96293

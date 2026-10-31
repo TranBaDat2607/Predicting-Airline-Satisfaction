@@ -1,0 +1,9 @@
+used 654, held out 6
+0:0:2      k0 1.84e-22 k1 5.42 w<.5  11 own pred 0.96506 corr base 0.95548 diff to anchor 0.0212 | held-out pred - actual (u): 0072:+18.0 0073:+28.8 0074:+21.0 0075:+28.9 0076:+24.8 0077:+45.5
+0:12:2     k0 1e-09 k1 12 w<.5  10 own pred 0.96496 corr base 0.95635 diff to anchor 0.0199 | held-out pred - actual (u): 0072:+13.5 0073:+20.5 0074:+12.6 0075:+20.5 0076:+16.5 0077:+39.2
+0:25:2     k0 1e-09 k1 25 w<.5  11 own pred 0.96481 corr base 0.95763 diff to anchor 0.0194 | held-out pred - actual (u): 0072:+1.6 0073:+4.7 0074:-3.2 0075:+4.8 0076:+0.7 0077:+22.3
+0:0:1      k0 2.14e-26 k1 4.45 w<.5  21 own pred 0.96504 corr base 0.95580 diff to anchor 0.0222 | held-out pred - actual (u): 0072:+16.9 0073:+25.1 0074:+17.3 0075:+25.2 0076:+21.1 0077:+45.8
+0:6:1      k0 1e-09 k1 6 w<.5  20 own pred 0.96501 corr base 0.95604 diff to anchor 0.0216 | held-out pred - actual (u): 0072:+15.7 0073:+23.1 0074:+15.3 0075:+23.2 0076:+19.1 0077:+44.0
+0:12:1     k0 1e-09 k1 12 w<.5  19 own pred 0.96486 corr base 0.95738 diff to anchor 0.0207 | held-out pred - actual (u): 0072:+3.7 0073:+8.6 0074:+0.7 0075:+8.7 0076:+4.6 0077:+24.1
+0:25:1     k0 1e-09 k1 25 w<.5  17 own pred 0.96477 corr base 0.95796 diff to anchor 0.0201 | held-out pred - actual (u): 0072:-2.0 0073:+0.1 0074:-7.8 0075:+0.2 0076:-3.9 0077:+15.4
+0:50:1     k0 1e-09 k1 50 w<.5  13 own pred 0.96467 corr base 0.95860 diff to anchor 0.0206 | held-out pred - actual (u): 0072:-9.6 0073:-10.8 0074:-18.8 0075:-10.7 0076:-14.8 0077:+3.9

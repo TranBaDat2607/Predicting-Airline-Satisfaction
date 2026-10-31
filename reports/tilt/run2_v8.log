@@ -1,0 +1,35 @@
+files 473, used 467, held out 0
+REML noise: k0 1e-06 k1 80 (x rounding var); weights < 0.5: 7, < 0.2: 5; REML -5064.09
+LOO R2 0.852; surprise sd 44.25u; LOO resid sd 18.38u
+            n    w_mean  w_lt05  noise_med_u   resid_sd
+source                                                 
+atlas      40  1.330885       0     0.816561   0.396314
+dataset    52  1.207513       2     1.652968   8.935692
+lb          4  1.301834       0     0.792475   0.381623
+notebook  342  1.078870       5     3.077764  21.171368
+own        29  1.097075       0     0.317232   5.100336
+lowest weights:
+                                                                name    source    score      corr  surprise_u  loo_resid_u  noise_sd_u         w
+304                  arunklenin/ps6e10-airline-satisfaction-baseline  notebook  0.96157  0.939414  310.526354   369.336719  212.345663  0.000429
+347                              data/ext/ps-s6e10-02/0.96122_FE.csv   dataset  0.96122  0.974192   42.683389    62.719513   34.158701  0.006257
+227                      sarunpm/airline-satisfaction-for-0-96168-lb  notebook  0.96171  0.988427    3.631261    23.028632   12.082620  0.021419
+191                               amanatar/s6e10-the-consensus-forge  notebook  0.96167  0.991065   -4.494054    16.407601    8.764932  0.034200
+386  data/ext/s6e10-top18-artifacts/pillar3_taisei_newton_096182.csv   dataset  0.96182  0.992549    2.942409    13.923066    7.822509  0.035235
+228                           gauravduttaiiitb/s6e10-xgboost-roc-auc  notebook  0.95821  0.949203  -79.412038   -20.617848    8.271079  0.231960
+167                                   samanyu1808/s6e10-megastack-v1  notebook  0.96184  0.994766   -5.334174     4.029465    2.320904  0.286032
+330                       gauravduttaiiitb/s6e10-autogluon-best-v150  notebook  0.95878  0.949468  -37.562219    14.698939    5.415113  0.536498
+221           summaiyasafdar/airline-satisfaction-eda-lgbm-xgb-blend  notebook  0.95829  0.942418  -37.906572    15.912125    5.853347  0.543044
+21                                             udaken10/full-oh-full  notebook  0.95696  0.934414  -99.931302   -26.546232    6.213798  0.582434
+own files (surprise vs LOO residual):
+                                         name source    score      corr  surprise_u  loo_resid_u  noise_sd_u         w
+465              subs/0057_lbb-settf16-10.csv    own  0.96214  1.000000    0.032563     0.226569    0.289109  1.152379
+466                subs/0058_tilt-v3-eta1.csv    own  0.96297  0.981633  153.457408    -1.566611    2.196925  1.152339
+467  subs/0060_stack-lr-pool321-kaggle-v3.csv    own  0.96185  0.995996   -9.438005     0.443368    1.026813  1.190828
+468             subs/0062_tilt-v4-t2-eta1.csv    own  0.96361  0.966249  292.132258     8.945517    3.274665  1.000000
+469      subs/0063_tilt-v5-t2-vfix13-eta1.csv    own  0.96365  0.967253  289.875684     4.006536    3.090563  1.068554
+470      subs/0064_tilt-v6-t2-vfix45-eta1.csv    own  0.96378  0.965176  315.243616    12.555213    3.325625  1.000000
+471             subs/0065_probe-top10k-x2.csv    own  0.96373  0.958959  331.252665    12.306003    3.606959  1.000000
+472          subs/0066_tilt-v7-t2k80-eta1.csv    own  0.96369  0.965076  298.064938   -17.684033    3.340798  1.000000
+eta  0.90: predicted public 0.96409
+eta  1.00: predicted public 0.96410
+eta 1.0: rank corr with base 0.962672 -> subs/0067_tilt-v8-vfix90-eta1.csv

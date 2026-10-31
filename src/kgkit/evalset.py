@@ -38,6 +38,9 @@ from . import state as S
 # lb-only: no score of its own at all (logged with cv=None). lb-blend: blended with public submission files; in a
 # K-fold workspace such a blend has no OOF, so a CV logged for it was borrowed from a component.
 LB_ONLY_TAGS = ("lb-only", "lb-blend")
+# public-lb-fitted: tilted toward an estimate of the public labels. Its public score says nothing about private, and
+# Kaggle auto-selects the best public scores when no finals are selected, so it must never be a final pick.
+LB_FITTED_TAGS = ("public-lb-fitted",)
 DECIDED = ("keep", "discard", "inconclusive")
 COMPARISONS = "comparisons.jsonl"
 
@@ -277,14 +280,20 @@ def record_key(rec: dict, holdout: bool) -> str | None:
     return rec.get("eval_hash") if holdout else rec.get("folds_hash")
 
 
+def lb_fitted(rec: dict) -> bool:
+    """True for a record tagged ``public-lb-fitted``: display only, never a final pick."""
+    return isinstance(rec, dict) and bool(set(rec.get("tags") or ()) & set(LB_FITTED_TAGS))
+
+
 def own_score(rec: dict, holdout: bool = False) -> bool:
     """True when the record's score is its own on the evaluation set.
 
     K-fold: a record tagged ``lb-only`` or ``lb-blend`` has none (a blend with public files has no OOF, so its CV
     was borrowed from a component). Fixed holdout (``holdout=True``): the blend itself is scored on the holdout, so
     ``lb-blend`` only says it includes public files; only ``lb-only`` means no score of its own. A score recomputed
-    from the record's own stored holdout predictions is always its own."""
-    if not isinstance(rec.get("cv"), (int, float)):
+    from the record's own stored holdout predictions is always its own, except for a ``public-lb-fitted`` record
+    (in either mode): it was tilted toward the public labels, so no score of it is an honest estimate."""
+    if not isinstance(rec.get("cv"), (int, float)) or lb_fitted(rec):
         return False
     if rec.get("holdout_path"):
         return True
@@ -348,8 +357,28 @@ def recent_noise(root: str | Path, key: str | None, k: int = 5) -> dict | None:
             "n_units": last[-1].get("n_units"), "last": f"{last[-1].get('new')} vs {last[-1].get('base')}"}
 
 
+def fmt_se(x: float) -> str:
+    """A noise scale (an SE, an SD, a threshold of a few SEs) to 2 significant digits: 0.0034, 7.7e-06, 340. Its size
+    follows the metric's scale and the size of the evaluation set (a paired SE of an AUC over 700k rows is ~1e-5):
+    any fixed number of decimals rounds it to 0 in some competition."""
+    return _sig(x, 2)
+
+
+def fmt_gain(x: float) -> str:
+    """A signed difference of two scores (a gain, a delta) to 3 significant digits, so that it can be read against
+    its noise (``fmt_se``) at any scale: +0.00213, +1.23e-05, -340."""
+    return _sig(x, 3, "+")
+
+
+def _sig(x: float, digits: int, sign: str = "") -> str:
+    """``x`` to ``digits`` significant digits as format 'g' writes it (an exponent below 1e-4); a value with more
+    digits before the point is written whole, 340 rather than 3.4e+02."""
+    s = f"{x:{sign}.{digits}g}"
+    return f"{x:{sign}.0f}" if "e+" in s else s
+
+
 def format_noise(noise: dict) -> str:
     """'paired SE of differences ~0.0034 (bootstrap over 58 rows, median of 3 compares)'."""
     units = f" over {noise['n_units']} {noise.get('unit') or 'rows'}" if noise.get("n_units") else ""
     many = f", median of {noise['n']} compares" if noise.get("n", 1) > 1 else ""
-    return f"paired SE of differences ~{noise['se']:.4f} ({'/'.join(noise['methods'])}{units}{many})"
+    return f"paired SE of differences ~{fmt_se(noise['se'])} ({'/'.join(noise['methods'])}{units}{many})"

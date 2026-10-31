@@ -43,6 +43,8 @@ items = []  # (name, source, score, values)
 kern = pd.read_csv(OUT / "kernels.csv")
 for r in kern.itertuples():
     p = OUT / "k" / r.ref.replace("/", "__") / "submission.csv"
+    fixed = OUT / "k_fixed" / r.ref.replace("/", "__") / "submission.csv"  # version matched by src/lb_match.py
+    p = fixed if fixed.exists() else p
     if p.exists() and r.best_public_score and r.best_public_score > 0:
         items.append((r.ref, "notebook", float(r.best_public_score), p))
 
@@ -50,8 +52,8 @@ for p in sorted(glob.glob("data/ext/*/0.96*") + glob.glob("data/ext/*/0.95*")):
     m = re.match(r"(0\.9\d{4})", Path(p).name)
     if m:
         items.append((p, "dataset", float(m.group(1)), Path(p)))
-for p in glob.glob("data/ext/goodpjw-pub/*_0962*.csv"):
-    m = re.search(r"_(0962\d\d)_", Path(p).name)
+for p in glob.glob("data/ext/goodpjw-pub/*_096*.csv"):
+    m = re.search(r"_(096\d\d\d)(?:_|\.csv)", Path(p).name)
     items.append((p, "dataset", float("0." + m.group(1)[1:]) if m else None, Path(p)))
 # rehosted public files whose name carries the PUBLIC score (a "cv-0-9xxxx" number is a CV score and is ignored)
 LB_NAME = [r"lb-0-(9\d{4})", r"0-(9\d{4})-public-score", r"_0(9[56]\d{3})(?:_|\.)"]
@@ -62,7 +64,17 @@ for lib in ("s6e10-top18-artifacts", "ps6e10-best-public-submissions"):
             if m:
                 items.append((p, "dataset", float("0." + m.group(1)), Path(p)))
                 break
-KNOWN = {"data/ext/dataset-submission-for-lb-score-0-96192/submission_alpha_1p40.csv": 0.96192}  # dataset title
+# score-named files inside notebook outputs (src/lb_scan_outputs.py); same parser
+NAMED_PAT = re.compile(r"(?i)(?<!cv)(?<!cv[_-])(?:lb[_-]?|public[_-]?|pb[_-]?|_|^)0[._-]?(9[56]\d{3})(?=[_.\-a-z]|$)")
+for p in sorted(glob.glob("data/tilt/named/*/*.csv")):
+    stem = Path(p).stem
+    if re.search(r"(?i)(^|[^a-z])(oof|cv|train)([^a-z]|$)|cv[_-]?0", stem):
+        continue
+    m = NAMED_PAT.search(stem)
+    if m:
+        items.append((p, "named", float("0." + m.group(1)), Path(p)))
+KNOWN = {"data/ext/dataset-submission-for-lb-score-0-96192/submission_alpha_1p40.csv": 0.96192,  # dataset title
+         "data/ext/dennis-best/s6e10-best.csv": 0.96213}  # provenance.json official_public_score
 for p, s in KNOWN.items():
     if Path(p).exists():
         items.append((p, "dataset", s, Path(p)))
@@ -78,6 +90,12 @@ for npz, csv, key, col in [("own_scored_ranks.npz", "own_scores.csv", "key", "pu
             items.append((f"atlas:{k}", "atlas", float(sc[k]), z[k]))
 for f in ["rabari_v41_submission.csv", "rabari_v43_submission.csv", "rabari_v54_submission.csv"]:
     pass  # scores unknown except v43 (in lb_surface.PUBLIC)
+
+# recipes and files whose public score their author measured and published (src/lb_mined.py): no version ambiguity
+for table in ("mined.csv", "mined_extra.csv"):  # src/lb_extra.py: per-version scores documented by notebooks
+    if (OUT / table).exists():
+        for r in pd.read_csv(OUT / table).itertuples():
+            items.append((f"mined:{r.name}", "mined", float(r.score), np.load(OUT / "mined" / f"{r.name}.npy")))
 
 import sys
 sys.path.insert(0, "src")
@@ -109,7 +127,13 @@ for name, src, score, obj in items:
     if h in seen:
         j = seen[h]
         if abs(rows[j]["score"] - score) > 1e-9:
-            rows[j]["conflict"] = True
+            # the same ranking with two scores: trust the more reliable source (our own exact scores, then probe
+            # tables and score-named files, then notebooks whose listed score may belong to another version)
+            rel = {"own": 4, "mined": 3, "atlas": 3, "lb": 3, "dataset": 2, "named": 2, "notebook": 1}
+            if rel.get(src, 0) > rel.get(rows[j]["source"], 0) and not rows[j].get("tied"):
+                rows[j].update(name=name, source=src, score=score)
+            elif rel.get(src, 0) == rel.get(rows[j]["source"], 0):
+                rows[j]["conflict"] = True
         rows[j]["dups"] += 1
         continue
     seen[h] = len(rows)

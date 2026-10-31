@@ -1,0 +1,28 @@
+REML noise: k0 9.59e-25 k1 9.34 (x rounding var); weights < 0.5: 11, < 0.2: 7; REML -4120.22
+339 candidates; sd quantiles (u): [ 5.16  7.4  12.25]
+                                                                       name      pred       sd_u      corr
+22           pool:kout-s6e10-factorization-machine-w-more-variants:fm_cross  0.957999  23.512217  0.940818
+58                                         pool:sadam:preds_e10_sparselr_lr  0.957473  23.430278  0.931089
+21            pool:kout-s6e10-factorization-machine-w-more-variants:fm_base  0.957388  22.607446  0.932603
+28          pool:kout-s6e10-factorization-machine-w-more-variants:fm_seeds3  0.957453  22.056578  0.933238
+27          pool:kout-s6e10-factorization-machine-w-more-variants:fm_noorig  0.957558  21.597525  0.937205
+26             pool:kout-s6e10-factorization-machine-w-more-variants:fm_k32  0.957566  21.565663  0.934274
+38        pool:kout-s6e10-the-original-prior-stack-v5:oof_artifacts/lgbm_te  0.957982  20.371255  0.934669
+23             pool:kout-s6e10-factorization-machine-w-more-variants:fm_ffm  0.958041  19.389964  0.939146
+39   pool:kout-s6e10-the-original-prior-stack-v5:oof_artifacts/lgbm_te_rows  0.958192  19.369243  0.935002
+307                                                         pool:tfm:mitra2  0.956298  19.220506  0.909493
+24          pool:kout-s6e10-factorization-machine-w-more-variants:fm_ffm_s3  0.958292  18.308381  0.942774
+88                                              pool:sadam:preds_e9_mlp_mlp  0.958342  18.254380  0.945378
+148                                             pool:124:gp_tabicl_full_raw  0.956843  17.852193  0.920573
+296                                          pool:koumei:tabicl_fdcat_c250k  0.956774  17.691321  0.918674
+107                                                           pool:124:gl_e  0.956557  17.217152  0.918897
+25     pool:kout-s6e10-factorization-machine-w-more-variants:fm_ffm_s3_noog  0.958516  16.629663  0.947216
+316                         artifacts/0021_tabpfn35-auxcatfd-c400k/test.npy  0.960095  15.262977  0.965344
+40        pool:kout-s6e10-the-original-prior-stack-v5:oof_artifacts/xgb_gpu  0.958419  15.073587  0.947952
+81                                         pool:sadam:preds_e6_origwide_cat  0.959024  14.362965  0.953348
+306                                                         pool:tfm:limix2  0.957889  14.356827  0.933809
+83                                         pool:sadam:preds_e6_origwide_xgb  0.959183  14.091405  0.956192
+281                         pool:goodpjw:series_members_p1_p8/deepfm_rawaux  0.960265  14.031106  0.971015
+120                                               pool:124:gp_deepfm_rawaux  0.960276  13.885905  0.971063
+82                                         pool:sadam:preds_e6_origwide_lgb  0.959219  13.657758  0.956905
+321                         artifacts/0037_tabpfn35fast-catfd10-5f/test.npy  0.959936  13.442727  0.961347

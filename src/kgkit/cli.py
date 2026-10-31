@@ -10,7 +10,8 @@ Commands
   adv         adversarial validation (train vs test)
   score       score a prediction column against a truth column with a registered metric
   metrics     list registered metrics
-  ledger      list | best | show | lb | add | compare | noise | decide | baseline | lineage | import
+  ledger      list | best | show | lb | add | tag | compare | noise | decide | baseline | lineage | import
+  final       which submissions Kaggle has selected as finals, and whether auto-selection would pick a fitted file
   backlog     add | list | set | render | fidelity  — the ranked idea backlog (human vs GPU hours)
   features    search  — generate and screen thousands of candidate features on the frozen folds
   kernels     top | pull | review  — study and reproduce public notebooks
@@ -324,7 +325,8 @@ def cmd_config(a):
             raise SystemExit(f"expected KEY=VALUE with KEY one of {', '.join(fields)}; got {kv!r}")
         cur = getattr(st, k)
         if v.strip().lower() in ("", "none", "null"):
-            val = None if k in ("runtime_limit_hours", "holdout_n", "holdout_se", "public_lb_n", "rope") else ""
+            val = (None if k in ("runtime_limit_hours", "holdout_n", "holdout_se", "public_lb_n", "rope")
+                   else [] if isinstance(cur, list) else "")
         elif isinstance(cur, bool):
             val = v.strip().lower() in ("1", "true", "yes", "on")
         elif k in ("daily_submissions", "final_submissions", "holdout_n", "public_lb_n"):
@@ -333,6 +335,8 @@ def cmd_config(a):
             val = float(v)
         elif isinstance(cur, list):
             val = [x.strip() for x in v.split(",") if x.strip()]
+            if k == "final_picks":
+                val = _final_picks(root, st, val)
         else:
             val = v.strip()
         if k == "validation" and val not in S.VALIDATION_MODES:
@@ -347,8 +351,56 @@ def cmd_config(a):
     st.save(root)
 
 
+def _final_picks(root, st, refs: list[str]) -> list[str]:
+    """``config final_picks=0027,0025``: ledger ids (a ref that is no record is kept as written), with a warning for a
+    fitted pick and for more picks than the competition takes."""
+    from . import evalset as E
+    from .experiment import Ledger
+
+    led, out = Ledger(root), []
+    for ref in refs:
+        try:
+            r = led.get(ref)
+        except KeyError:
+            print(f"note: {ref!r} is not a ledger record; kept as written")
+            out.append(ref)
+            continue
+        out.append(r["id"])
+        if E.lb_fitted(r):
+            print(f"WARNING: {r['id']} is tagged public-lb-fitted: its public score says nothing about the private "
+                  "one, so it must not be a final pick")
+    if len(out) > max(1, st.final_submissions or 2):
+        print(f"note: {len(out)} picks, but the competition takes {st.final_submissions}")
+    return out
+
+
+def cmd_final(a):
+    """Ask Kaggle which submissions are selected as finals; with none selected, which ones its auto-selection would
+    take, and whether any is a public-lb-fitted file. Records the selection in ``final_picks``."""
+    from . import finals as FN
+    from . import state as S
+    from .experiment import Ledger
+
+    root = S.find_root()
+    st = S.load()
+    if st is None or root is None:
+        raise SystemExit("not inside a kaggle-grandmaster workspace (no .kaggle-gm/competition.json)")
+    recs = Ledger(root).records()
+    data, error = FN.live(st.slug)
+    text, picks = FN.report(st, recs, data, error, local=FN.lines(root, st, recs))
+    print("\n".join(text))
+    if picks:
+        st.final_picks = picks
+        st.save(root)
+        print(f"recorded final_picks = {', '.join(picks)}")
+    print()
+    print("\n".join(FN.steps(st)))
+
+
 def cmd_status(a):
     from . import state as S
+    from . import evalset as E
+    from . import finals as FN
     from .experiment import Ledger, fmt_cv
 
     st = S.load(a.dir)
@@ -377,7 +429,8 @@ def cmd_status(a):
     if recs:
         best = led.best(1)
         borrowed = led.borrowed_scores()
-        tags = sorted({t for r in borrowed for t in r.get("tags") or () if t in ("lb-only", "lb-blend")})
+        tags = sorted({t for r in borrowed for t in r.get("tags") or ()
+                       if t in (*E.LB_ONLY_TAGS, *E.LB_FITTED_TAGS)})
         left_out = (f"; {len(borrowed)} record(s) with a CV that is not their own left out ({', '.join(tags)})"
                     if borrowed else "")
         if best:
@@ -401,7 +454,11 @@ def cmd_status(a):
         with_lb = [r for r in recs if r.get("lb_public") is not None]
         if with_lb:
             bl = sorted(with_lb, key=lambda r: r["lb_public"], reverse=st.greater_is_better)[0]
-            print(f"best public LB: {bl['lb_public']:.5f} ({bl['id']}, CV {fmt_cv(bl)})")
+            fitted = FN.not_fitted_note(recs, st)
+            print(f"best public LB: {bl['lb_public']:.5f} ({bl['id']}, CV {fmt_cv(bl)})"
+                  + (f"; {fitted}" if fitted else ""))
+        for line in FN.lines(root, st, recs):  # the same lines as the session brief
+            print(line)
         agreement = led.cv_lb_summary() or led.noise_note()  # the noise line rides on the CV-LB line when there is one
         if agreement:
             print(agreement)
@@ -501,7 +558,18 @@ def _add_notes(a) -> str:
     return " ".join([*a.args[2:], *([a.notes] if a.notes else [])])
 
 
+def _fitted_note(r: dict) -> str:
+    """What the ``public-lb-fitted`` tag does, appended to the commands that log or tag a record."""
+    from . import evalset as E
+
+    if not E.lb_fitted(r):
+        return ""
+    return (" (public-LB fitted: display only, never a final pick. Kept out of best CV, the baseline and the CV-LB "
+            "correlation; `kgkit status` warns while Kaggle's auto-selection would take it)")
+
+
 def cmd_ledger(a):
+    from . import evalset as E
     from .experiment import Ledger, fmt_cv
 
     led = Ledger()
@@ -514,7 +582,7 @@ def cmd_ledger(a):
     elif a.action == "lb":
         priv = float(a.args[2]) if len(a.args) > 2 else None
         r = led.attach_lb(a.args[0], float(a.args[1]), priv)
-        print(f"{r['id']}: CV {fmt_cv(r)} -> public LB {r['lb_public']}")
+        print(f"{r['id']}: CV {fmt_cv(r)} -> public LB {r['lb_public']}" + _fitted_note(r))
         agreement = led.cv_lb_summary()
         if agreement:
             print(agreement)
@@ -535,13 +603,19 @@ def cmd_ledger(a):
         elif "lb-blend" in r["tags"]:
             note = (" (lb-blend on a fixed holdout: the blend's holdout score is its own and counts)" if led._holdout()
                     else " (lb-blend: this CV is not the blend's own; kept out of best CV and the CV-LB correlation)")
-        print(f"logged {r['id']}{note}")
+        print(f"logged {r['id']}{note}{_fitted_note(r)}")
     elif a.action == "compare":
         _ledger_compare(led, a)
     elif a.action == "noise":
         _ledger_noise(led, a)
+    elif a.action == "tag":
+        r = led.tag(a.args[0], *a.args[1:], remove=a.remove)
+        print(f"{r['id']}: tags {', '.join(r['tags']) or '(none)'}" + _fitted_note(r))
     elif a.action == "decide":
-        r = led.decide(a.args[0], a.args[1], " ".join(a.args[2:]), parent=a.parent)
+        try:
+            r = led.decide(a.args[0], a.args[1], " ".join(a.args[2:]), parent=a.parent)
+        except ValueError as e:
+            raise SystemExit(str(e))
         print(f"{r['id']}: {r['decision']}" + (f" (vs {r['parent']})" if r.get("parent") else ""))
         if r["decision"] in ("keep", "baseline"):
             print(f"accepted baseline is now {r['id']} (CV {fmt_cv(r)})")
@@ -556,7 +630,7 @@ def cmd_ledger(a):
         chain = led.lineage(a.args[0] if a.args else led.baseline()["id"])
         prev = None
         for r in chain:
-            d = f"{r['cv'] - prev:+.5f}" if prev is not None and r.get("cv") is not None else "root"
+            d = E.fmt_gain(r["cv"] - prev) if prev is not None and r.get("cv") is not None else "root"
             print(f"{r['id']:40s} CV {fmt_cv(r)} ({d})  {r.get('decision') or '-':12s} "
                   f"{(r.get('decision_note') or r.get('notes') or '')[:60]}")
             prev = r.get("cv")
@@ -573,7 +647,7 @@ def cmd_ledger(a):
         folds = _col(a.folds).to_numpy() if a.folds else None
         r = led.import_preds(a.args[0], arr(a.args[1]), arr(a.test) if a.test else None, y_true=y, folds=folds,
                              cv=a.cv, notes=a.notes or "", source=a.source)
-        print(f"logged {r['id']}: CV {r['cv']:.5f}" + (f" +/- {r['cv_std']:.5f}" if r.get("cv_std") else "")
+        print(f"logged {r['id']}: CV {r['cv']:.5f}" + (f" +/- {E.fmt_se(r['cv_std'])}" if r.get("cv_std") else "")
               + f" [{a.source}]")
 
 
@@ -613,7 +687,8 @@ def _ledger_add_preds(led, a, extra: dict) -> dict:
     r = led.log(a.args[0], score, holdout_pred=p, **kw) if holdout else led.log(a.args[0], score, oof=p, **kw)
     where = "holdout" if holdout else "OOF"
     blend = "; tagged lb-blend, its own holdout score still counts" if holdout and "lb-blend" in (a.tag or ()) else ""
-    print(f"logged {r['id']}: {where} {m.name} {score:.5f} recomputed from {len(y)} rows, predictions stored{blend}")
+    print(f"logged {r['id']}: {where} {m.name} {score:.5f} recomputed from {len(y)} rows, predictions stored{blend}"
+          + _fitted_note(r))
     return r
 
 
@@ -643,6 +718,7 @@ def _ledger_compare(led, a):
     from . import metrics as M
     from . import state as S
     from .compare import compare_folds, describe, estimate, format_comparison, verdict
+    from .evalset import fmt_se
 
     st = S.load()
     holdout = st is not None and st.holdout
@@ -725,8 +801,8 @@ def _ledger_compare(led, a):
         public_n = a.public_n or (st.public_lb_n if st else None)
         if public_n:
             lb = estimate(y, pa, pb, m.name, method=_method(a), n_boot=a.boot, groups=groups, mask=ok, size=public_n)
-            print(f"  public LB (n={public_n}): {describe(lb)}: LB gaps between these two under ~{2 * lb['se']:.5f} "
-                  "are noise (assumes the public rows look like the evaluation rows)")
+            print(f"  public LB (n={public_n}): {describe(lb)}: LB gaps between these two under "
+                  f"~{fmt_se(2 * lb['se'])} are noise (assumes the public rows look like the evaluation rows)")
     _log_comparison(led, new_id, base_id, folds_res, boot, lb, v["decision"])
     print(f"\nrecord it: python -m kgkit ledger decide {new_id} keep|discard|inconclusive \"<why>\" --parent {base_id}")
 
@@ -784,6 +860,7 @@ def _ledger_noise(led, a):
     from . import metrics as M
     from . import state as S
     from .compare import describe, estimate
+    from .evalset import fmt_se
 
     st = S.load()
     truth_spec = a.truth or (st.eval_truth if st else "")
@@ -803,7 +880,7 @@ def _ledger_noise(led, a):
     if public_n:
         lb = estimate(y, p, None, m.name, method=_method(a), n_boot=a.boot, groups=groups, size=public_n)
         gap = math.hypot(res["se"], lb["se"])
-        print(f"public LB (n={public_n}): {describe(lb)}; a CV-LB gap within ~{2 * gap:.5f} (2 x sqrt(SE_eval^2 + "
+        print(f"public LB (n={public_n}): {describe(lb)}; a CV-LB gap within ~{fmt_se(2 * gap)} (2 x sqrt(SE_eval^2 + "
               "SE_LB^2)) is sampling noise, not a validation problem (assumes the public rows look like the "
               "evaluation rows)")
     print("this is the noise of one absolute score: judge a difference between two models with `kgkit ledger "
@@ -1220,6 +1297,7 @@ def cmd_whoami(a):
 
 
 def cmd_gpu(a):
+    from . import evalset as E
     from . import gpu as G
 
     if a.gpu_cmd == "quota":
@@ -1243,7 +1321,7 @@ def cmd_gpu(a):
         if set(folders) != {"data"}:
             print("inputs: " + "; ".join(f"{d}/ <- {', '.join(refs)}" for d, refs in folders.items()))
         if tm.get("prune"):
-            print(f"pruning against {tm['prune']['baseline']} with margin {tm['prune']['margin']:.5f}")
+            print(f"pruning against {tm['prune']['baseline']} with margin {E.fmt_se(tm['prune']['margin'])}")
         if G.source_problem(kdir):
             print("next: make room as the WARNING above says and build again (`gpu push` refuses this script)")
         else:
@@ -1254,8 +1332,8 @@ def cmd_gpu(a):
         built = rec.get("jobs") != ["notebook"]
         print(f"pushed {rec['kernel']} v{rec['version']} ({rec['accelerator']}, cap {rec['hours']}h). "
               + ("It runs without some of its inputs: see the WARNING above." if rec.get("dropped_sources") else
-                 f"Next: python -m kgkit gpu wait {rec['kernel']}  (run it in the background)"
-                 + (", then gpu collect" if built else "; `kaggle kernels output` for its files")))
+                 f"Next: python -m kgkit gpu wait {rec['kernel']}  (run it in the background), then gpu collect"
+                 + ("" if built else f" (its files go to {G.kernel_output_dir(rec['kernel'])}/)")))
     elif a.gpu_cmd == "status":
         root = G._root(None)
         confirmed = {r["kernel"] for r in G.confirm_pending(root, a.kernel or None)}
@@ -1271,9 +1349,12 @@ def cmd_gpu(a):
                       f"`kgkit gpu release {k}`)")
                 continue
             s, text = G.kernel_status(k)
+            was_active = G.latest_run(root, k).get("status") in G.ACTIVE
             G.note_status(root, k, s)
             print(f"{k}: {s}" + (f"  ({text})" if s == "unknown" else "")
                   + ("  (its push from a background command went through)" if k in confirmed else ""))
+            if was_active and s in ("cancelled", "error"):  # it ended since the log last saw it: say how
+                G.report_stop(root, k, s, tail=False)
         if not kernels:
             print("no active remote runs")
     elif a.gpu_cmd == "release":
@@ -1360,7 +1441,10 @@ _LEDGER_OPTIONS = [
     ("--notes", dict(help="free text (add: appended to the notes words)")),
     ("--tag", dict(action="append", help="tag the record; repeatable. lb-blend: blended with public files (K-fold: "
                                          "its CV is borrowed, kept out of best CV and the CV-LB correlation; "
-                                         "holdout+lb: its holdout score still counts)")),
+                                         "holdout+lb: its holdout score still counts). public-lb-fitted: fitted to "
+                                         "the public labels: display only, never a baseline or a final pick, and "
+                                         "`kgkit status` warns while Kaggle would auto-select it")),
+    ("--remove", dict(action="store_true", help="tag: remove the tags instead of adding them")),
     ("--pred", dict(help="FILE:COL[,COL...] or .npy predictions on the evaluation set (holdout+lb: the holdout; else "
                          "OOF); the score is recomputed, the predictions stored and compared with the baseline")),
     ("--variant", dict(help="name shared by re-runs of one pipeline with other seeds (seed noise)")),
@@ -1379,6 +1463,8 @@ _LEDGER_ACTIONS = {
                                                "with public files)"),
                                   ("notes", "*", "free text")],
             "--parent --tag --variant --notes --pred " + _PAIRED),
+    "tag": ("add tags to a record, or remove them (--remove): mark a logged file public-lb-fitted",
+            [_EXP, ("tag", "+", "tags to add (or remove)")], "--remove"),
     "compare": ("paired comparison of two experiments (or artifacts/<name> folders of per-fold OOFs)",
                 [("new", None, "ledger id/name or artifacts folder"),
                  ("baseline", "?", "default: the accepted baseline")], _PAIRED),
@@ -1474,6 +1560,13 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--dir", default=".")
     s.add_argument("-n", type=int, default=10)
     s.set_defaults(fn=cmd_status)
+
+    s = sub.add_parser("final", help="which submissions Kaggle has selected as finals, and which it would auto-select",
+                       description="Ask Kaggle which submissions are selected as finals (the website selects them; "
+                                   "there is no API for that). With none selected, show the best public scores "
+                                   "Kaggle would auto-select and warn when one is a public-lb-fitted file. Records "
+                                   "the selection in competition.json (final_picks).")
+    s.set_defaults(fn=cmd_final)
 
     s = sub.add_parser("folds", help="assign CV folds")
     s.add_argument("train")
@@ -1645,8 +1738,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     g = sub.add_parser("gpu", help="train on Kaggle GPUs/TPUs: quota, remote kernels, accelerator-hour accounting")
     gs = g.add_subparsers(dest="gpu_cmd", required=True)
-    s = gs.add_parser("quota", help="live weekly GPU quota and reset countdown")
-    s.add_argument("--cached", action="store_true", help="do not call the API; use the cached value")
+    s = gs.add_parser("quota", help="weekly GPU/TPU quota and reset countdown: live, or the cached value with its age "
+                                    "when the API call fails twice")
+    s.add_argument("--cached", action="store_true", help="do not call the API; use the cached value (shows its age)")
     s = gs.add_parser("plan", help="GPU-hour budget until the deadline")
     s.add_argument("--cached", action="store_true")
     s.add_argument("--deadline", help="YYYY-MM-DD (default: competition.json)")
@@ -1654,7 +1748,9 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--name", required=True, help="experiment name (artifacts/<name>/ fold files)")
     s.add_argument("--cmd", required=True,
                    help='training command run from the project root; "{fold}" = one fold per process/GPU')
-    s.add_argument("--hours", type=float, required=True, help="session cap (~1.3x the estimate, <= 12; TPU <= 9)")
+    s.add_argument("--hours", type=float, required=True,
+                   help="session cap (~1.3x the estimate, <= 12; TPU <= 9): a hard stop, Kaggle kills the session at "
+                        "it (the runner stops its jobs a few minutes before, checkpoints saved)")
     s.add_argument("--folds", type=int, nargs="+", help="folds to run (default: all in data/folds.csv)")
     s.add_argument("--accelerator", default="NvidiaTeslaT4",
                    help="NvidiaTeslaT4 (2x T4) | NvidiaTeslaP100 | TpuV5E8 (TPU quota, one process per chip) | "
@@ -1689,7 +1785,10 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--public", action="store_true")
     s = gs.add_parser("push", help="check quota, inputs and session slots, then push a kernel folder")
     s.add_argument("dir", help="a `gpu build` folder, or any kernel folder with kernel-metadata.json (needs --hours)")
-    s.add_argument("--hours", type=float, help="session cap (-t); required for folders not made by `gpu build`")
+    s.add_argument("--hours", type=float,
+                   help="session cap (-t), a hard stop: Kaggle kills the run at it wherever the script is, keeping "
+                        "only the files already written - leave ~1.3-1.5x the measured runtime; required for folders "
+                        "not made by `gpu build`")
     s.add_argument("--force", action="store_true",
                    help="push even if the cap exceeds the plannable quota, an input kernel is still running, "
                         "the session slots look full, or the machine shape is not one Kaggle is known to accept")
@@ -1702,7 +1801,9 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--interval", type=float, default=90)
     s.add_argument("--max-hours", type=float, default=13)
     s.add_argument("--collect", action="store_true", help="collect the outputs when it completes")
-    s = gs.add_parser("collect", help="download outputs, import ledger records, account GPU hours")
+    s = gs.add_parser("collect", help="bring a finished kernel's outputs back and account its GPU hours: a `gpu "
+                                      "build` kernel's results go into the ledger, any other kernel's files into "
+                                      "data/ext/kout-<slug>/")
     s.add_argument("kernel")
     s.add_argument("--from-dir", help="use an already-downloaded output folder")
     s.add_argument("--weights", action="store_true", help="also download model weights (*.pt etc.)")

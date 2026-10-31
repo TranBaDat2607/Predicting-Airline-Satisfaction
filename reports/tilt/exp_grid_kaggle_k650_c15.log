@@ -1,0 +1,15 @@
+base 0.96170; K 650; corrupted 83 (one-sided)
+built system 105s
+k0 0 k1 1 nu 2: public 0.96390 gain  +219.8u predicted 0.96725 (optimism +335.4u); weights corrupted 0.45 clean 0.99; 228s
+k0 0 k1 3 nu 2: public 0.96456 gain  +286.3u predicted 0.96585 (optimism +128.8u); weights corrupted 0.41 clean 0.99; 344s
+k0 0 k1 6 nu 2: public 0.96465 gain  +294.8u predicted 0.96551 (optimism +86.5u); weights corrupted 0.40 clean 1.00; 448s
+k0 0 k1 12 nu 2: public 0.96480 gain  +310.2u predicted 0.96514 (optimism +34.1u); weights corrupted 0.39 clean 1.04; 548s
+k0 0 k1 25 nu 2: public 0.96476 gain  +306.0u predicted 0.96482 (optimism +6.0u); weights corrupted 0.40 clean 1.07; 652s
+k0 0 k1 50 nu 2: public 0.96468 gain  +297.8u predicted 0.96440 (optimism -27.6u); weights corrupted 0.43 clean 1.10; 753s
+k0 3 k1 6 nu 2: public 0.96472 gain  +302.4u predicted 0.96527 (optimism +54.3u); weights corrupted 0.40 clean 1.02; 854s
+k0 10 k1 6 nu 2: public 0.96471 gain  +300.6u predicted 0.96501 (optimism +30.5u); weights corrupted 0.41 clean 1.05; 961s
+k0 30 k1 6 nu 2: public 0.96468 gain  +298.3u predicted 0.96458 (optimism -10.6u); weights corrupted 0.43 clean 1.09; 1069s
+k0 0 k1 6 nu 1: public 0.96483 gain  +313.0u predicted 0.96531 (optimism +48.1u); weights corrupted 0.37 clean 1.04; 1172s
+k0 0 k1 6 nu 4: public 0.96443 gain  +273.1u predicted 0.96580 (optimism +137.2u); weights corrupted 0.43 clean 1.00; 1292s
+k0 0 k1 12 nu 4: public 0.96461 gain  +291.3u predicted 0.96534 (optimism +72.3u); weights corrupted 0.43 clean 1.01; 1394s
+k0 0 k1 12 nu 1: public 0.96486 gain  +316.2u predicted 0.96497 (optimism +10.8u); weights corrupted 0.35 clean 1.08; 1483s

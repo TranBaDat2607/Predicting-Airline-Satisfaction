@@ -1,0 +1,5 @@
+base public 0.96296 private 0.962008; corrupted files 0 / 370
+x1    k0       1 k1   1e-09 median w bad nan good 1.00 |  eta0.6 pub 0.96535 (pred 0.96557) priv 0.96106  eta1 pub 0.96558 (pred 0.96587) priv 0.96009  eta1.5 pub 0.96534 (pred 0.96568) priv 0.95898  eta2 pub 0.96491 (pred 0.96525) priv 0.95799
+x24   k0     576 k1   1e-09 median w bad nan good 1.00 |  eta0.6 pub 0.96433 (pred 0.96387) priv 0.96162  eta1 pub 0.96466 (pred 0.96401) priv 0.96112  eta1.5 pub 0.96474 (pred 0.96388) priv 0.96043  eta2 pub 0.96461 (pred 0.96359) priv 0.95973
+reml  k0       1 k1       1 median w bad nan good 1.00 |  eta0.6 pub 0.96534 (pred 0.96551) priv 0.96108  eta1 pub 0.96558 (pred 0.96581) priv 0.96012  eta1.5 pub 0.96536 (pred 0.96562) priv 0.95902  eta2 pub 0.96493 (pred 0.96520) priv 0.95805
+t2    k0       1 k1       1 median w bad nan good 1.00 |  eta0.6 pub 0.96531 (pred 0.96548) priv 0.96108  eta1 pub 0.96555 (pred 0.96577) priv 0.96012  eta1.5 pub 0.96534 (pred 0.96557) priv 0.95902  eta2 pub 0.96492 (pred 0.96516) priv 0.95804

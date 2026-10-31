@@ -1,7 +1,75 @@
-# Public-LB tilt — how the public top 5 was reached (2026-10-27)
+# Public-LB tilt — how the public top 5 was reached (2026-10-27), and top 2 (2026-10-29)
 
-**Status:** public LB **0.96297, 3rd** (0058). Tilted files are *public-LB fitted*: they raise the public score and
-lower the private one, so they are never final picks (see `final-selection.md`).
+**Status (2026-10-30):** public LB **0.96473, 1st** (0078; Kawamata 0.96451, who wrote in the forum that his gains
+come from LB probing over ~200 entries and will not carry over to private; Altunok 0.96446). Tilted files are *public-LB fitted*: they
+raise the public score and lower the private one, so they are never final picks (see `final-selection.md`).
+
+## Session 6 (2026-10-30): exact pairs and an exponential posterior
+
+| step | files | model | eta | predicted | public |
+|---|---|---|---|---|---|
+| 0072 | 582 (+87 mined exact pairs, new public files) | exponential tilt, nu 2, REML | 1.0 | 0.96469 | **0.96452 (1st)** |
+| 0073 | 650 (+70 per-version pairs, 98 re-matched versions) | same | 1.0 | 0.96484 | **0.96462** |
+| 0074-0076 | nudge probes of 0073 (t 0.08 on the low-score 45 % of rows) | - | - | 0.96453 mean | 0.96461 / 0.96453 / 0.96457 |
+| 0077 | 664 | same | 1.0 | 0.96486 | 0.96451 (rank-diff sd to 0073 0.025, public sd of that move ~7u) |
+| 0078 | 660, noise calibrated: nu 1, k1 18 | exponential tilt | 1.0 | 0.96479 | **0.96473** |
+
+- `src/lb_mined.py`: notebooks document (recipe, public score) tables. These pairs have no version ambiguity; every rebuild is checked against the
+  author's pinned file (rank corr 1.0000 for probe G, the climb, T3 and the final Mirror Pair file).
+- `src/tilt_exp.py`: rows have three states, so conditioning on K linear measurements tilts each row's prior exponentially; the Gaussian solution is
+  the first Newton step of its dual. Simulation (K 400, 30 % one-sided wrong scores): +136.3u vs +134.4u, optimism 4.8u vs 9.6u.
+- Meta Kaggle has no submissions or teams of a running competition, and the LB CSV's date is the last submission's: no exact version-score link.
+- Noise calibration. Simulation grid on Kaggle CPU (K 650, `reports/tilt/exp_grid_kaggle_*.log`): nu 1 beats nu 2 by 7-18u, and the best k1 is the one with small
+  optimism (nu 2, 5 % wrong scores: k1 6 +314u, optimism +45u; k1 12 +317u, optimism +1u). On the real files REML gives k1 5.4 and held-out own tilts are
+  predicted +18..+45u too high; k1 18-25 at nu 1 predicts them within 8u (0077, the outlier, +15..+25u) (`src/tilt_grid_real.py`). 0078 at nu 1, k1 18 realised 6u
+  under its prediction and +11u over the previous best, on the same data as 0077.
+- Rejected: correlated model errors (`kernel_power`, REML +93 but held-out tilts up to 28u too low), shared errors within a probe family (no change), marking
+  mined files exact (held-out errors +5u worse).
+
+## Session 5 (2026-10-29): why the real files gave half the simulated gain, and the fix
+
+- Simulation with exact scores (`src/tilt_eb_sim.py`, 370 files): noise x1 gains +262u and is calibrated; the real
+  files under x24 gave +83u. The real files are far less mutually consistent (LOO R² 0.56 vs 0.83).
+- Cause: **wrong scores**. A notebook's search-API score belongs to one of its versions (submissions linked to the
+  notebook); the output we downloaded is the latest version. Simulated with 25–50 % corrupted scores, a global noise
+  level over-predicts by up to 150u (the real-data symptom) and Student-t weights recover most of the gain.
+- `src/tilt_eb.py`: per-file noise = rounding (a floor) + model error ∝ file size (REML k0, k1), Student-t (nu 2)
+  EM weights; files the others cannot explain get w ≈ 0 (e.g. a 0.94-correlated "baseline" notebook listed at
+  0.96157: surprise +313u). Leave-own-tilt-out check: 0062 predicted 0.96365 vs 0.96361 observed, 0058 0.96296 vs
+  0.96297, 0056 0.96289 vs 0.96285.
+- `src/lb_fetch_versions.py` + `src/lb_match.py`: older versions' outputs are downloaded and the one the posterior
+  (fitted without that notebook) predicts closest to the listed score is used (rohitt94 z +40 → v3 z −0.9; kava1 +16 →
+  v13 0.0; anhadmahajan06 +3.6 → v30 +0.6). 13 notebooks re-matched: model error k1 21 → 9.
+- Split check (`src/split_check.py`): the posterior public membership is unrelated to id order/residues → random split.
+- Own re-submissions of the posterior tilt add ~0 (simulation `src/tilt_active_sim2.py`): only new directions
+  (new scored files, unscored models) add information.
+
+| step | files | noise model | eta | predicted | public |
+|---|---|---|---|---|---|
+| 0062 | 389 | Student-t nu 2, REML | 1.0 | 0.96379 | **0.96361** (+64u over 0058) |
+| 0063 | 391 (13 version-matched) | same + rounding floor | 1.0 | 0.96378 | **0.96365** |
+| 0064 | 422 (45 matched, ~30 recovered from notebooks with no usable latest output) | same | 1.0 | 0.96391 | **0.96378** |
+| 0065 | 423, probe: 10k largest moves at eta 2 (KG-chosen) | same | – | 0.96379 | 0.96373 |
+| 0066 | 424 | k1 fixed 80 (best leave-own-tilt-out) | 1.0 | 0.96387 | 0.96369 |
+| 0067 | 467 (90 matched/recovered) | k1 80 | 1.0 | 0.96410 | **0.96414** |
+| 0068 | 476 (+ nina2025/ps-s6e10-04, score-named notebook outputs, 101 matched) | REML k1 8.3 | 1.0 | 0.96442 | **0.96432** (2nd, 11u behind 1st) |
+| 0069 | 310 "clean" (170 unmatched multi-version notebooks left out) | REML k1 3.7 | 1.0 | 0.96487 | 0.96391 ✗ |
+| 0070 | 480 incl. 0069 | nu 1, REML k1 6.3 | 1.0 | 0.96439 | 0.96428 |
+| 0071 | 480, bagged (8 bags x 75 % of the public files) | nu 2 REML | 1.0 | 0.96437 | 0.96423 |
+
+Calibration over all own tilts (0056-0071 without 0069): realised = predicted − 12u ± 9u. With every own tilt in the
+fit, held-out own tilts are predicted within ±3u (0067/0068/0070/0071), yet each new posterior tilt still realises
+~12u under its prediction, so with the 29 Oct data a new tilt is expected at ~0.9642-0.9643 (best 0.96432).
+
+- 0069 lesson: a smaller, more self-consistent file set gets a lower model error, trusts every file more, tilts
+  further (rank corr 0.954) and is 96u optimistic. The full-data model had predicted 0069 within 9u. Keep all files.
+- Gauss-Newton re-linearisation around the posterior (`TiltGN`, `src/tilt_gn_check.py`) does not remove the
+  optimism (held-out errors +20/+4/+13u vs linear +10/+4.5/+13u): linearisation is not its cause.
+
+Own probes (Kaggle CPU simulation `kernels/tilt-sim`, 300 public-like files with 25 % wrong scores, 15 own probes):
+probing the unscored model with the largest posterior sd gains ~0.5u per submission (0.96424 → 0.96432), a random
+unscored model ~0, re-submitting the tilt 0. One-step knowledge gradient on the real data agrees (0.5–1.1u).
+The lever is scored public data: recovered notebook versions gave +36u in one round (0064 → 0067).
 
 ## Why a tilt
 

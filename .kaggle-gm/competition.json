@@ -11,8 +11,19 @@
   "gpu": "",
   "daily_submissions": 10,
   "final_submissions": 2,
+  "final_picks": [
+    "0057_lbb-settf16-10",
+    "0020_stack-lr-pool319-kaggle"
+  ],
   "deadline": "2026-10-31",
   "team_merger_deadline": "",
   "external_data_allowed": "unknown",
+  "validation": "kfold",
+  "holdout_n": null,
+  "holdout_se": null,
+  "eval_truth": "",
+  "eval_groups": "",
+  "public_lb_n": null,
+  "rope": null,
   "notes": []
 }

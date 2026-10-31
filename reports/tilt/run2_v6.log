@@ -1,0 +1,36 @@
+files 428, used 422, held out 0
+REML noise: k0 4.38e-26 k1 10.4 (x rounding var); weights < 0.5: 11, < 0.2: 7; REML -4476.57
+LOO R2 0.754; surprise sd 35.72u; LOO resid sd 19.55u
+            n    w_mean  w_lt05  noise_med_u   resid_sd
+source                                                 
+atlas      40  1.161828       1     0.418375   0.463462
+dataset    52  1.073712       5     0.732859   9.040751
+lb          4  1.153143       0     0.419862   0.415579
+notebook  300  1.009709       5     1.158044  22.889129
+own        26  1.073702       0     0.292488   3.586768
+lowest weights:
+                                                                                         name    source    score      corr  surprise_u  loo_resid_u  noise_sd_u         w
+267                                           arunklenin/ps6e10-airline-satisfaction-baseline  notebook  0.96157  0.939414  310.380102   366.030023  207.764683  0.000064
+305                                                       data/ext/ps-s6e10-02/0.96122_FE.csv   dataset  0.96122  0.974192   45.545030    62.965834   33.050632  0.000957
+204                                               sarunpm/airline-satisfaction-for-0-96168-lb  notebook  0.96171  0.988427    5.563649    23.166225   11.050474  0.003668
+172                                                        amanatar/s6e10-the-consensus-forge  notebook  0.96167  0.991065   -3.494859    17.183512    8.413978  0.005315
+344                           data/ext/s6e10-top18-artifacts/pillar3_taisei_newton_096182.csv   dataset  0.96182  0.992549    3.828864    13.725148    6.941233  0.006411
+158                                                            samanyu1808/s6e10-megastack-v1  notebook  0.96184  0.994766   -4.698481     3.927010    1.884207  0.062660
+354  data/ext/ps6e10-best-public-submissions/s6e10-two-view-gbdt-realmlp-stack-lb-0-96125.csv   dataset  0.96125  0.987409  -20.616645     5.051489    1.737906  0.184333
+353      data/ext/ps6e10-best-public-submissions/s6e10-tabpfn-route-categories-lb-0-96160.csv   dataset  0.96160  0.991427  -12.825507    -2.410885    0.959246  0.423742
+257                                                             ou20040313/s6e10-orange-blend  notebook  0.96187  0.996238   -8.220418     2.223120    0.668437  0.424759
+320                                                           data/ext/ps-s6e10-7/0.96201.csv   dataset  0.96201  0.998826    0.050410    -1.088294    0.461975  0.448654
+own files (surprise vs LOO residual):
+                                         name source    score      corr  surprise_u  loo_resid_u  noise_sd_u         w
+420              subs/0045_lbb-settf8-125.csv    own  0.96214  0.999999    0.044805     0.287744    0.288797  1.081830
+421              subs/0054_tilt-v1-eta0-3.csv    own  0.96266  0.987485  100.628422     1.167393    0.783552  1.005395
+422              subs/0056_tilt-v2-eta0-6.csv    own  0.96285  0.989571  111.639941    -3.136109    0.720010  1.000000
+423              subs/0057_lbb-settf16-10.csv    own  0.96214  1.000000    0.031396     0.278384    0.288741  1.090659
+424                subs/0058_tilt-v3-eta1.csv    own  0.96297  0.981633  156.468922     2.148692    0.924679  1.014315
+425  subs/0060_stack-lr-pool321-kaggle-v3.csv    own  0.96185  0.995996   -8.945108     0.662498    0.490020  1.056184
+426             subs/0062_tilt-v4-t2-eta1.csv    own  0.96361  0.966249  296.547752     9.363031    1.267716  1.000000
+427      subs/0063_tilt-v5-t2-vfix13-eta1.csv    own  0.96365  0.967253  294.270805   -14.635486    1.237836  1.000000
+eta  0.80: predicted public 0.96389
+eta  1.00: predicted public 0.96391
+eta  1.20: predicted public 0.96385
+eta 1.0: rank corr with base 0.965179 -> subs/0064_tilt-v6-t2-vfix45-eta1.csv

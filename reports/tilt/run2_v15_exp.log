@@ -1,0 +1,44 @@
+files 668, used 659, held out 0
+REML noise: k0 3.65e-27 k1 6.85 (x rounding var); weights < 0.5: 12, < 0.2: 9; REML -6927.45
+gaussian tilt at eta 1 predicted 0.96491
+  newton 1: step 1, rel change 1.0000, merit 644.74
+  newton 2: step 1, rel change 0.0611, merit 22.55
+  newton 3: step 1, rel change 0.0058, merit 0.22
+  newton 4: step 1, rel change 0.0001, merit 0.00
+exp fit round 0: weights < 0.5: 12, sd(x - z) 0.395, E[n1] 26699 E[n0] 33425
+exp fit round 1: weights < 0.5: 12, sd(x - z) 0.394, E[n1] 26698 E[n0] 33425
+exp fit round 2: weights < 0.5: 12, sd(x - z) 0.394, E[n1] 26698 E[n0] 33425
+exp fit round 3: weights < 0.5: 12, sd(x - z) 0.394, E[n1] 26698 E[n0] 33425
+LOO R2 0.940; surprise sd 66.00u; LOO resid sd 16.45u
+            n    w_mean  w_lt05  noise_med_u   resid_sd
+source                                                 
+atlas      40  1.144953       0     0.392484   0.499009
+dataset    57  1.080338       4     0.649145   7.655344
+mined     170  1.055300       3     0.501442   4.797572
+named       2  1.299362       0     0.382069   0.176541
+notebook  351  1.008319       5     1.076452  22.087247
+own        39  1.058325       0     0.446996   2.607410
+lowest weights:
+                                                                name    source    score      corr  surprise_u  loo_resid_u  noise_sd_u         w
+315                  arunklenin/ps6e10-airline-satisfaction-baseline  notebook  0.96157  0.939414  300.003078   370.368434  209.315278  0.000049
+318                     sarunpm/airline-satisfaction-lgbm-0-96059-lb  notebook  0.96149  0.973789   76.336689    92.922098   50.990923  0.000325
+360                              data/ext/ps-s6e10-02/0.96122_FE.csv   dataset  0.96122  0.974192   39.821019    55.001545   29.377493  0.000933
+234                      sarunpm/airline-satisfaction-for-0-96168-lb  notebook  0.96171  0.988427    2.961276    27.589373   14.082437  0.001738
+198                               amanatar/s6e10-the-consensus-forge  notebook  0.96167  0.991065   -5.364661    17.042019    8.232216  0.004274
+406  data/ext/s6e10-top18-artifacts/pillar3_taisei_newton_096182.csv   dataset  0.96182  0.992549    2.248900    14.020063    6.897615  0.004998
+523                                              mined:tk_m_tabpfn35     mined  0.96064  0.977963  -34.143075    10.742979    4.409561  0.038118
+174                                   samanyu1808/s6e10-megastack-v1  notebook  0.96184  0.994766   -5.820331     3.990763    1.846393  0.050279
+483                                       mined:gp_chain_00_ewtherka     mined  0.96188  0.996468   -8.643238     2.252950    1.038281  0.113753
+580            mined:x_anhadmahajan06_s6e10_are_you_satisfied_27_961     mined  0.96100  0.979768   -1.948777     3.369690    1.509288  0.308733
+own files (surprise vs LOO residual):
+                                  name source    score      corr  surprise_u  loo_resid_u  noise_sd_u         w
+660  subs/0069_tilt-v10-clean-eta1.csv    own  0.96391  0.953997  374.030891     7.339395    1.303325  1.002717
+661     subs/0070_tilt-v11-t1-eta1.csv    own  0.96428  0.959551  390.175027     1.164014    1.180655  1.071449
+662    subs/0071_tilt-v12-bag-eta1.csv    own  0.96423  0.958466  385.849172    -1.368254    1.215639  1.055808
+663    subs/0072_tilt-v13-exp-eta1.csv    own  0.96452  0.959372  412.103374    -4.750434    1.184773  1.002867
+664    subs/0073_tilt-v14-exp-eta1.csv    own  0.96462  0.957358  434.490489    -6.244091    1.227086  1.000000
+665             subs/0074_probe-n1.csv    own  0.96461  0.955938  438.717581     6.784268    1.245013  1.000000
+666             subs/0075_probe-n2.csv    own  0.96453  0.955991  430.627176    -1.572806    1.232351  1.020897
+667             subs/0076_probe-n3.csv    own  0.96457  0.955883  434.843455     2.729851    1.235409  1.017471
+eta  1.00: predicted public 0.96486
+eta 1.0: rank corr with base 0.957725 -> subs/0077_tilt-v15-exp-eta1.csv

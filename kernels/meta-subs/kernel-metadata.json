@@ -1,0 +1,15 @@
+{
+  "id": "tranbadat/s6e10-meta-submissions",
+  "title": "s6e10-meta-submissions",
+  "code_file": "meta_subs.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": ["kaggle/meta-kaggle"],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
