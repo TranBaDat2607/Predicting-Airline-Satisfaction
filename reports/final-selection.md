@@ -2,9 +2,9 @@
 
 _Decided 2026-10-30 (session 6, `/kg-final`). Deadline **2026-10-31 23:59 UTC** = 2026-11-01 06:59 in Vietnam (UTC+7). If the competition's Overview page gives another time, that one counts._
 
-**Status: NOT YET SELECTED.** `python -m kgkit final` on 2026-10-30: 49 scored submissions, 0 selected.
+**Status: SELECTED.** `python -m kgkit final` on 2026-10-31 read back 0057 and 0020 as the 2 finals. Re-checked on 2026-10-31 17:45 UTC: 0020 is still the best nested CV, 0057 ties the best unfitted public score. The steps below are kept for the record.
 
-## ACTION FOR THE USER (only the website can do this)
+## Website steps (done by the user)
 
 Kaggle has an API to list selected submissions, none to select them: the Kaggle CLI 2.2.5, the `kagglesdk` competition service and the plugin all confirm it. So neither the plugin nor Claude can tick them.
 
@@ -63,3 +63,14 @@ These exist only to hold the public-LB position the goal asked for. They are fit
 - The public top is fitted by several teams (us 0.96473, Kawamata 0.96451, Altunok 0.96446): expect a large shake-up. Kawamata wrote in the forum that his probing gains will not carry over to private.
 - Honest stack saturated: set transformers, SRIM LGB, TabPFN variants and the generator-surrogate LLR all add +0 (`0059`, memory `s6e10-members-tried`).
 - The public crowd now sits at 0.96223 (tkms0816's file), which its own author says includes row-block noise selected on the public LB.
+
+## Outcome (private board, read 2026-11-06 with `kgkit final`)
+
+| final | public | private |
+|---|---|---|
+| `0057_lbb-settf16-10` | 0.96214 | 0.96222 |
+| `0020_stack-lr-pool319-kaggle` | 0.96185 | **0.96236** (team score) |
+
+Rank 426 / 3,735, no medal (bronze 0.96237, silver 0.96238, gold 0.96244; 48 teams tied at 0.96236). Best private of any
+submission: 0.96238 (`0009`, 2e-5 higher). The public-best tilt `0078` scored 0.96027 private (it would have ranked
+~1,981), and every tilt scored between 0.9600 and 0.9618. The LB-weighted hedge 0057 was the weaker final. Full analysis: `reports/postmortem.md`.
