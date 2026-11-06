@@ -1,0 +1,37 @@
+{
+ "slug": "playground-series-s6e10",
+ "at": "2026-11-06T07:56:22Z",
+ "n": 2,
+ "selected": [
+  "0057_lbb-settf16-10",
+  "0020_stack-lr-pool319-kaggle"
+ ],
+ "auto": [],
+ "tied": false,
+ "private": true,
+ "board_read": true,
+ "rank": 426,
+ "teams": 3735,
+ "complete": true,
+ "score": 0.96236,
+ "medal": "no medal",
+ "cutoffs": {
+  "gold": [
+   17,
+   0.96244
+  ],
+  "silver": [
+   186,
+   0.96238
+  ],
+  "bronze": [
+   373,
+   0.96237
+  ]
+ },
+ "tie": [
+  390,
+  437
+ ],
+ "by": "final"
+}

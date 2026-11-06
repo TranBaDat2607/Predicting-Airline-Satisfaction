@@ -48,9 +48,9 @@ reports/     EDA, recon, adversarial validation, post-mortems
 ## Compute (from 2026-10-24: Linux machine, no local GPU — user rule: use Kaggle GPU **and** CPU)
 
 - Local: Linux, 12 CPU threads, 15 GB RAM, **no GPU**. Python env: `/home/nammovuivui/anaconda3/envs/airline-satisfaction/bin/python`
-  (3.12: pandas, sklearn, lightgbm, xgboost, catboost, torch-cpu). `kaggle` CLI on PATH. kgkit 1.13.0 is vendored in
-  `src/kgkit` (scripts need no PYTHONPATH); the plugin copy is `~/.claude/plugins/cache/claude-code-kaggle-grandmaster/kaggle-grandmaster/1.13.0`.
-  The plugin is installed for another project, so its skills are not auto-loaded here: read them from that path.
+  (3.12: pandas, sklearn, lightgbm, xgboost, catboost, torch-cpu). `kaggle` CLI on PATH. kgkit 1.20.0 is vendored in
+  `src/kgkit` (scripts need no PYTHONPATH); the plugin copy is `~/.claude/plugins/cache/claude-code-kaggle-grandmaster/kaggle-grandmaster/1.20.0`.
+  The plugin is installed at project scope here (updated 2026-11-06), so its skills and hooks load in this workspace.
 - **Kaggle GPU (2x T4)** for every model that trains: `python -m kgkit gpu build --name <exp> --cmd "python src/<x>.py --name <exp> --folds {fold}" ...`
   then `python -m kgkit gpu push kernels/<slug>`; hand-written kernels (TabPFN: `kernels/tabpfn-*`) go through
   `kgkit gpu push <dir> --hours H`. Max 2 GPU sessions at once; weekly quota resets Saturday 00:00 UTC.
@@ -84,6 +84,10 @@ reports/     EDA, recon, adversarial validation, post-mortems
 - `/kaggle-grandmaster:kg-final` — choose the final submissions
 
 ## Current plan / notes
+
+- **COMPETITION OVER (2026-10-31). Private 0.96236, rank 426 / 3,735, no medal** (bronze 0.96237; public 1st 0.96473 was a
+  public-LB-fitted tilt that scored 0.96027 private and was never a final). Post-mortem: `reports/postmortem.md`; lessons in
+  `~/.kaggle-gm/lessons.md`. The finals line below is the outcome. The session notes are history: the public-tilt work had no private value.
 
 - **Finals ticked by the user and confirmed with `python -m kgkit final` on 2026-10-31 17:40 UTC:** `0057_lbb-settf16-10` (public 0.96214) and
   `0020_stack-lr-pool319-kaggle` (public 0.96185); recorded in `final_picks`. Evidence in `reports/final-selection.md`.
